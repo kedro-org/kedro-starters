@@ -1,0 +1,4 @@
+output_dir: ~/code
+project_name: My Iris Template
+repo_name: project-iris-template
+python_package: project_iris_template

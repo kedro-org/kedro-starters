@@ -1,0 +1,31 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+#
+# This is a data set used by the iris classification example pipeline provided with this starter
+# template. Please feel free to remove it once you remove the example pipeline.
+example_iris_data:
+  type: spark.SparkDataSet
+  filepath: data/01_raw/iris.csv
+  file_format: csv
+  load_args:
+    header: true
+    inferSchema: true
+  save_args:
+    sep: ","
+    header: true
+
+# This is an example how to use `MemoryDataSet` with Spark objects that aren't `DataFrame`'s.
+# In particular, the `assign` copy mode ensures that the `MemoryDataSet` will be assigned
+# the Spark object itself, not a deepcopy version of it, since deepcopy doesn't work with
+# Spark object generally.
+example_classifier:
+  type: MemoryDataSet
+  copy_mode: assign

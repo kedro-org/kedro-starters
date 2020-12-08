@@ -1,0 +1,4 @@
+output_dir: ~/code
+project_name: My Spark Template
+repo_name: project-spark-template
+python_package: project_spark_template

@@ -1,0 +1,5 @@
+# Parameters for the example pipeline
+# Split ratio between testing data and training data
+example_test_data_ratio: 0.2
+# Parameter to train a random forest classifier
+example_num_trees: 10
