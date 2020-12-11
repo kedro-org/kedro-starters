@@ -39,7 +39,7 @@ from pathlib import Path
 
 import pytest
 
-from {{ cookiecutter.python_package }}.run import ProjectContext
+from {{cookiecutter.python_package}}.run import ProjectContext
 
 
 @pytest.fixture

@@ -35,8 +35,8 @@ from kedro.io import DataCatalog
 from kedro.pipeline import Pipeline
 from kedro.versioning import Journal
 
-from {{ cookiecutter.python_package }}.pipelines import data_engineering as de
-from {{ cookiecutter.python_package }}.pipelines import data_science as ds
+from {{cookiecutter.python_package}}.pipelines import data_engineering as de
+from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
 
 class ProjectHooks:
@@ -73,6 +73,3 @@ class ProjectHooks:
         return DataCatalog.from_config(
             catalog, credentials, load_versions, save_version, journal
         )
-
-
-project_hooks = ProjectHooks()

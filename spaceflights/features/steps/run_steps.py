@@ -26,7 +26,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import yaml
-
 from behave import given, then
 
 from features.steps.sh_run import run

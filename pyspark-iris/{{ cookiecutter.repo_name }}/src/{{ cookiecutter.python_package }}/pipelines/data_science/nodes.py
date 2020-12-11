@@ -40,7 +40,9 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 from pyspark.sql import DataFrame
 
 
-def train_model(training_data: DataFrame, parameters: Dict[str, Any]) -> RandomForestClassifier:
+def train_model(
+    training_data: DataFrame, parameters: Dict[str, Any]
+) -> RandomForestClassifier:
     """Node for training a random forest model to classify the data.
     The number of trees is defined in conf/project/parameters.yml
     and passed into this node via the `parameters` argument.
@@ -56,16 +58,14 @@ def predict(model: RandomForestClassifier, testing_data: DataFrame) -> DataFrame
     """
     predictions = model.transform(testing_data)
     return predictions
- 
- 
+
+
 def report_accuracy(predictions: DataFrame) -> None:
     """Node for reporting the accuracy of the predictions performed by the
     previous node. Notice that this function has no outputs, except logging.
     """
     evaluator = MulticlassClassificationEvaluator(
-        labelCol="label",
-        predictionCol="prediction",
-        metricName="accuracy"
+        labelCol="label", predictionCol="prediction", metricName="accuracy"
     )
     accuracy = evaluator.evaluate(predictions)
     log = logging.getLogger(__name__)

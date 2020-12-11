@@ -1,7 +1,6 @@
 import subprocess
 
 import yaml
-
 from behave import given, then
 
 OK_EXIT_CODE = 0

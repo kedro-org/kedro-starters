@@ -26,50 +26,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Project hooks."""
-from typing import Any, Dict, Iterable, Optional
+"""Entry point for running a Kedro pipeline as a Python package."""
+from pathlib import Path
+from typing import Any, Dict, Union
 
-from kedro.config import ConfigLoader
-from kedro.framework.hooks import hook_impl
-from kedro.io import DataCatalog
-from kedro.pipeline import Pipeline
-from kedro.versioning import Journal
-
-from {{cookiecutter.python_package}}.pipelines import data_engineering as de
-from {{cookiecutter.python_package}}.pipelines import data_science as ds
+from kedro.framework.context import KedroContext
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
 
 
-class ProjectHooks:
-    @hook_impl
-    def register_pipelines(self) -> Dict[str, Pipeline]:
-        """Register the project's pipeline.
+class ProjectContext(KedroContext):
+    """A subclass of KedroContext to add Spark initialisation for the pipeline.
+    """
 
-        Returns:
-            A mapping from a pipeline name to a ``Pipeline`` object.
-
-        """
-        data_engineering_pipeline = de.create_pipeline()
-        data_science_pipeline = ds.create_pipeline()
-
-        return {
-            "de": data_engineering_pipeline,
-            "ds": data_science_pipeline,
-            "__default__": data_engineering_pipeline + data_science_pipeline,
-        }
-
-    @hook_impl
-    def register_config_loader(self, conf_paths: Iterable[str]) -> ConfigLoader:
-        return ConfigLoader(conf_paths)
-
-    @hook_impl
-    def register_catalog(
+    def __init__(
         self,
-        catalog: Optional[Dict[str, Dict[str, Any]]],
-        credentials: Dict[str, Dict[str, Any]],
-        load_versions: Dict[str, str],
-        save_version: str,
-        journal: Journal,
-    ) -> DataCatalog:
-        return DataCatalog.from_config(
-            catalog, credentials, load_versions, save_version, journal
+        package_name: str,
+        project_path: Union[Path, str],
+        env: str = None,
+        extra_params: Dict[str, Any] = None,
+    ):
+        super().__init__(package_name, project_path, env, extra_params)
+        self.init_spark_session()
+
+    def init_spark_session(self) -> None:
+        """Initialises a SparkSession using the config defined in project's conf folder."""
+
+        # Load the spark configuration in spark.yaml using the config loader
+        parameters = self.config_loader.get("spark*", "spark*/**")
+        spark_conf = SparkConf().setAll(parameters.items())
+
+        # Initialise the spark session
+        spark_session_conf = (
+            SparkSession.builder.appName(self.package_name)
+            .enableHiveSupport()
+            .config(conf=spark_conf)
         )
+        _spark_session = spark_session_conf.getOrCreate()
+        _spark_session.sparkContext.setLogLevel("WARN")
