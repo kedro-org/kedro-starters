@@ -38,12 +38,13 @@ from pyspark.sql import SparkSession
 
 class ProjectContext(KedroContext):
     def __init__(
-            self,
-            project_path: Union[Path, str],
-            env: str = None,
-            extra_params: Dict[str, Any] = None,
+        self,
+        package_name: str,
+        project_path: Union[Path, str],
+        env: str = None,
+        extra_params: Dict[str, Any] = None,
     ):
-        super().__init__(project_path, env, extra_params)
+        super().__init__(package_name, project_path, env, extra_params)
         self.init_spark_session()
 
     def init_spark_session(self) -> None:
