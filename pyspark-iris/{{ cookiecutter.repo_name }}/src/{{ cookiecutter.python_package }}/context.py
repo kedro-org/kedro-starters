@@ -38,6 +38,7 @@ from pyspark.sql import SparkSession
 class ProjectContext(KedroContext):
     """A subclass of KedroContext to add Spark initialisation for the pipeline.
     """
+
     def __init__(
         self,
         package_name: str,
@@ -57,10 +58,9 @@ class ProjectContext(KedroContext):
 
         # Initialise the spark session
         spark_session_conf = (
-            SparkSession.builder
-                .appName(self.package_name)
-                .enableHiveSupport()
-                .config(conf=spark_conf)
+            SparkSession.builder.appName(self.package_name)
+            .enableHiveSupport()
+            .config(conf=spark_conf)
         )
         _spark_session = spark_session_conf.getOrCreate()
         _spark_session.sparkContext.setLogLevel("WARN")
