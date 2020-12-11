@@ -40,7 +40,7 @@ from kedro.framework.cli.jupyter import jupyter as jupyter_group
 from kedro.framework.cli.pipeline import pipeline as pipeline_group
 from kedro.framework.cli.project import project_group
 from kedro.framework.cli.utils import KedroCliError, env_option, split_string
-from kedro.framework.context import load_context
+from kedro.framework.session import KedroSession
 from kedro.utils import load_obj
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -62,6 +62,8 @@ This option cannot be used together with --parallel."""
 PARALLEL_ARG_HELP = """Run the pipeline using the `ParallelRunner`.
 If not specified, use the `SequentialRunner`. This flag cannot be used together
 with --runner."""
+ASYNC_ARG_HELP = """Load and save node inputs and outputs asynchronously
+with threads. If not specified, load and save datasets synchronously."""
 TAG_ARG_HELP = """Construct the pipeline using only nodes which have this tag
 attached. Option can be used multiple times, what results in a
 pipeline constructed from nodes having any of those tags."""
@@ -101,8 +103,8 @@ def _get_values_as_tuple(values: Iterable[str]) -> Tuple[str, ...]:
 def _reformat_load_versions(  # pylint: disable=unused-argument
     ctx, param, value
 ) -> Dict[str, str]:
-    """Reformat data structure from tuple to dictionary for `load-version`.
-        E.g ('dataset1:time1', 'dataset2:time2') -> {"dataset1": "time1", "dataset2": "time2"}.
+    """Reformat data structure from tuple to dictionary for `load-version`, e.g:
+    ('dataset1:time1', 'dataset2:time2') -> {"dataset1": "time1", "dataset2": "time2"}.
     """
     load_versions_dict = {}
 
@@ -127,7 +129,8 @@ def _split_params(ctx, param, value):
         item = item.split(":", 1)
         if len(item) != 2:
             ctx.fail(
-                f"Invalid format of `{param.name}` option: Item `{item[0]}` must contain "
+                f"Invalid format of `{param.name}` option: "
+                f"Item `{item[0]}` must contain "
                 f"a key and a value separated by `:`."
             )
         key = item[0].strip()
@@ -169,6 +172,7 @@ def cli():
     "--runner", "-r", type=str, default=None, multiple=False, help=RUNNER_ARG_HELP
 )
 @click.option("--parallel", "-p", is_flag=True, multiple=False, help=PARALLEL_ARG_HELP)
+@click.option("--async", "is_async", is_flag=True, multiple=False, help=ASYNC_ARG_HELP)
 @env_option
 @click.option("--tag", "-t", type=str, multiple=True, help=TAG_ARG_HELP)
 @click.option(
@@ -195,6 +199,7 @@ def run(
     env,
     parallel,
     runner,
+    is_async,
     node_names,
     to_nodes,
     from_nodes,
@@ -218,17 +223,18 @@ def run(
     tag = _get_values_as_tuple(tag) if tag else tag
     node_names = _get_values_as_tuple(node_names) if node_names else node_names
 
-    context = load_context(Path.cwd(), env=env, extra_params=params)
-    context.run(
-        tags=tag,
-        runner=runner_class(),
-        node_names=node_names,
-        from_nodes=from_nodes,
-        to_nodes=to_nodes,
-        from_inputs=from_inputs,
-        load_versions=load_version,
-        pipeline_name=pipeline,
-    )
+    package_name = str(Path(__file__).resolve().parent.name)
+    with KedroSession.create(package_name, env=env, extra_params=params) as session:
+        session.run(
+            tags=tag,
+            runner=runner_class(is_async=is_async),
+            node_names=node_names,
+            from_nodes=from_nodes,
+            to_nodes=to_nodes,
+            from_inputs=from_inputs,
+            load_versions=load_version,
+            pipeline_name=pipeline,
+        )
 
 
 cli.add_command(pipeline_group)
