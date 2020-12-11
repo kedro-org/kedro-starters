@@ -36,6 +36,8 @@ from pyspark.sql import SparkSession
 
 
 class ProjectContext(KedroContext):
+    """A subclass of KedroContext to add Spark initialisation for the pipeline.
+    """
     def __init__(
         self,
         package_name: str,
