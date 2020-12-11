@@ -27,8 +27,8 @@
 # limitations under the License.
 
 """Project settings."""
-from {{cookiecutter.python_package}}.hooks import ProjectHooks
 from {{cookiecutter.python_package}}.context import ProjectContext
+from {{cookiecutter.python_package}}.hooks import ProjectHooks
 
 # Instantiate and list your project hooks here
 HOOKS = (ProjectHooks(),)
