@@ -54,6 +54,7 @@ setup(
         "docs": [
             "sphinx>=1.6.3, <2.0",
             "sphinx_rtd_theme==0.4.1",
+            "docutils",
             "nbsphinx==0.3.4",
             "nbstripout==0.3.3",
             "recommonmark==0.5.0",
