@@ -20,7 +20,7 @@ logs/**
 !.gitkeep
 
 # keep also the example dataset
-!data/01_raw/iris.csv
+!data/01_raw/*
 
 
 ##########################
