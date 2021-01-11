@@ -44,7 +44,7 @@ def create_pipeline(**kwargs):
                 train_model,
                 ["example_train_x", "example_train_y", "parameters"],
                 "example_model",
-                name="train_model"
+                name="train"
             ),
             node(
                 predict,
@@ -56,6 +56,6 @@ def create_pipeline(**kwargs):
                 report_accuracy,
                 ["example_predictions", "example_test_y"],
                 None,
-                name="report_accuracy"),
+                name="report"),
         ]
     )
