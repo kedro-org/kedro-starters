@@ -45,9 +45,8 @@ class ProjectHooks:
             A mapping from a pipeline name to a ``Pipeline`` object.
 
         """
-        return {
-            "__default__": Pipeline([]),
-        }
+
+        return {"__default__": Pipeline([])}
 
     @hook_impl
     def register_config_loader(self, conf_paths: Iterable[str]) -> ConfigLoader:
