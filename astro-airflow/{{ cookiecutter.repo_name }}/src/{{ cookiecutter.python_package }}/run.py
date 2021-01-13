@@ -26,7 +26,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Application entry point."""
+"""Entry point for running a Kedro pipeline as a Python package."""
 from pathlib import Path
 
 from kedro.framework.session import KedroSession

@@ -26,31 +26,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Example code for the nodes in the example pipeline. This code is meant
+just for illustrating basic Kedro features.
+
+Delete this when you start working on your own Kedro project.
 """
-This module contains an example test.
 
-Tests should be placed in ``src/tests``, in modules that mirror your
-project's structure, and in files named test_*.py. They are simply functions
-named ``test_*`` which test a unit of logic.
+from kedro.pipeline import Pipeline, node
 
-To run the tests, run ``kedro test``.
-"""
-from pathlib import Path
-
-import pytest
-from kedro.framework.context import KedroContext
+from .nodes import predict, report_accuracy, train_model
 
 
-@pytest.fixture
-def project_context():
-    return KedroContext(
-        package_name="{{ cookiecutter.python_package }}", project_path=Path.cwd()
+def create_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                train_model,
+                ["example_train_x", "example_train_y", "parameters"],
+                "example_model",
+                name="train"
+            ),
+            node(
+                predict,
+                dict(model="example_model", test_x="example_test_x"),
+                "example_predictions",
+                name="predict"
+            ),
+            node(
+                report_accuracy,
+                ["example_predictions", "example_test_y"],
+                None,
+                name="report"),
+        ]
     )
-
-
-# The tests below are here for the demonstration purpose
-# and should be replaced with the ones testing the project
-# functionality
-class TestProjectContext:
-    def test_package_name(self, project_context):
-        assert project_context.package_name == "{{ cookiecutter.python_package }}"

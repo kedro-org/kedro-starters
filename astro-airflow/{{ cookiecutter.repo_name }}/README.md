@@ -11,7 +11,7 @@ Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get st
 In order to get the best out of the template:
 
 * Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/12_faq/01_faq.html#what-is-data-engineering-convention)
+* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/11_faq/01_faq.html#what-is-data-engineering-convention)
 * Don't commit data to your repository
 * Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
@@ -25,7 +25,7 @@ To install them, run:
 kedro install
 ```
 
-## How to run your Kedro pipeline
+## How to run Kedro
 
 You can run your Kedro project with:
 
@@ -41,7 +41,8 @@ Have a look at the file `src/tests/test_run.py` for instructions on how to write
 kedro test
 ```
 
-To configure the coverage threshold, go to the `.coveragerc` file.
+To configure the coverage threshold, look at the `.coveragerc` file.
+
 
 ## Project dependencies
 
@@ -60,8 +61,6 @@ After this, if you'd like to update your project requirements, please update `sr
 ## How to work with Kedro and notebooks
 
 > Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
->
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `kedro install` you will not need to take any extra steps before you use them.
 
 ### Jupyter
 To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
