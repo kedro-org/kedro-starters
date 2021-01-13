@@ -3,3 +3,15 @@
 .env
 airflow_settings.yaml
 logs/
+
+# All Kedro project files, except data/ and conf/
+.ipython/
+docs/
+notebooks/
+src/
+.coveragerc
+.gitignore
+.isort.cfg
+pyproject.toml
+README.md
+setup.cfg
