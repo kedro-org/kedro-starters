@@ -49,6 +49,7 @@ def create_pipeline(**kwargs):
                 func=create_master_table,
                 inputs=["preprocessed_shuttles", "preprocessed_companies", "reviews"],
                 outputs="master_table",
+                name="creating_master_table",
             ),
         ]
     )
