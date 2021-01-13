@@ -1,0 +1,1 @@
+FROM quay.io/astronomer/ap-airflow:latest-onbuild
