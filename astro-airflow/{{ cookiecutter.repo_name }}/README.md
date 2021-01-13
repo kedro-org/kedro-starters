@@ -119,3 +119,38 @@ To automatically strip out all output cell contents before committing to `git`, 
 ## Package your Kedro project
 
 [Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/03_tutorial/05_package_a_project.html)
+
+## Run your project in Airflow
+
+The easiest way to run your project in Airflow is by [installing the Astronomer CLI](https://www.astronomer.io/docs/cloud/stable/get-started/quickstart#step-4-install-the-astronomer-cli)
+and follow the following instructions:
+
+Package your project:
+```shell
+kedro package
+```
+
+Copy the package at the root of the project such that the Docker images 
+created by the Astronomer CLI can pick it up:
+```shell
+cp src/dist/*.whl ./
+```
+
+Generate a catalog file with placeholders for all the in-memory datasets:
+```shell
+kedro catalog create --pipeline=__default__
+```
+
+Edit the file `conf/base/catalog/__default__.yml` and chose a way to 
+persists the datasets rather than store them in-memory.
+
+Install the Kedro Airflow plugin and convert your pipeline into an Airflow dag:
+```shell
+pip install kedro-airflow
+kedro airflow create -t dags/
+```
+
+Run your local Airflow instance through Astronomer:
+```shell
+astro dev start
+```
