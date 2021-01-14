@@ -142,7 +142,27 @@ kedro catalog create --pipeline=__default__
 ```
 
 Edit the file `conf/base/catalog/__default__.yml` and chose a way to 
-persists the datasets rather than store them in-memory.
+persists the datasets rather than store them in-memory. E.g.:
+```yaml
+example_train_x:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/example_train_x.pkl
+example_train_y:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/example_train_y.pkl
+example_test_x:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/example_test_x.pkl
+example_test_y:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/example_test_y.pkl
+example_model:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/example_model.pkl
+example_predictions:
+  type: pickle.PickleDataSet
+  filepath: data/07_model_output/example_predictions.pkl
+```
 
 Install the Kedro Airflow plugin and convert your pipeline into an Airflow dag:
 ```shell
