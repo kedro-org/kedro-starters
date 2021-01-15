@@ -141,8 +141,8 @@ Generate a catalog file with placeholders for all the in-memory datasets:
 kedro catalog create --pipeline=__default__
 ```
 
-Edit the file `conf/base/catalog/__default__.yml` and chose a way to 
-persists the datasets rather than store them in-memory. E.g.:
+Edit the file `conf/base/catalog/__default__.yml` and choose a way to 
+persist the datasets rather than store them in-memory. E.g.:
 ```yaml
 example_train_x:
   type: pickle.PickleDataSet

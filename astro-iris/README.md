@@ -1,8 +1,8 @@
-# The `kedro-starter-pandas-iris` Kedro starter
+# The `astro-iris` Kedro starter
 
 ## Introduction
 
-The code in this repository demonstrates best practice when working with Kedro. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro Iris dataset example](https://kedro.readthedocs.io/en/stable/02_get_started/05_example_project.html).
+The code in this repository demonstrates best practice when working with Kedro. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro Iris dataset example](https://kedro.readthedocs.io/en/stable/02_get_started/05_example_project.html). It also provides a minimum viable setup to deploy the Kedro pipeline on Airflow with [Astronomer](https://www.astronomer.io/).
 
 
 ### An example machine learning pipeline using only native `Kedro`
