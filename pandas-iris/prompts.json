@@ -6,12 +6,17 @@
     },
     "repo_name": {
       "title": "Repository Name:",
-      "text": "Please enter a directory name for your new project repository.\n Alphanumeric characters, hyphens and underscores are allowed. Lowercase is recommended.",
+      "text": "Please enter a directory name for your new project repository.\n Alphanumeric characters, hyphens and underscores are allowed.\n Lowercase is recommended.",
       "default": ""
     },
     "python_package": {
       "title": "Python Package Name:",
-      "text": " Please enter a valid Python package name for your project package. Alphanumeric characters and underscores are allowed. Lowercase is recommended. Package name must start with a letter or underscore.",
+      "text": " Please enter a valid Python package name for your project package.\n Alphanumeric characters and underscores are allowed.\n Lowercase is recommended. Package name must start with a letter\n or underscore.",
       "default": ""
+    },
+    "custom_prompt": {
+      "title": "My custom prompt:",
+      "text": "Please type your name",
+      "default": "root"
     }
 }
