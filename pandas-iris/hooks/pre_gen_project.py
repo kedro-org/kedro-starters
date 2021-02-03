@@ -2,19 +2,17 @@ import re
 import sys
 
 from click import secho
-from kedro.framework.cli.utils import KedroCliError
 
 REPO_REGEX = r"^\w+(-*\w+)*$"
 repo_name = '{{ cookiecutter.repo_name }}'
 pkg_name = "{{ cookiecutter.python_package }}"
 
-
 if not re.match(REPO_REGEX, repo_name):
-    raise KedroCliError(f"`{repo_name}` is not a valid repository name. It must contain "
+    secho(f"`{repo_name}` is not a valid repository name. It must contain "
           f"only word symbols and/or hyphens, must also start and "
-          f"end with alphanumeric symbol.")
+          f"end with alphanumeric symbol.", fg="red", err=True)
     # exits with status 1 to indicate failure
-    # sys.exit(1)
+    sys.exit(1)
 
 base_message = f"`{pkg_name}` is not a valid Python package name."
 if not re.match(r"^[a-zA-Z_]", pkg_name):
