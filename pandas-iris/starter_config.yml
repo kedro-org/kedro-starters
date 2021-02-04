@@ -11,7 +11,6 @@ repo_name:
     Please enter a directory name for your new project repository.
     Alphanumeric characters, hyphens and underscores are allowed.
     Lowercase is recommended.
-  default: ""
 
 python_package:
   title: "Python Package Name:"
@@ -20,7 +19,6 @@ python_package:
     Alphanumeric characters and underscores are allowed.
     Lowercase is recommended. Package name must start with a letter
     or underscore.
-  default: ""
 
 custom_prompt:
   title: "My custom prompt:"
