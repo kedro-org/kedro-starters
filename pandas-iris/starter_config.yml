@@ -12,7 +12,9 @@ repo_name:
     Alphanumeric characters, hyphens and underscores are allowed.
     Lowercase is recommended.
   regexp_validator: "^\\w+(-*\\w+)*$"
-  error_msg: "Custom message"
+  error_msg: |
+    It must contain only word symbols and/or hyphens, must also
+    start and end with alphanumeric symbol."
 
 python_package:
   title: "Python Package Name:"
@@ -21,3 +23,7 @@ python_package:
     Alphanumeric characters and underscores are allowed.
     Lowercase is recommended. Package name must start with a letter
     or underscore.
+  regexp_validator: "^[a-zA-Z_]\\w{1,}$"
+  error_msg: |
+    It must start with a letter or underscore, be at least 2 characters long
+    and contain only letters, digits, and/or underscores.
