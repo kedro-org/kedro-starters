@@ -11,6 +11,8 @@ repo_name:
     Please enter a directory name for your new project repository.
     Alphanumeric characters, hyphens and underscores are allowed.
     Lowercase is recommended.
+  regexp_validator: "^\\w+(-*\\w+)*$"
+  error_msg: "Custom message"
 
 python_package:
   title: "Python Package Name:"
