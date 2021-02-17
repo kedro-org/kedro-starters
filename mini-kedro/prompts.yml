@@ -11,3 +11,7 @@ repo_name:
     Please enter a directory name for your new project repository.
     Alphanumeric characters, hyphens and underscores are allowed.
     Lowercase is recommended.
+  regexp_validator: "^\\w+(-*\\w+)*$"
+  error_msg: |
+    It must contain only word symbols and/or hyphens, must also
+    start and end with alphanumeric symbol."
