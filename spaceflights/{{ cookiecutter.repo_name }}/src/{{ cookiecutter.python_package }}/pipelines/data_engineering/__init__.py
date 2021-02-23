@@ -26,6 +26,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Complete Data Engineering pipeline for the Spaceflights tutorial"""
+"""Complete Data Engineering pipeline for the spaceflights tutorial"""
 
 from .pipeline import create_pipeline  # NOQA
