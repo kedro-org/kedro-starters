@@ -37,19 +37,19 @@ def create_pipeline(**kwargs):
                 func=split_data,
                 inputs=["master_table", "parameters"],
                 outputs=["X_train", "X_test", "y_train", "y_test"],
-                name="splitting_data",
+                name="split_data_node",
             ),
             node(
                 func=train_model,
                 inputs=["X_train", "y_train"],
                 outputs="regressor",
-                name="training_model",
+                name="train_model_node"
             ),
             node(
                 func=evaluate_model,
                 inputs=["regressor", "X_test", "y_test"],
                 outputs=None,
-                name="evaluating_model",
+                name="evaluate_model_node"
             ),
         ]
     )
