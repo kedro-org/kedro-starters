@@ -34,12 +34,14 @@ def _is_true(x):
 
 def _parse_percentage(x):
     x = x.str.replace("%", "")
-    return x.astype(float) / 100
+    x = x.astype(float) / 100
+    return x
 
 
 def _parse_money(x):
     x = x.str.replace("$", "").str.replace(",", "")
-    return x.astype(float)
+    x = x.astype(float)
+    return x
 
 
 def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
@@ -74,20 +76,15 @@ def create_master_table(
 ) -> pd.DataFrame:
     """Combines all data to create a master table.
 
-        Args:
-            shuttles: Preprocessed data for shuttles.
-            companies: Preprocessed data for companies.
-            reviews: Source data for reviews.
-        Returns:
-            Master table.
+    Args:
+        shuttles: Preprocessed data for shuttles.
+        companies: Preprocessed data for companies.
+        reviews: Raw data for reviews.
+    Returns:
+        Master table.
 
     """
     rated_shuttles = shuttles.merge(reviews, left_on="id", right_on="shuttle_id")
-
-    with_companies = rated_shuttles.merge(
-        companies, left_on="company_id", right_on="id"
-    )
-
-    master_table = with_companies.drop(["shuttle_id", "company_id"], axis=1)
+    master_table = rated_shuttles.merge(companies, left_on="company_id", right_on="id")
     master_table = master_table.dropna()
     return master_table
