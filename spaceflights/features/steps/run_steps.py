@@ -27,7 +27,6 @@
 # limitations under the License.
 import yaml
 from behave import given, then
-
 from features.steps.sh_run import run
 
 OK_EXIT_CODE = 0

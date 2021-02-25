@@ -34,7 +34,6 @@ from kedro.framework.hooks import hook_impl
 from kedro.io import DataCatalog
 from kedro.pipeline import Pipeline
 from kedro.versioning import Journal
-
 from {{cookiecutter.python_package}}.pipelines import data_engineering as de
 from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
