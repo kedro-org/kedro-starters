@@ -65,7 +65,9 @@ class ProjectHooks:
         }
 
     @hook_impl
-    def register_config_loader(self, conf_paths: Iterable[str]) -> ConfigLoader:
+    def register_config_loader(
+        self, conf_paths: Iterable[str], env: str, extra_params: Dict[str, Any]
+    ) -> ConfigLoader:
         return ConfigLoader(conf_paths)
 
     @hook_impl
