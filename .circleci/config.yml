@@ -35,7 +35,7 @@ commands:
     description: Run end to end tests for all starters
     steps:
       - run:
-          command: behave */features
+          command: behave features
 
 jobs:
   security_scan:
