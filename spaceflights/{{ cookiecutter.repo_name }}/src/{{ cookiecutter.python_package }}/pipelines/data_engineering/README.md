@@ -1,10 +1,7 @@
 # Data Engineering pipeline
-
-> *Note:* This `README.md` was generated using `Kedro {{ cookiecutter.kedro_version }}` for illustration purposes. Please modify it according to your pipeline structure and contents.
-
 ## Overview
 
-This modular pipeline preprocesses the raw data (`preprocessing_companies` and `preprocessing_shuttles` nodes) and then creates the master table (`master_table` node).
+This modular pipeline preprocesses the raw data (`preprocess_companies_node` and `preprocess_shuttles_node`) and creates the master table (`create_master_table_node`).
 
 ## Pipeline inputs
 
@@ -13,21 +10,21 @@ This modular pipeline preprocesses the raw data (`preprocessing_companies` and `
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Source data about the companies provide the space shuttles |
+| Description | Raw data on the companies running the space shuttles |
 
 ### `shuttles`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Source data about technical characteristics of various space shuttles |
+| Description | Raw data on technical characteristics of the space shuttles |
 
 ### `reviews`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Source dataset with historical customer reviews of their space trips |
+| Description | Raw data with historical customer reviews of their space trips |
 
 
 ## Pipeline outputs
@@ -37,18 +34,18 @@ This modular pipeline preprocesses the raw data (`preprocessing_companies` and `
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Cleansed and normalised version of the `companies` dataset |
+| Description | Preprocessed version of the `companies` dataset |
 
 ### `preprocessed_shuttles`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Cleansed and normalised version of the `shuttles` dataset |
+| Description | Preprocessed version of the `shuttles` dataset |
 
 ### `master_table`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | A combined dataset from preprocessed companies and shuttle datasets, and source reviews data |
+| Description | A combined dataset containing data on shuttles, with company and reviews information joined in |

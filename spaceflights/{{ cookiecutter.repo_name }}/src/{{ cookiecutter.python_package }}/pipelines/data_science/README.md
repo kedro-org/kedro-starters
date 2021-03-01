@@ -5,10 +5,9 @@
 ## Overview
 
 This modular pipeline:
-1. Splits the master table into train and test subsets (`split_data` node)
-2. Trains a simple linear regression model (`train_model` node)
-3. Evaluates the accuracy of a trained model from (2) on a test set (`evaluate_model` node)
-
+1. Splits the master table into train and test subsets (`split_data_node`)
+2. Trains a simple linear regression model (`train_model_node`)
+3. Evaluates the performance of the trained model on the test set (`evaluate_model_node`)
 
 ## Pipeline inputs
 
@@ -17,14 +16,14 @@ This modular pipeline:
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | A combined dataset from preprocessed companies and shuttle datasets, and source reviews data |
+| Description | A combined dataset containing data on shuttles, with company and reviews information joined in |
 
 ### `parameters`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `dict` |
-| Description | Project parameter dictionary that must contain the following keys: `test_size` (the proportion of the dataset to include in the test split), `random_state` (random seed for the shuffling applied to the data before applying the split) |
+| Description | Project parameter dictionary that must contain the following keys: `test_size` (the proportion of the dataset to include in the test split), `random_state` (random seed for the shuffling applied to the data before applying the split), `features` (list of features to use for modelling) |
 
 
 ## Pipeline outputs
@@ -33,29 +32,29 @@ This modular pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | DataFrame containing train set features |
+| Type | `pandas.DataFrame` |
+| Description | Train set features |
 
 ### `y_train`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | DataFrame containing train set target variable |
+| Type | `pandas.Series` |
+| Description | Train set target variable |
 
 ### `X_test`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | DataFrame containing test set features |
+| Type | `pandas.DataFrame` |
+| Description | Test set features |
 
 ### `y_test`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | DataFrame containing test set target variable |
+| Type | `pandas.Series` |
+| Description | Test set target variable |
 
 ### `regressor`
 
