@@ -43,13 +43,13 @@ def create_pipeline(**kwargs):
                 func=train_model,
                 inputs=["X_train", "y_train"],
                 outputs="regressor",
-                name="train_model_node"
+                name="train_model_node",
             ),
             node(
                 func=evaluate_model,
                 inputs=["regressor", "X_test", "y_test"],
                 outputs=None,
-                name="evaluate_model_node"
+                name="evaluate_model_node",
             ),
         ]
     )

@@ -25,11 +25,9 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import logging
 from typing import Dict, Tuple
 
-import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
@@ -68,7 +66,9 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
     return regressor
 
 
-def evaluate_model(regressor: LinearRegression, X_test: pd.DataFrame, y_test: pd.Series):
+def evaluate_model(
+    regressor: LinearRegression, X_test: pd.DataFrame, y_test: pd.Series
+):
     """Calculates and logs the coefficient of determination.
 
     Args:
