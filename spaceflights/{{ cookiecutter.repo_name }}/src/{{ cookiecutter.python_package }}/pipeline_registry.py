@@ -36,7 +36,7 @@ from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
-    """Register the project's pipeline.
+    """Register the project's pipelines.
 
     Returns:
         A mapping from a pipeline name to a ``Pipeline`` object.

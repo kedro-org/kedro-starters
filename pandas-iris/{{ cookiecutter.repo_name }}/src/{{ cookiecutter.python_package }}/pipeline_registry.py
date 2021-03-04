@@ -34,15 +34,9 @@ from kedro.pipeline import Pipeline
 from {{cookiecutter.python_package}}.pipelines import data_engineering as de
 from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
-#-----------------------------------------------------------------------#
-# Here you can find an example pipeline, made of two modular pipelines. #
-#                                                                       #
-# Delete this when you start working on your own Kedro project as       #
-# well as pipelines/data_science AND pipelines/data_engineering         #
-#-----------------------------------------------------------------------#
 
 def register_pipelines() -> Dict[str, Pipeline]:
-    """Register the project's pipeline.
+    """Register the project's pipelines.
 
     Returns:
         A mapping from a pipeline name to a ``Pipeline`` object.
