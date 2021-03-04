@@ -33,49 +33,41 @@ def _is_true(x):
 
 
 def _parse_percentage(x):
-    if isinstance(x, str):
-        return float(x.replace("%", "")) / 100
-    return float("NaN")
+    x = x.str.replace("%", "")
+    x = x.astype(float) / 100
+    return x
 
 
 def _parse_money(x):
-    return float(x.replace("$", "").replace(",", ""))
+    x = x.str.replace("$", "").str.replace(",", "")
+    x = x.astype(float)
+    return x
 
 
 def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
-    """Preprocess the data for companies.
+    """Preprocesses the data for companies.
 
-        Args:
-            companies: Source data.
-        Returns:
-            Preprocessed data.
-
+    Args:
+        companies: Raw data.
+    Returns:
+        Preprocessed data.
     """
-
-    companies["iata_approved"] = companies["iata_approved"].apply(_is_true)
-
-    companies["company_rating"] = companies["company_rating"].apply(_parse_percentage)
-
+    companies["iata_approved"] = _is_true(companies["iata_approved"])
+    companies["company_rating"] = _parse_percentage(companies["company_rating"])
     return companies
 
 
 def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
-    """Preprocess the data for shuttles.
+    """Preprocesses the data for shuttles.
 
-        Args:
-            shuttles: Source data.
-        Returns:
-            Preprocessed data.
-
+    Args:
+        shuttles: Raw data.
+    Returns:
+        Preprocessed data.
     """
-    shuttles["d_check_complete"] = shuttles["d_check_complete"].apply(_is_true)
-
-    shuttles["moon_clearance_complete"] = shuttles["moon_clearance_complete"].apply(
-        _is_true
-    )
-
-    shuttles["price"] = shuttles["price"].apply(_parse_money)
-
+    shuttles["d_check_complete"] = _is_true(shuttles["d_check_complete"])
+    shuttles["moon_clearance_complete"] = _is_true(shuttles["moon_clearance_complete"])
+    shuttles["price"] = _parse_money(shuttles["price"])
     return shuttles
 
 
@@ -84,20 +76,15 @@ def create_master_table(
 ) -> pd.DataFrame:
     """Combines all data to create a master table.
 
-        Args:
-            shuttles: Preprocessed data for shuttles.
-            companies: Preprocessed data for companies.
-            reviews: Source data for reviews.
-        Returns:
-            Master table.
+    Args:
+        shuttles: Preprocessed data for shuttles.
+        companies: Preprocessed data for companies.
+        reviews: Raw data for reviews.
+    Returns:
+        Master table.
 
     """
     rated_shuttles = shuttles.merge(reviews, left_on="id", right_on="shuttle_id")
-
-    with_companies = rated_shuttles.merge(
-        companies, left_on="company_id", right_on="id"
-    )
-
-    master_table = with_companies.drop(["shuttle_id", "company_id"], axis=1)
+    master_table = rated_shuttles.merge(companies, left_on="company_id", right_on="id")
     master_table = master_table.dropna()
     return master_table

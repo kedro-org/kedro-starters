@@ -1,4 +1,4 @@
-# The `kedro-starter-pyspark-iris` Kedro starter
+# The `pyspark-iris` Kedro starter
 
 ## Introduction
 
