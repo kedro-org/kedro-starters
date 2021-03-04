@@ -16,7 +16,7 @@ This modular pipeline:
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | A combined dataset containing data on shuttles, with company and reviews information joined in |
+| Description | A combined dataset containing data on shuttles, joined with company and reviews information |
 
 ### `parameters`
 

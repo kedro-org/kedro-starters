@@ -48,4 +48,4 @@ This modular pipeline preprocesses the raw data (`preprocess_companies_node` and
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | A combined dataset containing data on shuttles, with company and reviews information joined in |
+| Description | A combined dataset containing data on shuttles, joined with company and reviews information |
