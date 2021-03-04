@@ -50,7 +50,8 @@ def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
     Args:
         companies: Raw data.
     Returns:
-        Preprocessed data.
+        Preprocessed data, with `company_rating` converted to a float and
+        `iata_approved` converted to boolean.
     """
     companies["iata_approved"] = _is_true(companies["iata_approved"])
     companies["company_rating"] = _parse_percentage(companies["company_rating"])
@@ -63,7 +64,8 @@ def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
     Args:
         shuttles: Raw data.
     Returns:
-        Preprocessed data.
+        Preprocessed data, with `price` converted to a float and `d_check_complete`,
+        `moon_clearance_complete` converted to boolean.
     """
     shuttles["d_check_complete"] = _is_true(shuttles["d_check_complete"])
     shuttles["moon_clearance_complete"] = _is_true(shuttles["moon_clearance_complete"])
