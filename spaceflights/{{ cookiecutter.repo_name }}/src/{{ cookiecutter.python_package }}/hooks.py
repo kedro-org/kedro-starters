@@ -53,7 +53,7 @@ class ProjectHooks:
 
         return {
             "__default__": data_processing_pipeline + data_science_pipeline,
-            "de": data_processing_pipeline,
+            "dp": data_processing_pipeline,
             "ds": data_science_pipeline,
         }
 
