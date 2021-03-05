@@ -1,4 +1,4 @@
-# Data Engineering pipeline
+# Data Processing pipeline
 ## Overview
 
 This modular pipeline preprocesses the raw data (`preprocess_companies_node` and `preprocess_shuttles_node`) and creates the master table (`create_master_table_node`).
