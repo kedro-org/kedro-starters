@@ -56,3 +56,4 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "ds": data_science_pipeline,
         "__default__": data_engineering_pipeline + data_science_pipeline,
     }
+    
