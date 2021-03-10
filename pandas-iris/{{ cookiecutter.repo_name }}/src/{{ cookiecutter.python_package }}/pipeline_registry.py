@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
@@ -19,37 +19,34 @@
 # trademarks of QuantumBlack. The License does not grant you any right or
 # license to the QuantumBlack Trademarks. You may not use the QuantumBlack
 # Trademarks or any confusingly similar mark as a trademark for your product,
-#     or use the QuantumBlack Trademarks in any other manner that might cause
+# or use the QuantumBlack Trademarks in any other manner that might cause
 # confusion in the marketplace, including but not limited to in advertising,
 # on websites, or on software.
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from kedro.pipeline import Pipeline, node
 
-from .nodes import evaluate_model, split_data, train_model
+"""Project pipelines."""
+from typing import Dict
+
+from kedro.pipeline import Pipeline
+
+from {{cookiecutter.python_package}}.pipelines import data_engineering as de
+from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
 
-def create_pipeline(**kwargs):
-    return Pipeline(
-        [
-            node(
-                func=split_data,
-                inputs=["master_table", "parameters"],
-                outputs=["X_train", "X_test", "y_train", "y_test"],
-                name="split_data_node",
-            ),
-            node(
-                func=train_model,
-                inputs=["X_train", "y_train"],
-                outputs="regressor",
-                name="train_model_node",
-            ),
-            node(
-                func=evaluate_model,
-                inputs=["regressor", "X_test", "y_test"],
-                outputs=None,
-                name="evaluate_model_node",
-            ),
-        ]
-    )
+def register_pipelines() -> Dict[str, Pipeline]:
+    """Register the project's pipelines.
+
+    Returns:
+        A mapping from a pipeline name to a ``Pipeline`` object.
+
+    """
+    data_engineering_pipeline = de.create_pipeline()
+    data_science_pipeline = ds.create_pipeline()
+
+    return {
+        "de": data_engineering_pipeline,
+        "ds": data_science_pipeline,
+        "__default__": data_engineering_pipeline + data_science_pipeline,
+    }

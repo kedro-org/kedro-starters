@@ -1,4 +1,4 @@
-# The `kedro-starter-pandas-iris` Kedro starter
+# The `pandas-iris` Kedro starter
 
 ## Introduction
 

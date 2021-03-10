@@ -31,7 +31,7 @@ such as:
 * Split data into training and testing datasets
 """
 
-from typing import Any, Dict
+from typing import List
 
 from pyspark.ml.feature import StringIndexer, VectorAssembler
 from pyspark.sql import DataFrame
@@ -64,7 +64,7 @@ def transform_features(data: DataFrame) -> DataFrame:
 
 def split_data(
     transformed_data: DataFrame, example_test_data_ratio: float
-) -> Dict[str, Any]:
+) -> List[DataFrame]:
     """Node for splitting the classical Iris data set into training and test
     sets, each split into features and labels.
     The split ratio parameter is taken from conf/base/parameters.yml.

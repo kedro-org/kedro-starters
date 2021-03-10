@@ -23,6 +23,7 @@ def reload_kedro(path, line=None, env: str = None, extra_params: Dict[str, Any] 
         import kedro.config.default_logger
         from kedro.framework.cli.jupyter import collect_line_magic
         from kedro.framework.hooks import get_hook_manager
+        from kedro.framework.project import configure_project
         from kedro.framework.session import KedroSession
         from kedro.framework.session.session import _activate_session
     except ImportError:
@@ -51,6 +52,7 @@ def reload_kedro(path, line=None, env: str = None, extra_params: Dict[str, Any] 
         for module in to_remove:
             del sys.modules[module]
 
+        configure_project(metadata.package_name)
         session = KedroSession.create(
             metadata.package_name, path, env=env, extra_params=extra_params
         )
