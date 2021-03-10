@@ -58,6 +58,14 @@ def run_kedro_pipeline(context):
     )
 
 
+@given("I have executed the CLI command to list Kedro pipelines")
+def list_kedro_pipelines(context):
+    """Behave step to list Kedro pipelines in a project."""
+    context.result = subprocess.run(
+        [context.kedro, "pipeline", "list"], cwd=context.root_project_dir
+    )
+
+
 @then("I should get a successful exit code")
 def check_status_code(context):
     if context.result.returncode != OK_EXIT_CODE:
