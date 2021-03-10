@@ -32,31 +32,10 @@ from typing import Any, Dict, Iterable, Optional
 from kedro.config import ConfigLoader
 from kedro.framework.hooks import hook_impl
 from kedro.io import DataCatalog
-from kedro.pipeline import Pipeline
 from kedro.versioning import Journal
-
-from {{cookiecutter.python_package}}.pipelines import data_processing as dp
-from {{cookiecutter.python_package}}.pipelines import data_science as ds
 
 
 class ProjectHooks:
-    @hook_impl
-    def register_pipelines(self) -> Dict[str, Pipeline]:
-        """Register the project's pipeline.
-
-        Returns:
-            A mapping from a pipeline name to a ``Pipeline`` object.
-
-        """
-        data_processing_pipeline = dp.create_pipeline()
-        data_science_pipeline = ds.create_pipeline()
-
-        return {
-            "__default__": data_processing_pipeline + data_science_pipeline,
-            "dp": data_processing_pipeline,
-            "ds": data_science_pipeline,
-        }
-
     @hook_impl
     def register_config_loader(
         self, conf_paths: Iterable[str], env: str, extra_params: Dict[str, Any]
