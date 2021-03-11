@@ -1,7 +1,7 @@
 import subprocess
 
 import yaml
-from behave import given, then
+from behave import given, then, when
 
 OK_EXIT_CODE = 0
 
@@ -63,6 +63,13 @@ def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(
         [context.kedro, "pipeline", "list"], cwd=context.root_project_dir
+    )
+
+
+@when("I lint the project")
+def lint_project(context):
+    context.result = subprocess.run(
+        [context.kedro, "lint", "--check-only"], cwd=context.root_project_dir
     )
 
 

@@ -3,6 +3,7 @@ behave>=1.2.6, <2.0
 black>=19.10b0, <20.0
 isort>=4.3.21, <5.0
 git+https://github.com/quantumblacklabs/kedro.git@master#egg=kedro
+# reqs for `SparkDataSet`
 pyspark>=2.2, <4.0
 hdfs>=2.5.8, <3.0
 s3fs>=0.3.0, <0.5
