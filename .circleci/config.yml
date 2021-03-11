@@ -24,7 +24,7 @@ commands:
           sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
       - run:
           name: Install pip setuptools
-          command: python -m pip install -U "pip>=20.0" "setuptools>=38.0" wheel
+          command: python -m pip install -U "pip==21.0.1" "setuptools>=38.0" wheel
       - run:
           command: |
             sudo pip install -r test_requirements.txt
