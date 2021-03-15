@@ -28,13 +28,11 @@
 
 """Command line tools for manipulating a Kedro project.
 Intended to be invoked via `kedro`."""
-import os
 from itertools import chain
 from pathlib import Path
 from typing import Dict, Iterable, Tuple
 
 import click
-from kedro.framework.cli import main as kedro_main
 from kedro.framework.cli.catalog import catalog as catalog_group
 from kedro.framework.cli.jupyter import jupyter as jupyter_group
 from kedro.framework.cli.pipeline import pipeline as pipeline_group
@@ -104,7 +102,7 @@ def _get_values_as_tuple(values: Iterable[str]) -> Tuple[str, ...]:
 def _reformat_load_versions(  # pylint: disable=unused-argument
     ctx, param, value
 ) -> Dict[str, str]:
-    """Reformat data structure from tuple to dictionary for `load-version`, e.g:
+    """Reformat data structure from tuple to dictionary for `load-version`, e.g.:
     ('dataset1:time1', 'dataset2:time2') -> {"dataset1": "time1", "dataset2": "time2"}.
     """
     load_versions_dict = {}
@@ -249,8 +247,3 @@ cli.add_command(jupyter_group)
 
 for command in project_group.commands.values():
     cli.add_command(command)
-
-
-if __name__ == "__main__":
-    os.chdir(str(PROJ_PATH))
-    kedro_main()
