@@ -30,7 +30,7 @@
 Intended to be invoked via `kedro`."""
 from itertools import chain
 from pathlib import Path
-from typing import Dict, Iterable, Tuple
+from typing import Iterable, Tuple
 
 import click
 from kedro.framework.cli.utils import (
