@@ -38,8 +38,9 @@ from pyspark.sql import DataFrame
 
 
 def transform_features(data: DataFrame) -> DataFrame:
-    """Node for transforming 4 feature columns in the dataset into a single features vector column,
-    as well as transforming the textual representation of the species column into a numeric one.
+    """Node for transforming 4 feature columns in the dataset
+    into a single features vector column, as well as transforming
+    the textual representation of the species column into a numeric one.
 
     For more information, please visit:
     https://spark.apache.org/docs/latest/ml-features

@@ -31,7 +31,6 @@ from pathlib import Path
 from typing import Any, Dict, Union
 
 from kedro.framework.context import KedroContext
-
 from pyspark import SparkConf
 from pyspark.sql import SparkSession
 
@@ -51,7 +50,9 @@ class ProjectContext(KedroContext):
         self.init_spark_session()
 
     def init_spark_session(self) -> None:
-        """Initialises a SparkSession using the config defined in project's conf folder."""
+        """Initialises a SparkSession using the config
+        defined in project's conf folder.
+        """
 
         # Load the spark configuration in spark.yaml using the config loader
         parameters = self.config_loader.get("spark*", "spark*/**")
