@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  win: circleci/windows@2.2.0
-
 executors:
   py38:
     docker:
@@ -31,64 +28,16 @@ commands:
       - run:
           command: |
             sudo pip install -r test_requirements.txt
-
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
       - run:
           command: behave features/run.feature
-
   e2e_lint:
     description: Run `kedro lint` end to end tests for all starters
     steps:
       - run:
           command: behave features/lint.feature
-
-  # Windows-related commands
-  win_setup_conda:
-    description: Setup conda
-    parameters:
-      python_version:
-        type: string
-    steps:
-      - run:
-          name: Initialize conda
-          command: conda init powershell
-      - run:
-          name: Create 'kedro_starters' conda environment
-          command: |
-            conda create --name kedro_starters python=<< parameters.python_version >> -y
-  win_setup_env:
-    description: Setup environment
-    steps:
-      - run:
-          name: Install Java 8
-          command: |
-            $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
-            Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
-      - run:
-          name: Create Inbound rules for Java
-          command: |
-            New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
-            New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
-      - run:
-          name: Set Java environment variables
-          command: |
-            [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
-            setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
-  win_setup_requirements:
-    description: Install dependencies
-    steps:
-      - run:
-          name: Install Fiona
-          command: conda activate kedro_starters; conda install -c conda-forge fiona -y
-      - run:
-          name: Install all requirements
-          command: conda activate kedro_starters; pip install -r test_requirements.txt -U
-      - run:
-          name: Pip freeze
-          command: conda activate kedro_starters; pip freeze
 
 jobs:
   security_scan:
@@ -134,78 +83,6 @@ jobs:
       - setup_requirements:
           python_version: "python3.6"
       - e2e_lint
-  win_e2e_38:
-    executor:
-      name: win/default
-    steps:
-      - win_setup_conda:
-          python_version: "3.8"
-      - checkout
-      - win_setup_env
-      - win_setup_requirements
-      - run:
-          name: Run `kedro run` feature
-          command: conda activate kedro_starters; behave features/run.feature
-  win_e2e_37:
-    executor:
-      name: win/default
-    steps:
-      - win_setup_conda:
-          python_version: "3.7"
-      - checkout
-      - win_setup_env
-      - win_setup_requirements
-      - run:
-          name: Run `kedro run` feature
-          command: conda activate kedro_starters; behave features/run.feature
-  win_e2e_36:
-    executor:
-      name: win/default
-    steps:
-      - win_setup_conda:
-          python_version: "3.6"
-      - checkout
-      - win_setup_env
-      - win_setup_requirements
-      - run:
-          name: Run `kedro run` feature
-          command: conda activate kedro_starters; behave features/run.feature
-  win_lint_38:
-      executor:
-        name: win/default
-      steps:
-        - win_setup_conda:
-            python_version: "3.8"
-        - checkout
-        - win_setup_env
-        - win_setup_requirements
-        - run:
-            name: Run `kedro lint` feature
-            command: conda activate kedro_starters; behave features/lint.feature
-  win_lint_37:
-    executor:
-      name: win/default
-    steps:
-      - win_setup_conda:
-          python_version: "3.7"
-      - checkout
-      - win_setup_env
-      - win_setup_requirements
-      - run:
-          name: Run `kedro lint` feature
-          command: conda activate kedro_starters; behave features/lint.feature
-  win_lint_36:
-    executor:
-      name: win/default
-    steps:
-      - win_setup_conda:
-          python_version: "3.6"
-      - checkout
-      - win_setup_env
-      - win_setup_requirements
-      - run:
-          name: Run `kedro lint` feature
-          command: conda activate kedro_starters; behave features/lint.feature
 
 workflows:
   version: 2
@@ -218,9 +95,3 @@ workflows:
       - lint_38
       - lint_37
       - lint_36
-      - win_e2e_38
-      - win_e2e_37
-      - win_e2e_36
-      - win_lint_38
-      - win_lint_37
-      - win_lint_36
