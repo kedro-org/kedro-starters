@@ -38,18 +38,14 @@ from pyspark.sql import DataFrame
 
 
 def transform_features(data: DataFrame) -> DataFrame:
-    """Node for transforming 4 feature columns in the dataset into a single features vector column,
-    as well as transforming the textual representation of the species column into a numeric one.
+    """Node for transforming 4 feature columns in the dataset
+    into a single features vector column, as well as transforming
+    the textual representation of the species column into a numeric one.
 
     For more information, please visit:
     https://spark.apache.org/docs/latest/ml-features
     """
-    raw_feature_columns = [
-        "sepal_length",
-        "sepal_width",
-        "petal_length",
-        "petal_width",
-    ]
+    raw_feature_columns = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
     # merge 4 feature columns into a single features vector column
     vector_assembler = VectorAssembler(
         inputCols=raw_feature_columns, outputCol="features"

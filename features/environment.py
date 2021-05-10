@@ -51,13 +51,23 @@ def create_new_venv() -> Path:
 def before_scenario(context, scenario):
     """Environment preparation before each test is run.
     """
-
     context.venv_dir = create_new_venv()
     bin_dir = context.venv_dir / "bin"
     context.pip = str(bin_dir / "pip")
     context.python = str(bin_dir / "python")
     context.kedro = str(bin_dir / "kedro")
-    context.starter_path = str(Path(__file__).parents[1])
+    starters_root = Path(__file__).parents[1]
+    starter_names = [
+        "astro-iris",
+        "pandas-iris",
+        "pyspark",
+        "pyspark-iris",
+        "spaceflights",
+    ]
+    starters_paths = {
+        starter: str(starters_root / starter) for starter in starter_names
+    }
+    context.starters_paths = starters_paths
     subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
     context.temp_dir = Path(tempfile.mkdtemp())
 

@@ -1,7 +1,7 @@
 import subprocess
 
 import yaml
-from behave import given, then
+from behave import given, then, when
 
 OK_EXIT_CODE = 0
 
@@ -28,8 +28,8 @@ def create_configuration_file(context):
         yaml.dump(config, config_file, default_flow_style=False)
 
 
-@given("I have run a non-interactive kedro new with the starter")
-def create_project_from_config_file(context):
+@given("I have run a non-interactive kedro new with the starter {starter_name}")
+def create_project_from_config_file(context, starter_name):
     """Behave step to run Kedro new given the config I previously created."""
     res = subprocess.run(
         [
@@ -38,7 +38,7 @@ def create_project_from_config_file(context):
             "--config",
             str(context.config_file),
             "--starter",
-            context.starter_path,
+            context.starters_paths[starter_name],
         ]
     )
     assert res.returncode == OK_EXIT_CODE
@@ -50,11 +50,26 @@ def install_project_dependencies(context):
     assert res.returncode == OK_EXIT_CODE
 
 
-@given("I have executed the CLI command to list Kedro pipelines")
+@given("I have run the Kedro pipeline")
 def run_kedro_pipeline(context):
+    """Behave step to run the newly created Kedro pipeline."""
+    context.result = subprocess.run(
+        [context.kedro, "run"], cwd=context.root_project_dir
+    )
+
+
+@given("I have executed the CLI command to list Kedro pipelines")
+def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(
         [context.kedro, "pipeline", "list"], cwd=context.root_project_dir
+    )
+
+
+@when("I lint the project")
+def lint_project(context):
+    context.result = subprocess.run(
+        [context.kedro, "lint", "--check-only"], cwd=context.root_project_dir
     )
 
 
