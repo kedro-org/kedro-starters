@@ -1,7 +1,7 @@
 # Data Processing pipeline
 ## Overview
 
-This modular pipeline preprocesses the raw data (`preprocess_companies_node` and `preprocess_shuttles_node`) and creates the master table (`create_master_table_node`).
+This modular pipeline preprocesses the raw data (`preprocess_companies_node` and `preprocess_shuttles_node`) and creates the model input table (`create_model_input_table_node`).
 
 ## Pipeline inputs
 
@@ -43,7 +43,7 @@ This modular pipeline preprocesses the raw data (`preprocess_companies_node` and
 | Type | `pandas.DataFrame` |
 | Description | Preprocessed version of the `shuttles` dataset |
 
-### `master_table`
+### `model_input_table`
 
 |      |                    |
 | ---- | ------------------ |
