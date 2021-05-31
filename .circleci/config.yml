@@ -28,6 +28,9 @@ commands:
       - run:
           command: |
             sudo pip install -r test_requirements.txt
+      - run:
+          name: Pip freeze
+          command: pip freeze
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
