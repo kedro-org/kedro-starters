@@ -19,9 +19,11 @@ commands:
         type: string
     steps:
       - checkout
-      - run: |
-          sudo chown -R circleci:circleci /usr/local/bin
-          sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
+      - run:
+          name: Grant CircleCI access to dependency locations
+          command: |
+            sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
       - run:
           name: Install pip setuptools
           command: python -m pip install -U "pip==21.0.1" "setuptools>=38.0" wheel
