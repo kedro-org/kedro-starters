@@ -1,9 +1,6 @@
 version: 2.1
 
 executors:
-  py39:
-    docker:
-      - image: circleci/python:3.9
   py38:
     docker:
       - image: circleci/python:3.8
@@ -49,18 +46,12 @@ commands:
 
 jobs:
   security_scan:
-    executor: py39
+    executor: py38
     steps:
       - setup_requirements:
-          python_version: "python3.9"
+          python_version: "python3.8"
       - run:
           command: bandit -ll -r .
-  e2e_39:
-    executor: py39
-    steps:
-      - setup_requirements:
-          python_version: "python3.9"
-      - e2e_run
   e2e_38:
     executor: py38
     steps:
@@ -79,12 +70,6 @@ jobs:
       - setup_requirements:
           python_version: "python3.6"
       - e2e_run
-  lint_39:
-    executor: py39
-    steps:
-      - setup_requirements:
-          python_version: "python3.9"
-      - e2e_lint
   lint_38:
     executor: py38
     steps:
@@ -109,11 +94,9 @@ workflows:
   build:
     jobs:
       - security_scan
-      - e2e_39
       - e2e_38
       - e2e_37
       - e2e_36
-      - lint_39
       - lint_38
       - lint_37
       - lint_36
