@@ -83,7 +83,7 @@ def create_model_input_table(
         companies: Preprocessed data for companies.
         reviews: Raw data for reviews.
     Returns:
-        Mode input table.
+        Model input table.
 
     """
     rated_shuttles = shuttles.merge(reviews, left_on="id", right_on="shuttle_id")
