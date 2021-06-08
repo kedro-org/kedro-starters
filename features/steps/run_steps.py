@@ -46,7 +46,12 @@ def create_project_from_config_file(context, starter_name):
 
 @given("I have installed the Kedro project's dependencies")
 def install_project_dependencies(context):
-    res = subprocess.run([context.kedro, "install"], cwd=context.root_project_dir)
+    # breakpoint()
+    # res = subprocess.run([context.kedro, "install"], cwd=context.root_project_dir)
+    res = subprocess.run(
+        [context.pip, "install", "-r", "requirements.txt"],
+        cwd=context.root_project_dir / "src",
+    )
     assert res.returncode == OK_EXIT_CODE
 
 
@@ -68,6 +73,7 @@ def list_kedro_pipelines(context):
 
 @when("I lint the project")
 def lint_project(context):
+    breakpoint()
     context.result = subprocess.run(
         [context.kedro, "lint", "--check-only"], cwd=context.root_project_dir
     )
