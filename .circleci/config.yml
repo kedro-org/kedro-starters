@@ -19,20 +19,15 @@ commands:
         type: string
     steps:
       - checkout
-      - run:
-          name: Grant CircleCI access to dependency locations
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
+      - run: |
+          sudo chown -R circleci:circleci /usr/local/bin
+          sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
       - run:
           name: Install pip setuptools
           command: python -m pip install -U "pip==21.0.1" "setuptools>=38.0" wheel
       - run:
           command: |
             sudo pip install -r test_requirements.txt
-      - run:
-          name: Pip freeze
-          command: pip freeze
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:

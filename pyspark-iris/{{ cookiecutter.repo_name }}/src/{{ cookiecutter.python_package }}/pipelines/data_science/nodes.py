@@ -54,7 +54,8 @@ def train_model(
 
 
 def predict(model: RandomForestClassifier, testing_data: DataFrame) -> DataFrame:
-    """Node for making predictions given a pre-trained model and a testing dataset."""
+    """Node for making predictions given a pre-trained model and a testing dataset.
+    """
     predictions = model.transform(testing_data)
     return predictions
 

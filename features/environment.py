@@ -49,7 +49,8 @@ def create_new_venv() -> Path:
 
 
 def before_scenario(context, scenario):
-    """Environment preparation before each test is run."""
+    """Environment preparation before each test is run.
+    """
     context.venv_dir = create_new_venv()
     bin_dir = context.venv_dir / "bin"
     context.pip = str(bin_dir / "pip")
