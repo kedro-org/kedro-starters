@@ -27,7 +27,7 @@
 # limitations under the License.
 from kedro.pipeline import Pipeline, node
 
-from .nodes import create_master_table, preprocess_companies, preprocess_shuttles
+from .nodes import create_model_input_table, preprocess_companies, preprocess_shuttles
 
 
 def create_pipeline(**kwargs):
@@ -46,10 +46,10 @@ def create_pipeline(**kwargs):
                 name="preprocess_shuttles_node",
             ),
             node(
-                func=create_master_table,
+                func=create_model_input_table,
                 inputs=["preprocessed_shuttles", "preprocessed_companies", "reviews"],
-                outputs="master_table",
-                name="create_master_table_node",
+                outputs="model_input_table",
+                name="create_model_input_table_node",
             ),
         ]
     )

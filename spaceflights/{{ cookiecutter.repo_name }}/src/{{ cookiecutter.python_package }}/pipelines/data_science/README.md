@@ -5,13 +5,13 @@
 ## Overview
 
 This modular pipeline:
-1. Splits the master table into train and test subsets (`split_data_node`)
+1. Splits the model input table into train and test subsets (`split_data_node`)
 2. Trains a simple linear regression model (`train_model_node`)
 3. Evaluates the performance of the trained model on the test set (`evaluate_model_node`)
 
 ## Pipeline inputs
 
-### `master_table`
+### `model_input_table`
 
 |      |                    |
 | ---- | ------------------ |
