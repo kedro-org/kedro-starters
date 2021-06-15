@@ -42,6 +42,9 @@ def create_project_from_config_file(context, starter_name):
         ]
     )
     assert res.returncode == OK_EXIT_CODE
+    # prevent telemetry from prompting for input during e2e tests
+    telemetry_file = context.root_project_dir / ".telemetry"
+    telemetry_file.write_text("consent: false", encoding="utf-8")
 
 
 @given("I have installed the Kedro project's dependencies")
