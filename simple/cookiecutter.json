@@ -1,0 +1,5 @@
+{
+    "project_name": "New Kedro Project",
+    "repo_name": "{{ cookiecutter.project_name.replace(' ', '-').lower().strip('-') }}",
+    "python_package": "{{ cookiecutter.project_name.replace(' ', '_').lower().strip('-') }}"
+}
