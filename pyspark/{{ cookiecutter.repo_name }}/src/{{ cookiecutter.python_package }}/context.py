@@ -27,23 +27,12 @@
 # limitations under the License.
 
 """Entry point for running a Kedro pipeline as a Python package."""
-import logging
 from pathlib import Path
 from typing import Any, Dict, Union
 
 from kedro.framework.context import KedroContext
-
-logger = logging.getLogger(__name__)
-
-try:
-    from pyspark import SparkConf
-    from pyspark.sql import SparkSession
-except ModuleNotFoundError:
-    logger.warning(
-        "Could not import pyspark. Please ensure pyspark is installed "
-        "before running any pipeline. You can use 'kedro install' to "
-        "install project dependencies."
-    )
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
 
 
 class ProjectContext(KedroContext):
