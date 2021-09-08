@@ -49,8 +49,9 @@ def create_project_from_config_file(context, starter_name):
 
 @given("I have installed the Kedro project's dependencies")
 def install_project_dependencies(context):
+    reqs_path = "src/requirements.txt"
     res = subprocess.run(
-        [context.kedro, "install", "--no-build-reqs"], cwd=context.root_project_dir
+        [context.pip, "install", "-r", reqs_path], cwd=context.root_project_dir
     )
     assert res.returncode == OK_EXIT_CODE
 

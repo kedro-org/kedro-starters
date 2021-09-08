@@ -17,7 +17,7 @@ cd <my-project-name>  # change directory into newly created project directory
 Install the required dependencies:
 
 ```bash
-kedro install
+pip install -r src/requirements.txt
 ```
 
 Now you can run the project:
