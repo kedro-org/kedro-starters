@@ -3,4 +3,5 @@ behave>=1.2.6, <2.0
 black==21.5b1
 click<8.0
 isort~=5.0
+PyYAML>=4.2, <6.0
 git+https://github.com/quantumblacklabs/kedro.git@master#egg=kedro
