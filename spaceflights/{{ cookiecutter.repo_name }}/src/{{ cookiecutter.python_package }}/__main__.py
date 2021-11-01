@@ -1,4 +1,3 @@
-
 """{{ cookiecutter.project_name }} file for ensuring the package is executable
 as `{{ cookiecutter.repo_name }}` and `python -m {{ cookiecutter.python_package }}`
 """

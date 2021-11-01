@@ -1,5 +1,3 @@
-
-
 """Entry point for running a Kedro pipeline as a Python package."""
 from pathlib import Path
 from typing import Any, Dict, Union

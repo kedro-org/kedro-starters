@@ -1,5 +1,3 @@
-
-
 """Project hooks."""
 from typing import Any, Dict, Iterable, Optional
 

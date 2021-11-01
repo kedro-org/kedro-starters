@@ -1,4 +1,3 @@
-
 """Example code for the nodes in the example pipeline. This code is meant
 just for illustrating basic Kedro features.
 

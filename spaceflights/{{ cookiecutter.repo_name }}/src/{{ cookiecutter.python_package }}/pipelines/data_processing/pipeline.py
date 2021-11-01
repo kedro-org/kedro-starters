@@ -1,4 +1,3 @@
-
 from kedro.pipeline import Pipeline, node
 
 from .nodes import create_model_input_table, preprocess_companies, preprocess_shuttles

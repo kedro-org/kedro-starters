@@ -1,4 +1,3 @@
-
 """Example nodes to solve some common data engineering problems using PySpark,
 such as:
 * Extracting, transforming and selecting features

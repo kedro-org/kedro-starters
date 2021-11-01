@@ -1,5 +1,3 @@
-
-
 """Behave environment setup commands"""
 
 import os

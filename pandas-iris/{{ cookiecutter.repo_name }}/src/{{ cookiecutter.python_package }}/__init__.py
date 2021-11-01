@@ -1,4 +1,3 @@
-
 """{{ cookiecutter.project_name }}
 """
 

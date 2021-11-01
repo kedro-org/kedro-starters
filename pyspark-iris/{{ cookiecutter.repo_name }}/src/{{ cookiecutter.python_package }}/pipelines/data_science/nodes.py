@@ -1,5 +1,3 @@
-
-
 """Example nodes to solve some common data science problems using PySpark,
 such as:
 * Train a machine learning model on a training dataset

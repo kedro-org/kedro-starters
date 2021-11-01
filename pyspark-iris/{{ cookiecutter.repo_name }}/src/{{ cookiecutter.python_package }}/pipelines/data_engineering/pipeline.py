@@ -1,5 +1,3 @@
-
-
 """Example data engineering pipeline with PySpark.
 """
 

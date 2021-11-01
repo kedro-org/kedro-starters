@@ -1,5 +1,3 @@
-
-
 from setuptools import find_packages, setup
 
 entry_point = (
