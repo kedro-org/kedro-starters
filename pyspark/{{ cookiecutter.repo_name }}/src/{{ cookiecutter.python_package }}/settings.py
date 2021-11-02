@@ -1,5 +1,3 @@
-
-
 """Project settings."""
 from {{cookiecutter.python_package}}.context import ProjectContext
 from {{cookiecutter.python_package}}.hooks import ProjectHooks

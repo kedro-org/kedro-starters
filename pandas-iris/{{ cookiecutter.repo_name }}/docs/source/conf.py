@@ -27,6 +27,7 @@ from {{cookiecutter.python_package}} import __version__ as release
 # -- Project information -----------------------------------------------------
 
 project = "{{ cookiecutter.python_package }}"
+copyright = "2021, QuantumBlack Visual Analytics Limited"
 author = "QuantumBlack"
 
 # The short X.Y version.
@@ -116,6 +117,9 @@ html_static_path = ["_static"]
 # html_sidebars = {}
 
 html_show_sourcelink = False
+
+# Removes, from all docs, the copyright footer.
+html_show_copyright = False
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
