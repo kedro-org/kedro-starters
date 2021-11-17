@@ -1,8 +1,8 @@
 ## Motivation and Context
-Why was this PR created?
+<!-- Why was this PR created? -->
 
 ## How has this been tested?
-What testing strategies have you used?
+<!-- What testing strategies have you used? -->
 
 ## Checklist
 
