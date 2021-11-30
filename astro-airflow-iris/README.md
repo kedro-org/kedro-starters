@@ -1,4 +1,4 @@
-# The `astro-iris` Kedro starter
+# The `astro-airflow-iris` Kedro starter
 
 ## Introduction
 

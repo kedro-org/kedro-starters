@@ -29,7 +29,7 @@ def before_scenario(context, scenario):
     context.kedro = str(bin_dir / "kedro")
     starters_root = Path(__file__).parents[1]
     starter_names = [
-        "astro-iris",
+        "astro-airflow-iris",
         "pandas-iris",
         "pyspark",
         "pyspark-iris",
