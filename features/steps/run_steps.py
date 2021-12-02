@@ -56,7 +56,7 @@ def install_project_dependencies(context):
     assert res.returncode == OK_EXIT_CODE
 
 
-@given("I have run the Kedro pipeline")
+@when("I run the Kedro pipeline")
 def run_kedro_pipeline(context):
     """Behave step to run the newly created Kedro pipeline."""
     context.result = subprocess.run(
@@ -64,13 +64,20 @@ def run_kedro_pipeline(context):
     )
 
 
-@given("I have executed the CLI command to list Kedro pipelines")
+@when("I execute the CLI command to list Kedro pipelines")
 def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(
         [context.kedro, "pipeline", "list"], cwd=context.root_project_dir
     )
 
+
+@when("I execute the CLI command to build the project docs")
+def list_kedro_pipelines(context):
+    """Behave step to build project docs."""
+    context.result = subprocess.run(
+        [context.kedro, "build-docs"], cwd=context.root_project_dir
+    )
 
 @when("I lint the project")
 def lint_project(context):
@@ -87,3 +94,12 @@ def check_status_code(context):
         assert False, "Expected exit code {}" " but got {}".format(
             OK_EXIT_CODE, context.result.returncode
         )
+
+@then("docs should be generated")
+def check_docs_generated(context):
+    """Check that new project docs are generated."""
+    index_html = (
+        context.root_project_dir / "docs" / "build" / "html" / "index.html"
+    ).read_text("utf-8")
+    project_repo = context.project_name.replace("-", "_")
+    assert f"Welcome to project {project_repo}’s API docs!" in index_html, index_html
