@@ -76,7 +76,7 @@ def list_kedro_pipelines(context):
 def list_kedro_pipelines(context):
     """Behave step to build project docs."""
     context.result = subprocess.run(
-        [context.kedro, "build-docs"], cwd=context.root_project_dir
+        ["command", context.kedro, "build-docs"], cwd=context.root_project_dir
     )
 
 @when("I lint the project")
