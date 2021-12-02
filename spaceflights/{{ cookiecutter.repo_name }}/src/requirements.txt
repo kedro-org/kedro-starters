@@ -6,7 +6,6 @@ jupyter~=1.0
 jupyter_client>=5.1, <7.0
 jupyterlab~=3.0
 kedro[pandas.CSVDataSet,pandas.ExcelDataSet]=={{ cookiecutter.kedro_version }}
-openpyxl>=3.0.6, <4.0
 kedro-telemetry~=0.1.0
 kedro-viz==3.16.0; python_version=='3.6'
 kedro-viz~=4.0; python_version>'3.6'
