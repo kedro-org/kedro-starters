@@ -6,7 +6,7 @@ entry_point = (
 
 
 # get the dependencies and installs
-with open("requirements.txt", "r", encoding="utf-8") as f:
+with open("requirements.txt", encoding="utf-8") as f:
     # Make sure we strip all comments and options (e.g "--extra-index-url")
     # that arise from a modified pip.conf file that configure global options
     # when running kedro build-reqs
@@ -28,11 +28,11 @@ setup(
             "sphinx~=3.4.3",
             "sphinx_rtd_theme==0.5.1",
             "nbsphinx==0.8.1",
-            "nbstripout==0.3.3",
+            "nbstripout~=0.4",
             "recommonmark==0.7.1",
             "sphinx-autodoc-typehints==1.11.1",
             "sphinx_copybutton==0.3.1",
-            "ipykernel~=5.3",
+            "ipykernel>=5.3, <7.0",
         ]
     },
 )
