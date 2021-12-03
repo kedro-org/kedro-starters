@@ -43,11 +43,6 @@ commands:
     steps:
       - run:
           command: behave features/lint.feature
-  e2e_build_docs:
-    description: Run `kedro build-docs` end to end tests for all starters
-    steps:
-      - run:
-          command: behave features/build_docs.feature
 
 jobs:
   security_scan:
@@ -93,24 +88,6 @@ jobs:
       - setup_requirements:
           python_version: "python3.6"
       - e2e_lint
-  build_docs_38:
-    executor: py38
-    steps:
-      - setup_requirements:
-          python_version: "python3.8"
-      - e2e_build_docs
-  build_docs_37:
-    executor: py37
-    steps:
-      - setup_requirements:
-          python_version: "python3.7"
-      - e2e_build_docs
-  build_docs_36:
-    executor: py36
-    steps:
-      - setup_requirements:
-          python_version: "python3.6"
-      - e2e_build_docs
 
 workflows:
   version: 2
@@ -123,6 +100,4 @@ workflows:
       - lint_38
       - lint_37
       - lint_36
-      - build_docs_38
-      - build_docs_37
-      - build_docs_36
+
