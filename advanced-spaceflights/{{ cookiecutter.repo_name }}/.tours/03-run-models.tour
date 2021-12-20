@@ -1,0 +1,105 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "03 Constructing the models 🧠",
+  "steps": [
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipeline_registry.py",
+      "description": "### Setting up the modelling pipeline\n\nOur modelling stage is made of three key parts:\n   1. [Split](https://realpython.com/train-test-split-python-data/) - Dividing the model input table into train and (unseen) test data\n   2. [Training](https://scikit-learn.org/stable/supervised_learning.html) our model(s)\n   3. [Evaluating](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html) our model performance\n\nThis wrapper function helps us build out two modular pipelines which leverage the same test/train data but utilise two different modelling techniques: \n  1. Simple linear regression\n  2. Random forest tree model",
+      "line": 25,
+      "selection": {
+        "start": {
+          "line": 25,
+          "character": 21
+        },
+        "end": {
+          "line": 25,
+          "character": 59
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/pipeline.py",
+      "description": "### Defining the split stage\n\n- This simple pipeline splits the data into train and test tranches.\n- The `split_options` are defined in parameters",
+      "line": 75,
+      "selection": {
+        "start": {
+          "line": 75,
+          "character": 47
+        },
+        "end": {
+          "line": 75,
+          "character": 67
+        }
+      }
+    },
+    {
+      "file": "conf/base/parameters/modelling.yml",
+      "description": "## Retrieve splitting options\nThe options in this YAML file define how we create our train and test data",
+      "line": 1
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/nodes.py",
+      "description": "## Generate our train and test data\nUsing the paramters we are able to:\n- Split our data into train and test data at a given ratio\n- Retrieve our target and independent variables\n- Use a pre-determined seed\n- Leverage the standard Sklearn toolkit",
+      "line": 39,
+      "selection": {
+        "start": {
+          "line": 38,
+          "character": 12
+        },
+        "end": {
+          "line": 38,
+          "character": 44
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/pipeline.py",
+      "description": "## Instantiate two independent modelling pipelines\n\n- Here we use a loop to create two instaces of the `new_train_eval_template()`\n- For each `model_type` we provide namespaced paramters and tracking datasets. \n- The `test_train_refs` are shared and live outside of these namespaces.",
+      "line": 97,
+      "selection": {
+        "start": {
+          "line": 95,
+          "character": 27
+        },
+        "end": {
+          "line": 95,
+          "character": 38
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/pipeline.py",
+      "description": "### Familiarise your self with the train evaluation template\n\n- This returns a `Pipeline` object that has inputs and outputs which are designed to be overriden.\n- Each modular instance of this pipeline should provide their own model options, regressor and experimentation params.",
+      "line": 11,
+      "selection": {
+        "start": {
+          "line": 11,
+          "character": 5
+        },
+        "end": {
+          "line": 11,
+          "character": 28
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/pipeline.py",
+      "description": "### Namespace by the model type",
+      "line": 93
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/modelling/pipeline.py",
+      "description": "### Combine into single modeling pipeline\n\n- Once combined, the modular instances nest into their namespaces\n- The split stage is shared and lives outside of a namespace\n- The `train_evaluation` namespace encapsulates the two modelling approaches which live within\n\nModular pipelines allow you to organise your reuse and remix your work within the same project or across codebases.\n\n![modelling](.tours/images/modelling.gif)",
+      "selection": {
+        "start": {
+          "line": 110,
+          "character": 12
+        },
+        "end": {
+          "line": 110,
+          "character": 35
+        }
+      }
+    }
+  ]
+}

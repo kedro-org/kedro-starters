@@ -13,3 +13,4 @@ The following aliases are available:
 * [Alias `pyspark-iris`](pyspark-iris): An alternative Kedro Iris dataset example, using [PySpark](https://kedro.readthedocs.io/en/stable/11_tools_integration/01_pyspark.html)
 * [Alias `pyspark`](pyspark): The configuration and initialisation code for a [Kedro pipeline using PySpark](https://kedro.readthedocs.io/en/stable/11_tools_integration/01_pyspark.html)
 * [Alias `spaceflights`](spaceflights): The [spaceflights tutorial](https://kedro.readthedocs.io/en/stable/03_tutorial/01_spaceflights_tutorial.html) example code
+* [Alias `advanced-spaceflights]](advanced-spaceflights): A more complex version of the [spaceflights tutorial](https://kedro.readthedocs.io/en/stable/03_tutorial/01_spaceflights_tutorial.html) which highlights some of the advanced patterns available in Kedro.

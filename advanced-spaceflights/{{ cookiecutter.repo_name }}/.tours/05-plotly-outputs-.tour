@@ -1,0 +1,67 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "04 Plotly plots in Kedro Viz 📈",
+  "steps": [
+    {
+      "file": "conf/base/catalog_08_reporting.yml",
+      "description": "### Declaring a `plotly.PlotlyDataSet` \n\n- The `PlotlyDataSet` accepts a Pandas DataFrame and passes the `plotly_args` to the Plotly Express library\n- In this situation we are creating a bar-chart\n",
+      "line": 2,
+      "selection": {
+        "start": {
+          "line": 26,
+          "character": 1
+        },
+        "end": {
+          "line": 27,
+          "character": 1
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/reporting/nodes.py",
+      "description": "### Preparing the bar chart\n\n- In order to render this plot we provide a DataFrame that is easy to work with\n- This function simply uses pandas to aggregate the data in a way ready for plotting",
+      "line": 13,
+      "selection": {
+        "start": {
+          "line": 25,
+          "character": 5
+        },
+        "end": {
+          "line": 25,
+          "character": 33
+        }
+      },
+      "title": "Preparing the bar chart"
+    },
+    {
+      "file": "conf/base/catalog_08_reporting.yml",
+      "description": "### YAML API definition\n- Here we declare the plotting parameters in the catalog\n- These are simply passed to the `plotly.express` module as keyword arguments",
+      "line": 5
+    },
+    {
+      "file": "conf/base/catalog_08_reporting.yml",
+      "description": "## Declaring a `plotly.JSONDataSet`\n\n- This will accept a python Plotly Object\n- It will then serialise the outputs to JSON\n- This is render-able in Kedro-Viz",
+      "line": 16
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/reporting/nodes.py",
+      "description": "### Python API definition\n\n- Alternatively, you can use the plotly express python API\n- Provide the arguments explicitly (or via Kedro Parameters)\n- Return a `plotly_object` from the function",
+      "line": 60
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/reporting/pipeline.py",
+      "description": "### The outputs are clickable within Kedro Viz\n\nClick the 🏞 icon to reveal the plot in the sidebar:\n\n![histogram](.tours/images/plotly-dataset.png)",
+      "line": 27,
+      "selection": {
+        "start": {
+          "line": 27,
+          "character": 26
+        },
+        "end": {
+          "line": 27,
+          "character": 41
+        }
+      }
+    }
+  ]
+}

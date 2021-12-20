@@ -1,0 +1,97 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "02 Engineering features 🧩",
+  "steps": [
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipeline_registry.py",
+      "description": "### Instantiating an instance of the feature engineering pipeline\n\n- This will create a namespaced instance of the pipeline\n- It will handle the creation of features that can:\n   1. Be extracted directly from the primary layer\n   2. Need to be derived by combining two existing features",
+      "line": 22,
+      "selection": {
+        "start": {
+          "line": 22,
+          "character": 5
+        },
+        "end": {
+          "line": 22,
+          "character": 49
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/pipeline.py",
+      "description": "### Features are created with two parametrised nodes:\n- `params:feature.static` - Provides the names of columns ready to be selected from the primary layer\n- `params:feature.derived` - Defines which columns need to be combined",
+      "line": 33,
+      "selection": {
+        "start": {
+          "line": 33,
+          "character": 13
+        },
+        "end": {
+          "line": 46,
+          "character": 15
+        }
+      }
+    },
+    {
+      "file": "conf/base/parameters/feature_engineering.yml",
+      "description": "### Defining static features\n\n- These are the column names provided in the parameters file. \n- These can be changed at anytime by a non-technical user without altering any python code",
+      "line": 10,
+      "selection": {
+        "start": {
+          "line": 10,
+          "character": 3
+        },
+        "end": {
+          "line": 19,
+          "character": 12
+        }
+      }
+    },
+    {
+      "file": "conf/base/parameters/feature_engineering.yml",
+      "description": "### Defining derived features\n\n- Some features are defined by combing two columns\n- These key names correspond directly to the `kwargs` of `_create_metric_column()` method\n- Since these operations look the same over and over, it we have made this process declarative\n\n`{{ cookiecutter.project_name }}/src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/nodes.py:17`\n```py\ndef _create_metric_column(\n    data: pd.DataFrame,\n    column_a: str,\n    column_b: str,\n    numpy_method: str,\n    conjunction: str,\n) -> pd.DataFrame:\n```",
+      "line": 20
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/nodes.py",
+      "description": "### Create all derived features\n- We iterate through the parameter list declared in YAML.\n- We create a new metric column for each list item.\n- We then use the `joiner` method to combine these into a single pandas DataFrame",
+      "line": 76,
+      "selection": {
+        "start": {
+          "line": 76,
+          "character": 12
+        },
+        "end": {
+          "line": 76,
+          "character": 23
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/nodes.py",
+      "description": "### Joining an arbitrary length of features\n\n- The `joiner()` method accepts `spine_df` and an arbitrary list of other tables to left join\n- The `reduce()` function will accumulate all DataFrames into a single table\n- There is a final check to ensure the cardinality has not exploded and that the number of rows in constant\n",
+      "line": 101,
+      "title": "Joining an arbitrary list of defined features"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/pipeline.py",
+      "description": "### Combine the spine, static and derived features into a single table\n- Reuse the `joiner` function\n- Create the `model_input_table`",
+      "line": 47
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/feature_engineering/pipeline.py",
+      "description": "## Namespace a modular instance of the feature pipeline\n\n- In order to wrap this process within the `feature_engineering` namespace we need to create a new modular pipeline instance.\n- We declare the non-namespaced inputs and outputs so that Kedro knowns that these datasets in particular exist outside of the namespace.\n\nIf we do not provide the inputs/outputs override Kedro will render the following image. By providing `prm_spine_table`, for example, we can tell Kedro that this isn't namespaced under `feature_engineering` and actually lives outside:\n\n\n![namespace_issue](.tours/images/namespace_without_mapping.png)\n\nProviding these in auto-reload mode renders the following:\n\n![namespace_issue_gif](.tours/images/namespace_without_mapping.gif)",
+      "line": 62,
+      "selection": {
+        "start": {
+          "line": 60,
+          "character": 49
+        },
+        "end": {
+          "line": 60,
+          "character": 64
+        }
+      }
+    }
+  ]
+}

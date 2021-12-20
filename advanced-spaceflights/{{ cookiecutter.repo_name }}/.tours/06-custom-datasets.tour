@@ -1,0 +1,41 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "05 Custom DataSets 💾",
+  "steps": [
+    {
+      "file": "conf/base/catalog_08_reporting.yml",
+      "description": "### Referencing a custom dataset by class path\n\n- For full instructions read [this tutorial](https://kedro.readthedocs.io/en/stable/07_extend_kedro/03_custom_datasets.html)\n- Custom datasets can be defined by extending existing classes or implementing new ones against our `AbstractDataSet` or `AbstractVersionedDataSet` interfaces\n- To use these within your Kedro projects they need to be accessible via a classpath either as source code or an installed library\n- You can debug classpath issues by jumping into a `kedro ipython` session and trying to `importlib.import_module` the class since that's all Kedro does behind the scenes :) \n- The custom DataSet used in this tutorial is located at the following location and allows us to read/write PNG image files using the [Pillow](https://pillow.readthedocs.io/en/stable/reference/Image.html) library.\n\n```bash\nsrc\n└── {{ cookiecutter.package_name }}\n    └── extras\n        └── datasets\n            ├── __init__.py\n            └── image_dataset.py\n```",
+      "line": 21
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/extras/datasets/image_dataset.py",
+      "description": "### Inheriting from `AbstractDataSet`\n\n- The abstract interface gives developers the ability to create their own connectors from scratch\n- The `AbstractVersionedDataSet` also exists and is the preferred way of implementing file based connectors, however we have used the non-versioned class for absolute simplicity here\n- Take a moment to read through the code, note how we simply require you to define `load()` and `save()` and `describe()` methods to get off and running.\n- In some cases you may not want to create a DataSet from scratch, but inherit and extend and existing one. This is a valid pattern and we have seen users do things like add Kerberos authentication to out of box data-sets.",
+      "line": 11,
+      "selection": {
+        "start": {
+          "line": 11,
+          "character": 7
+        },
+        "end": {
+          "line": 11,
+          "character": 19
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/reporting/pipeline.py",
+      "description": "### Generating the .png output\n\n- In this example pipeline we have a rather forced example of rendering a picture of a DataFrame as a `*.png` file\n- The results of the render can be seen below:\n\n![grid](.tours/images/grid.png)",
+      "line": 32,
+      "selection": {
+        "start": {
+          "line": 32,
+          "character": 26
+        },
+        "end": {
+          "line": 32,
+          "character": 50
+        }
+      }
+    }
+  ]
+}

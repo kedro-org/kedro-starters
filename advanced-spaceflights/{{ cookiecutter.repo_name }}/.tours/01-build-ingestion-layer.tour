@@ -1,0 +1,216 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "01 Building the ingestion pipeline 🏗",
+  "steps": [
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "# Kedro - Advanced Spaceflights Tutorial\n\n## Scenario \nIt is 2160 and the space tourism industry is booming. Globally, there are thousands of space shuttle companies taking tourists to the Moon and back. You have been able to source amenities offered in each space shuttle, customer reviews and company information.\n\n## Project\nYou want to construct a model for predicting the price for each trip to the Moon and the corresponding return flight.\n\nIn this tutorial, we illustrate the typical Kedro workflow and the steps necessary to convert an empty Kedro project template into a working project.\n\nIn the text, we assume that you create an empty project and follow the flow of the tutorial by copying and pasting the example code into the project as we describe. You will learn each step of the Kedro project development workflow, by working on an example to construct nodes and pipelines for the price-prediction model.",
+      "line": 1,
+      "selection": {
+        "start": {
+          "line": 1,
+          "character": 1
+        },
+        "end": {
+          "line": 17,
+          "character": 1
+        }
+      },
+      "title": "Introduce the {{ cookiecutter.project_name }} project"
+    },
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "## Company data\n\nThe `companies` dataset details the different players in the space travel market. This is stored in CSV format.\n",
+      "line": 3,
+      "title": "Raw companies table"
+    },
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "## Reviews data \nThe `reviews` dataset contains user reviews in respect to flights travelled. This is stored in CSV format.",
+      "line": 6,
+      "title": "Raw reviews table"
+    },
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "## Shuttles\nThe `shuttles` dataset details the type of spacecraft owned by different space flight operators. This is stored in Excel format, we are also passing an `engine` argument to the underlying Pandas read method via the `load_args` structure.",
+      "line": 11,
+      "title": "Raw shuttles table"
+    },
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "### `${variable}` syntax\n\nIn this project, we are using the [TemplatedConfigLoader](https://kedro.readthedocs.io/en/stable/kedro.config.TemplatedConfigLoader.html) to retrieve and inject the configured `${base_location}` variable from `globals.yml`. ",
+      "line": 13,
+      "title": "Highlight templated filepath"
+    },
+    {
+      "file": "conf/base/globals.yml",
+      "description": "## Templated configuration\nThe base contents of `globals.yml` is located at the following location:\n\n```\n└── conf\n    ├── README.md\n    └── base\n       ├── ...\n       └── globals.yml\n```\n\n- In this situation - we want to work with the data locally during our development phase. We define the `${base_location}` global variable in this file, this is then available to `TemplatedConfigLoader` whenever we we want to inject it into our YAML configuration. \n- This pattern also means if we want to change the location, we only have to change this line and it will update everywhere else.",
+      "line": 1,
+      "title": "Highlight globals.yml"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/nodes.py",
+      "description": "# Let's prepare the company data for analysis\n\n- The source `companies` data is stored as CSV data on disk. Ideally we would be working with a better, more robust format - but in the real world this is a common situation. \n- In Kedro we start by defining a [pure](https://en.wikipedia.org/wiki/Pure_function) python function that simply accepts some data and returns data. \n- It's a good convention to use descriptive argument names such as `companies`...but this is only for humans reading your code, this function itself isn't aware of what data exists in the catalog.",
+      "line": 11,
+      "selection": {
+        "start": {
+          "line": 11,
+          "character": 1
+        },
+        "end": {
+          "line": 25,
+          "character": 1
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/nodes.py",
+      "description": "## Convert columns to the correct types\n- The main purpose of this pre-processing step is to introduce [data types](https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#basics-dtypes) to the source CSV data. Whilst CSV provides a lot of simplicity, it is an untyped format. \n- This means we need a manual stage to convert (in this case) `boolean` and `float` columns appropriately. ",
+      "line": 20,
+      "selection": {
+        "start": {
+          "line": 20,
+          "character": 5
+        },
+        "end": {
+          "line": 23,
+          "character": 6
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "### Apply this function in a `node`, within a `Pipeline` object\n\nLet's describe how this works argument by argument:\n\n1. `func` - Refers to the function we just saw in `nodes.py` that types the appropriate columns.\n2. `inputs` - Refers to the catalog entry `reviews` in the raw catalog (`conf/base/catalog_01_raw.yml`)\n3. `outputs` - Refers to a new catalog entry we haven't seen yet... but will do soon!",
+      "selection": {
+        "start": {
+          "line": 16,
+          "character": 13
+        },
+        "end": {
+          "line": 20,
+          "character": 14
+        }
+      },
+      "line": 24
+    },
+    {
+      "directory": "conf/base",
+      "description": "### Catalog management in a realistic Kedro project\n\n- In a realistic Kedro project catalogs can be hard to manage when there are many datasets and multiple developers working on the same project. As such it is good practice to break up your YAML files into smaller distinct files. \n\n> Behind the scenes the ConfigLoader object scoops up all catalog files using the `glob` patterns `'catalog*'` and `'catalog*/**'`. This means we will retrieve and merge all files either prefixed or within a folder starting with the text `catalog_`. The only restriction here is that key names are unique across files.\n\n- Typed data in Kedro should live in the `intermediate` layer. You can read more about this thinking [here](https://kedro.readthedocs.io/en/stable/12_faq/01_faq.html#what-is-data-engineering-convention) or in this [in depth worked example](https://towardsdatascience.com/the-importance-of-layered-thinking-in-data-engineering-a09f685edc71).\n- The typed equivalent of data found in the `raw` layer is all declared in our intermediate layer catalog which can be found at: `conf/base/catalog_02_int.yml`"
+    },
+    {
+      "file": "conf/base/catalog_02_int.yml",
+      "description": "## Typed data requires a typed format\n\nParquet is a format that among other things stores data in an optimised and typed format. The folks at databricks have [written this piece on the topic](https://databricks.com/glossary/what-is-parquet) if you are interested.\n\n- It's fast to read, supports partitioning natively and even has some clever protections such as making it illegal to save a file with duplicate column names. \n- The `intermediate` layer is our typed equivalent of the `raw` layer and after this point we never touch the original data.",
+      "line": 7,
+      "selection": {
+        "start": {
+          "line": 7,
+          "character": 9
+        },
+        "end": {
+          "line": 7,
+          "character": 30
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Utilising Kedro parameters\n\n- Within the typing stage, humans often have to make judgements about data they didn't design. \n- In this example we pass our node a list of columns to explicitly cast as `float` objects.",
+      "line": 35,
+      "selection": {
+        "start": {
+          "line": 28,
+          "character": 44
+        },
+        "end": {
+          "line": 28,
+          "character": 76
+        }
+      }
+    },
+    {
+      "file": "conf/base/parameters/data_ingestion.yml",
+      "description": "## Parameters for data ingestion\n\n- Much like the catalog Kedro will scoop up and combine any files prefixed with `parameters` or within a folder (recursively) of the same name.\n- In the node `inputs` argument you can refer to the nested values using the `dot` syntax `params:typing.reviews.columns_as_floats` \n- In Python this will be retuned as a single item list `['reviews_per_month]`",
+      "line": 4
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/nodes.py",
+      "description": "## Parametrised logic\n\n- Using the parameter passed in, we go through a process to create a dictionary mapping every column to the appropriate data type.\n- A dictionary is created with `reviews_per_month` as a `float` and all other columns as `int` this is passed to pandas which performs the type-casting operation.\n\n> This is a simple example intended to show that Kedro parameters can be used anywhere you want to avoid hard-coding variables and perhaps allow non-technical users to modify later.",
+      "line": 45
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Creating the primary layer\n\n- Whereas the `intermediate` layer mirrors the data model of the original source, the `primary` layer is designed to represent to solve problem domain we are trying to work with.\n- The raw company data is non-unique, so we go through an aggregation stage so we have one row per company.",
+      "line": 41,
+      "selection": {
+        "start": {
+          "line": 31,
+          "character": 13
+        },
+        "end": {
+          "line": 36,
+          "character": 15
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Joining the pre-processed tables together\n\n- Both `shuttles` and `reviews` share a `shuttle_id` key\n- Both `shuttles` and `companies` share a `company_id` \n- We have aggregated the company data so that we have one row per company\n- This step creates a new primary table called `prm_agg_companies`\n- This new table has a composite key of `shuttle_id`, `company_id` and `review_id` as unique on that basis.\n\n> Hint: `cmd+click` the `combine_shuttle_level_information` function to see its implementation",
+      "selection": {
+        "start": {
+          "line": 38,
+          "character": 22
+        },
+        "end": {
+          "line": 38,
+          "character": 25
+        }
+      },
+      "line": 51
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Creating the primary layer\n\n### prm_shuttle_company_reviews:\nCombined outputs of intermediate tables where there is one `shuttle_id`, `company_id` and `review_id` per row.\n\n### prm_spine_table\nThis table simply contains the identifier columns from the `prm_shuttle_company_reviews` table and will be used for joining features along the same grain later on.\n\n\n\n## Visualise\nThe full primary pipeline visualises like so:\n\n![image](.tours/images/primary_layer.png)",
+      "line": 52,
+      "selection": {
+        "start": {
+          "line": 43,
+          "character": 58
+        },
+        "end": {
+          "line": 43,
+          "character": 73
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Modular pipelines\n\nWhat's this 👀? We're importing a different type `pipeline` you can differentiate it because it's lowercase. The full modular pipeline documentation can be [found here](https://kedro.readthedocs.io/en/stable/06_nodes_and_pipelines/03_modular_pipelines.html).",
+      "line": 2
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Instantiating a namespaced instance of the ingestion pipeline\n\nHere you can see the modular `pipeline()` method is passed several arguments:\n\n1. `pipe` is the regular Kedro `Pipeline` object declared above.\n2. `namespace` in this example is passed in to the method as an argument, or accepts a default.\n3. `input` and `outputs` are provided as iterables. Each of these map to the very beginning and very end of the `pipe` object passed in the first argument. This step is required so that the new namespace resolves correctly. Don't worry if this doesn't yet make sense it will as we go through other examples! \n",
+      "line": 70
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipelines/data_ingestion/pipeline.py",
+      "description": "## Replaceable inputs/outputs/parameters:\n\nInputs and outputs in this situation simple, in other examples the modular pattern allows us to override these an provide different catalog entries relevant to different pipeline instances. A simple extension of this example could look like this:\n\n```python\n...\ninputs={\"reviews\":\"uk_reviews\", \"shuttles\": \"uk_shuttles\", \"companies\": \"uk_companies\"}\n...\n```\n\nBy providing a dictionary instead, we can map the declared inputs of the underlying `pipe` object to different catalog entries. By extension it's easy to imagine a suite of instances for different countries where you pass in things like `\"reviews\" : \"us_reviews\" ` etc. This pattern allows us to build Kedro pipelines where the structure is static, but the data flow is dynamic in each instance. \n\nOther pats of this project will highlight how this functionality can be used to increase sophistication of your pipelines whilst also simplifying your codebase and mental model.",
+      "line": 73,
+      "selection": {
+        "start": {
+          "line": 73,
+          "character": 16
+        },
+        "end": {
+          "line": 73,
+          "character": 52
+        }
+      }
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/pipeline_registry.py",
+      "description": "## Instantiate and register the ingestion pipeline\n\nIn this step we instantiate the namespaced `ingestion_pipeline` and register it as it's own pipeline as well as part of the `__default__` pipeline.\n\nThe namespacing means that Kedro treats the instance of this pipeline as one encapsulated unit - as such `Kedro Viz` will render the following:\n\n![image](.tours/images/ingestion.gif)\n\nRun this in your terminal to see the fully rendered pipeline (remember to select the \"Data ingestion\" option from the top left drop-down):\n\n>> kedro viz",
+      "line": 43
+    }
+  ]
+}

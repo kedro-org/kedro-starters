@@ -1,0 +1,39 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "06 Custom Hooks 🎣",
+  "steps": [
+    {
+      "title": "Hooks allow us to add extensions to the lifecycle of a Kedro run",
+      "description": "Kedro hooks are documented in detail [here](https://kedro.readthedocs.io/en/latest/07_extend_kedro/02_hooks.html)\n\nKedro defines Hook specifications for particular execution points where users can inject additional behaviour. Currently, the following Hook specifications are provided in `kedro.framework.hooks`. Hooks look like the following:\n\n- `after_catalog_created`\n- `before_node_run`\n- `after_node_run`\n- `on_node_error`\n- `before_pipeline_run`\n- `after_pipeline_run`\n- `on_pipeline_error`\n- `before_dataset_loaded`\n- `after_dataset_loaded`\n- `before_dataset_saved`\n- `after_dataset_saved`\n\nThese should be defined/implemented in `hooks.py` and added to the Kedro project in `settings.py`\n"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/hooks.py",
+      "description": "### Defining a hook class\n\n- Here we define a class that can be referenced in `settings.py`\n- The most important thing here is that we expose methods that match the expected hook specs such as `before_catalog_created` and annotate these with a `@hook_impl` wrapper.",
+      "line": 35
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/hooks.py",
+      "description": "In this example we note the moment when we start to load a dataset...",
+      "line": 68,
+      "title": "Before dataset loaded"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/hooks.py",
+      "description": "...and save the moment when the dataset is finished loading.",
+      "line": 73,
+      "title": "After dataset loaded"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/hooks.py",
+      "description": "The outputs look like the following. In the real world we could start dumping this information to a more robust observability platform like [Prometheus](https://prometheus.io/) or [Neptune](https://neptune.ai/), but the concept remains the same.\n\n![hook-logs](.tours/images/hook-logs.png)",
+      "line": 77,
+      "title": "Log timing information"
+    },
+    {
+      "file": "src/{{ cookiecutter.package_name }}/settings.py",
+      "description": "Finally - we must register the hooks so Kedro knows to attach our class to the lifecycle of the run",
+      "line": 5,
+      "title": "Register hooks in settings.py"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "07 Additional Configuration Environments ⚙️",
+  "steps": [
+    {
+      "directory": "conf/base",
+      "description": "### Additional configuration environments \n\n- By default Kedro has 3 levels of configurations, in order of priority:\n  1. CLI parameter overrides\n  2. `conf/local` folder - Overrides or values that will not be synced to version control\n  3. `conf/base` folder - Values that will be synced to version control\n- The same key/value can be added to each of the levels, but will be destructively merged in order of precedence\n- This is to say that if the same dataset (other other configuration) key exists in both `base` and `local`, `local` wins 🏆\n- Kedro allows you to [add another 'environment'](https://kedro.readthedocs.io/en/latest/04_kedro_project_setup/02_configuration.html#additional-configuration-environments) by creating a new folder that takes priority ahead of `base`. These can be used for things like `production` vs `staging` or any other dimension which your config/data is duplicated against (geography is a common one).\n- Additional configuration environments take inspiration from the [12 Factor App](https://12factor.net/config) philosophy"
+    },
+    {
+      "file": "conf/base/catalog_01_raw.yml",
+      "description": "### Defining our `${base_location}` \n\n- In this project the first part of the file path is templated\n- The value of the `${base_location}` is defined in `globals.yml`",
+      "line": 8
+    },
+    {
+      "file": "conf/base/globals.yml",
+      "description": "### `conf/base/globals.yml`\n\n- In this project we have set up the `base` environment for local development and this points all our catalog entries to our local folder structure\n- One other advantage of this pattern is that if you need to change this prefix, you only need to change it once to update it everywhere\n- In real world projects we do no encourage you to store data locally and prefer cloud solutions instead",
+      "line": 1
+    },
+    {
+      "file": "conf/prod/globals.yml",
+      "description": "### `conf/base/globals.yml`\n\n- Now in a production environment we override this placeholder\n- In production we use an AWS S3 bucket to store/manage our runs\n- You can make Kedro run in this environment two ways:\n\n1. Using a CLI flag - `kedro run --env=prod`\n2. Using the environment variable `KEDRO_ENV=prod`\n\n",
+      "line": 1
+    },
+    {
+      "file": "conf/prod/parameters/modelling.yml",
+      "description": "### Environments can work for any type of configuration\n\n- In this example we are tweaking the model parameters\n- This will override the same value found in the `base` environment, note that this will work for heavily nested keys\n- This is a really common use of Kedro - one popular use of this pattern is to set up staging/development runs to only work on subsets of data  ",
+      "line": 2,
+      "selection": {
+        "start": {
+          "line": 2,
+          "character": 3
+        },
+        "end": {
+          "line": 2,
+          "character": 17
+        }
+      }
+    }
+  ]
+}
