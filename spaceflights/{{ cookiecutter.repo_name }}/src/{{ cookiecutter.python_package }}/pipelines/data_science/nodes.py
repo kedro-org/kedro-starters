@@ -12,7 +12,7 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
 
     Args:
         data: Data containing features and target.
-        parameters: Parameters defined in parameters.yml.
+        parameters: Parameters defined in parameters/data_science.yml.
     Returns:
         Split data.
     """
