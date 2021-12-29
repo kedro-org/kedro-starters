@@ -14,12 +14,14 @@
     {
       "file": "conf/base/globals.yml",
       "description": "### `conf/base/globals.yml`\n\n- In this project we have set up the `base` environment for local development and this points all our catalog entries to our local folder structure\n- One other advantage of this pattern is that if you need to change this prefix, you only need to change it once to update it everywhere\n- In real world projects we do no encourage you to store data locally and prefer cloud solutions instead",
-      "line": 1
+      "line": 1,
+      "title": "Base environment"
     },
     {
       "file": "conf/prod/globals.yml",
       "description": "### `conf/prod/globals.yml`\n\n- Now in a production environment we override this placeholder\n- In production we use an AWS S3 bucket to store/manage our runs\n- You can make Kedro run in this environment two ways:\n\n1. Using a CLI flag - `kedro run --env=prod`\n2. Using the environment variable `KEDRO_ENV=prod`\n\n",
-      "line": 1
+      "line": 1,
+      "title": "Production environment"
     },
     {
       "file": "conf/prod/parameters/modelling.yml",
