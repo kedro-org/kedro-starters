@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Iterable, Tuple
 
 import click
+import pandas as pd
 from kedro.framework.cli.utils import (
     KedroCliError,
     _config_file_callback,
@@ -140,3 +141,51 @@ def run(
             load_versions=load_version,
             pipeline_name=pipeline,
         )
+
+
+@env_option
+@cli.command()
+def list_datasets(env: str):
+    """This CLI command accepts the current configuration environment and
+    will summarise the datasets available in the catalog as a grid printed
+    out to the command line
+
+    Args:
+        env (str): The current configuration environment
+    """
+
+    # Crearte a Kedro session
+    package_name = str(Path(__file__).resolve().parent.name)
+    with KedroSession.create(package_name, env=env, extra_params=None) as session:
+
+        # Get catalog object
+        catalog = session.load_context().catalog
+
+        # Retrieve DataSet objects and names
+        dataset_names = [d for d in catalog.list() if not d.startswith("param")]
+        datasets = {  # Resolve namespaces
+            data_set: getattr(catalog.datasets, data_set.replace(".", "__"))
+            for data_set in dataset_names
+        }
+
+        # Build dataframe content
+        rows = [
+            {"catalog_entry": name, "dataset_type": ds_type.__class__.__name__}
+            for name, ds_type in datasets.items()
+        ]
+
+        # Extract the namespace information from the catalog entry
+        pattern = r"(.+\.)"
+        df = (
+            pd.DataFrame(rows).assign(
+                namespace=lambda x: x.catalog_entry.str.extract(
+                    pat=pattern, expand=False
+                ).str[:-1],
+                catalog_name=lambda x: x.catalog_entry.str.replace(
+                    pat=pattern, repl="", regex=True
+                ),
+            )
+        ).drop(labels="catalog_entry", axis=1)
+
+        # Print out results
+        click.echo(df.to_markdown(index=False, tablefmt="grid"))

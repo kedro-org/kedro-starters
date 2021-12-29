@@ -1,0 +1,16 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "08 Custom CLI command",
+  "steps": [
+    {
+      "file": "src/modular_spaceflights/cli.py",
+      "description": "# Add a decorated method to your project's `cli.py`\n\n- Kedro utilises a CLI library called [Click](https://click.palletsprojects.com/)\n- You can always get inspiration from the default `run()` method pre-populated for you\n- The `@env_option` is a convenience decorator which provides you with the environment name provided by the user via CLI or env variable\n- The method name will be converted to a CLI friendly version and will appear in the command list:\n\n![cli](.tours/images/custom_cli.png)",
+      "line": 148
+    },
+    {
+      "file": "src/modular_spaceflights/cli.py",
+      "description": "## Print out the results via click\n\n- Take a second to read through the implementation.\n- We're constructing a table view of datasets by iterating through the catalog\n- The results will look like so:\n![list](.tours/images/cli_list_ds.png)\n",
+      "line": 191
+    }
+  ]
+}
