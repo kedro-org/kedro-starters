@@ -18,7 +18,7 @@
     },
     {
       "file": "conf/prod/globals.yml",
-      "description": "### `conf/base/globals.yml`\n\n- Now in a production environment we override this placeholder\n- In production we use an AWS S3 bucket to store/manage our runs\n- You can make Kedro run in this environment two ways:\n\n1. Using a CLI flag - `kedro run --env=prod`\n2. Using the environment variable `KEDRO_ENV=prod`\n\n",
+      "description": "### `conf/prod/globals.yml`\n\n- Now in a production environment we override this placeholder\n- In production we use an AWS S3 bucket to store/manage our runs\n- You can make Kedro run in this environment two ways:\n\n1. Using a CLI flag - `kedro run --env=prod`\n2. Using the environment variable `KEDRO_ENV=prod`\n\n",
       "line": 1
     },
     {
