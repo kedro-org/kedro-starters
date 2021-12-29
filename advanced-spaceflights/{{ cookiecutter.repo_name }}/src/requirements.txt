@@ -19,3 +19,4 @@ matplotlib==3.5.0
 pre-commit~=1.17
 kedro-viz
 kedro-telemetry
+tabulate==0.8.9
