@@ -1,10 +1,10 @@
-from kedro.pipeline import Pipeline, node
+from kedro.pipeline import node, pipeline
 
 from .nodes import evaluate_model, split_data, train_model
 
 
 def create_pipeline(**kwargs):
-    return Pipeline(
+    return pipeline(
         [
             node(
                 func=split_data,

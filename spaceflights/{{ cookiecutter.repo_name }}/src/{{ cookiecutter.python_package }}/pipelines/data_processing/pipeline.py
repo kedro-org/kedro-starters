@@ -1,10 +1,10 @@
-from kedro.pipeline import Pipeline, node
+from kedro.pipeline import node, pipeline
 
 from .nodes import create_model_input_table, preprocess_companies, preprocess_shuttles
 
 
 def create_pipeline(**kwargs):
-    return Pipeline(
+    return pipeline(
         [
             node(
                 func=preprocess_companies,
