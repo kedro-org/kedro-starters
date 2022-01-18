@@ -30,7 +30,7 @@ def create_pipeline(**kwargs) -> Pipeline:
 
     namespaced_pipeline = pipeline(
         pipe=pipeline_instance,
-        namespace="Data Processing",
+        namespace="data_processing",
         inputs=["companies", "shuttles", "reviews"],
         outputs="model_input_table",
     )
