@@ -5,7 +5,7 @@ from .nodes import evaluate_model, split_data, train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    pipeline_instance = Pipeline(
+    pipeline_instance = pipeline(
         [
             node(
                 func=split_data,
