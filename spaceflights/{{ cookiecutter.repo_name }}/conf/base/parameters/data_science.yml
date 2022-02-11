@@ -12,7 +12,7 @@ model_options:
     - review_scores_rating
 
 model_options_experimental:
-  test_size: 0.3
+  test_size: 0.2
   random_state: 8
   features:
     - engines
