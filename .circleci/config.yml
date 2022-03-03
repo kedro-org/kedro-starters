@@ -1,15 +1,18 @@
 version: 2.1
 
 executors:
+  py310:
+    docker:
+      - image: circleci/python:3.10
+  py39:
+    docker:
+      - image: circleci/python:3.9
   py38:
     docker:
       - image: circleci/python:3.8
   py37:
     docker:
       - image: circleci/python:3.7
-  py36:
-    docker:
-      - image: circleci/python:3.6
 
 commands:
   setup_requirements:
@@ -26,7 +29,7 @@ commands:
             sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
       - run:
           name: Install pip setuptools
-          command: python -m pip install -U "pip==21.0.1" "setuptools>=38.0" wheel
+          command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
       - run:
           command: |
             sudo pip install -r test_requirements.txt
@@ -52,6 +55,18 @@ jobs:
           python_version: "python3.8"
       - run:
           command: bandit -ll -r .
+  e2e_310:
+    executor: py310
+    steps:
+      - setup_requirements:
+          python_version: "python3.10"
+      - e2e_run
+  e2e_39:
+    executor: py39
+    steps:
+      - setup_requirements:
+          python_version: "python3.9"
+      - e2e_run
   e2e_38:
     executor: py38
     steps:
@@ -64,12 +79,18 @@ jobs:
       - setup_requirements:
           python_version: "python3.7"
       - e2e_run
-  e2e_36:
-    executor: py36
+  lint_310:
+    executor: py310
     steps:
       - setup_requirements:
-          python_version: "python3.6"
-      - e2e_run
+          python_version: "python3.10"
+      - e2e_lint
+  lint_39:
+    executor: py39
+    steps:
+      - setup_requirements:
+          python_version: "python3.9"
+      - e2e_lint
   lint_38:
     executor: py38
     steps:
@@ -82,22 +103,18 @@ jobs:
       - setup_requirements:
           python_version: "python3.7"
       - e2e_lint
-  lint_36:
-    executor: py36
-    steps:
-      - setup_requirements:
-          python_version: "python3.6"
-      - e2e_lint
 
 workflows:
   version: 2
   build:
     jobs:
       - security_scan
+      - e2e_310
+      - e2e_39
       - e2e_38
       - e2e_37
-      - e2e_36
+      - lint_310
+      - lint_39
       - lint_38
       - lint_37
-      - lint_36
 
