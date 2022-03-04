@@ -56,7 +56,7 @@ def install_project_dependencies(context):
     assert res.returncode == OK_EXIT_CODE
 
 
-@given("I have run the Kedro pipeline")
+@when("I run the Kedro pipeline")
 def run_kedro_pipeline(context):
     """Behave step to run the newly created Kedro pipeline."""
     context.result = subprocess.run(
@@ -64,7 +64,7 @@ def run_kedro_pipeline(context):
     )
 
 
-@given("I have executed the CLI command to list Kedro pipelines")
+@when("I execute the CLI command to list Kedro pipelines")
 def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(

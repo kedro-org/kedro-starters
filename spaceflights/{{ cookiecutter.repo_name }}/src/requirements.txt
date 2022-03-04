@@ -1,11 +1,12 @@
 black==21.5b1
 flake8>=3.7.9, <4.0
-ipython~=7.0
+ipython~=7.16.3; python_version == '3.6'
+ipython>=7.31.1, <8.0; python_version > '3.6'
 isort~=5.0
 jupyter~=1.0
 jupyter_client>=5.1, <7.0
 jupyterlab~=3.0
-kedro[pandas.CSVDataSet,pandas.ExcelDataSet]=={{ cookiecutter.kedro_version }}
+kedro[pandas.CSVDataSet, pandas.ExcelDataSet, pandas.ParquetDataSet]=={{ cookiecutter.kedro_version }}
 kedro-telemetry~=0.1.0
 kedro-viz==3.16.0; python_version=='3.6'
 kedro-viz~=4.0; python_version>'3.6'
@@ -13,5 +14,6 @@ nbstripout~=0.4
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
-scikit-learn~=0.24
+scikit-learn~=1.0; python_version > '3.6'
+scikit-learn~=0.24; python_version == '3.6'
 wheel>=0.35, <0.37
