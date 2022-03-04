@@ -1,10 +1,8 @@
-bandit>=1.6.2, <2.0
+bandit>=1.6.2, <2.0; python_version > '3.6'
+bandit>=1.6.2, <1.7.2; python_version == '3.6'
 behave>=1.2.6, <2.0
 black==21.5b1
 click<8.0
 isort~=5.0
-git+https://github.com/quantumblacklabs/kedro.git@master#egg=kedro
-# reqs for `SparkDataSet`
-pyspark>=2.2, <4.0
-hdfs>=2.5.8, <3.0
-s3fs>=0.3.0, <0.5
+PyYAML>=4.2, <6.0
+git+https://github.com/kedro-org/kedro.git@main#egg=kedro

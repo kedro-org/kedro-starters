@@ -8,8 +8,8 @@ kedro new --starter=<alias>
 
 The following aliases are available:
 
-* [Alias `astro-iris`](astro-iris): The [Kedro Iris dataset example project](https://kedro.readthedocs.io/en/stable/02_get_started/05_example_project.html) with a minimal setup for deploying the pipeline on Airflow with [Astronomer](https://www.astronomer.io/).
-
+* [Alias `astro-airflow-iris`](astro-airflow-iris): The [Kedro Iris dataset example project](https://kedro.readthedocs.io/en/stable/02_get_started/05_example_project.html) with a minimal setup for deploying the pipeline on Airflow with [Astronomer](https://www.astronomer.io/).
+* 
 * [Alias `pandas-iris`](pandas-iris): The [Kedro Iris dataset example project](https://kedro.readthedocs.io/en/stable/02_get_started/05_example_project.html)
 
 * [Alias `pyspark-iris`](pyspark-iris): An alternative Kedro Iris dataset example, using [PySpark](https://kedro.readthedocs.io/en/stable/11_tools_integration/01_pyspark.html)

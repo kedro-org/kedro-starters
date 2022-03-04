@@ -42,17 +42,21 @@ def create_project_from_config_file(context, starter_name):
         ]
     )
     assert res.returncode == OK_EXIT_CODE
+    # prevent telemetry from prompting for input during e2e tests
+    telemetry_file = context.root_project_dir / ".telemetry"
+    telemetry_file.write_text("consent: false", encoding="utf-8")
 
 
 @given("I have installed the Kedro project's dependencies")
 def install_project_dependencies(context):
+    reqs_path = "src/requirements.txt"
     res = subprocess.run(
-        [context.kedro, "install", "--no-build-reqs"], cwd=context.root_project_dir
+        [context.pip, "install", "-r", reqs_path], cwd=context.root_project_dir
     )
     assert res.returncode == OK_EXIT_CODE
 
 
-@given("I have run the Kedro pipeline")
+@when("I run the Kedro pipeline")
 def run_kedro_pipeline(context):
     """Behave step to run the newly created Kedro pipeline."""
     context.result = subprocess.run(
@@ -60,7 +64,7 @@ def run_kedro_pipeline(context):
     )
 
 
-@given("I have executed the CLI command to list Kedro pipelines")
+@when("I execute the CLI command to list Kedro pipelines")
 def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(
