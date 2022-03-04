@@ -1,13 +1,13 @@
 """Example data engineering pipeline with PySpark.
 """
 
-from kedro.pipeline import Pipeline, node
+from kedro.pipeline import node, pipeline
 
 from .nodes import split_data, transform_features
 
 
 def create_pipeline(**kwargs):
-    return Pipeline(
+    return pipeline(
         [
             node(
                 transform_features,

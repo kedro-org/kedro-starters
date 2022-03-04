@@ -1,13 +1,13 @@
 """Example data science pipeline using PySpark.
 """
 
-from kedro.pipeline import Pipeline, node
+from kedro.pipeline import node, pipeline
 
 from .nodes import predict, report_accuracy, train_model
 
 
 def create_pipeline(**kwargs):
-    return Pipeline(
+    return pipeline(
         [
             node(
                 train_model,

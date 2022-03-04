@@ -5,11 +5,11 @@ from .nodes import evaluate_model, split_data, train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    pipeline_instance = Pipeline(
+    pipeline_instance = pipeline(
         [
             node(
                 func=split_data,
-                inputs=["model_input_table", "parameters"],
+                inputs=["model_input_table", "params:model_options"],
                 outputs=["X_train", "X_test", "y_train", "y_test"],
                 name="split_data_node",
             ),

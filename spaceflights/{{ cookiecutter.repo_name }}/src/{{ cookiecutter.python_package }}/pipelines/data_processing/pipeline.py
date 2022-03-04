@@ -5,7 +5,7 @@ from .nodes import create_model_input_table, preprocess_companies, preprocess_sh
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    pipeline_instance = Pipeline(
+    return pipeline(
         [
             node(
                 func=preprocess_companies,
@@ -25,13 +25,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="model_input_table",
                 name="create_model_input_table_node",
             ),
-        ]
-    )
-
-    namespaced_pipeline = pipeline(
-        pipe=pipeline_instance,
+        ],
         namespace="data_processing",
         inputs=["companies", "shuttles", "reviews"],
         outputs="model_input_table",
     )
-    return namespaced_pipeline
