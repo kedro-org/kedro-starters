@@ -59,7 +59,7 @@ jobs:
       - run:
           command: bandit -ll -r .
 
-  e2e_tests:
+  run:
     parameters:
       python_version:
         type: string
@@ -91,7 +91,7 @@ workflows:
     jobs:
       - security_scan:
           python_version: "3.8"
-      - e2e_tests:
+      - run:
           matrix:
             parameters:
               python_version: [ "3.7", "3.8", "3.9", "3.10" ]

@@ -2,17 +2,17 @@
 
 ## Introduction
 
-The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro documentation about how to work with PySpark](https://kedro.readthedocs.io/en/stable/11_tools_integration/01_pyspark.html).
+The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro documentation about how to work with PySpark](https://kedro.readthedocs.io/en/stable/tools_integration/pyspark.html).
 
 ## Getting started
 
-The starter template can be used to start a new project using the [`starter` option](https://kedro.readthedocs.io/en/stable/02_get_started/06_starters.html) in `kedro new`:
+The starter template can be used to start a new project using the [`starter` option](https://kedro.readthedocs.io/en/stable/get_started/starters.html) in `kedro new`:
 
 ```bash
 kedro new --starter=pyspark-iris
 ```
 
-As a reference, the [How to use Kedro on a Databricks cluster](https://github.com/kedro-org/kedro/blob/develop/docs/source/10_deployment/08_databricks.md) tutorial bootstraps the project using this starter.
+As a reference, the [How to use Kedro on a Databricks cluster](https://github.com/kedro-org/kedro/blob/develop/docs/source/deployment/databricks.md) tutorial bootstraps the project using this starter.
 
 ## Features
 
