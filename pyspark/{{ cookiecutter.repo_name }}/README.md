@@ -13,7 +13,7 @@ This project assumes that a Spark cluster is accessible. Please refer to [Spark 
 In order to get the best out of the template:
 
 * Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/11_faq/01_faq.html#what-is-data-engineering-convention)
+* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/faq/faq.html#what-is-data-engineering-convention)
 * Don't commit data to your repository
 * Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
@@ -58,7 +58,7 @@ This will copy the contents of `src/requirements.txt` into a new file `src/requi
 
 After this, if you'd like to update your project requirements, please update `src/requirements.in` and re-run `kedro build-reqs`.
 
-[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/04_kedro_project_setup/01_dependencies.html#project-specific-dependencies)
+[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
 
 ## How to work with Kedro and notebooks
 
@@ -120,4 +120,4 @@ To automatically strip out all output cell contents before committing to `git`, 
 
 ## Package your Kedro project
 
-[Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/03_tutorial/05_package_a_project.html)
+[Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/tutorial/package_a_project.html)
