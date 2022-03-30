@@ -1,5 +1,4 @@
-bandit>=1.6.2, <2.0; python_version > '3.6'
-bandit>=1.6.2, <1.7.2; python_version == '3.6'
+bandit>=1.6.2, <2.0
 behave>=1.2.6, <2.0
 black~=22.0
 isort~=5.0
