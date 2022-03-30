@@ -2,11 +2,9 @@
 
 ## Overview
 
-This is your new Kedro project with some initial Spark configurations and an example pipeline, which was generated using `Kedro {{ cookiecutter.kedro_version }}`.
+This is your new Kedro project, which was generated using `Kedro {{ cookiecutter.kedro_version }}`.
 
 Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
-
-This project assumes that a Spark cluster is accessible. Please refer to [Spark documentation](https://spark.apache.org/docs/latest/spark-standalone.html) on how to set one up locally.
 
 ## Rules and guidelines
 
@@ -27,7 +25,7 @@ To install them, run:
 pip install -r src/requirements.txt
 ```
 
-## How to run Kedro
+## How to run your Kedro pipeline
 
 You can run your Kedro project with:
 
@@ -43,8 +41,7 @@ Have a look at the file `src/tests/test_run.py` for instructions on how to write
 kedro test
 ```
 
-To configure the coverage threshold, look at the `.coveragerc` file.
-
+To configure the coverage threshold, go to the `.coveragerc` file.
 
 ## Project dependencies
 
@@ -54,15 +51,17 @@ To generate or update the dependency requirements for your project:
 kedro build-reqs
 ```
 
-This will copy the contents of `src/requirements.txt` into a new file `src/requirements.in` which will be used as the source for `pip-compile`. You can see the output of the resolution by opening `src/requirements.txt`.
+This will `pip-compile` the contents of `src/requirements.txt` into a new file `src/requirements.lock`. You can see the output of the resolution by opening `src/requirements.lock`.
 
-After this, if you'd like to update your project requirements, please update `src/requirements.in` and re-run `kedro build-reqs`.
+After this, if you'd like to update your project requirements, please update `src/requirements.txt` and re-run `kedro build-reqs`.
 
 [Further information about project dependencies](https://kedro.readthedocs.io/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
 
 ## How to work with Kedro and notebooks
 
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
+> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `catalog`, `context`, `pipelines` and `session`.
+>
+> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r src/requirements.txt` you will not need to take any extra steps before you use them.
 
 ### Jupyter
 To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
