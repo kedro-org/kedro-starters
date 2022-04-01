@@ -5,7 +5,7 @@ isort~=5.0
 jupyter~=1.0
 jupyterlab~=3.0
 kedro[spark.SparkDataSet]=={{ cookiecutter.kedro_version }}
-kedro-telemetry~=0.1.0
+kedro-telemetry~=0.2.0
 nbstripout~=0.4
 numpy~=1.19.1
 pytest-cov~=3.0
