@@ -29,6 +29,7 @@ def project_context(config_loader):
         hook_manager=_create_hook_manager(),
     )
 
+
 # The tests below are here for the demonstration purpose
 # and should be replaced with the ones testing the project
 # functionality
