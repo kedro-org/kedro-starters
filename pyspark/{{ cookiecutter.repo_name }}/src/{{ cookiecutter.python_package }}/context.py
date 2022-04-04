@@ -5,9 +5,9 @@ from typing import Any, Dict, Union
 from kedro.config import ConfigLoader
 from kedro.framework.context import KedroContext
 from pluggy import PluginManager
+from pyspark.sql import SparkSession
 
 from pyspark import SparkConf
-from pyspark.sql import SparkSession
 
 
 class ProjectContext(KedroContext):
