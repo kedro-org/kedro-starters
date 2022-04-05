@@ -1,12 +1,12 @@
 """Example code for the nodes in the example pipeline. This code is meant
 just for illustrating basic Kedro features.
 
-PLEASE DELETE THIS FILE ONCE YOU START WORKING ON YOUR OWN PROJECT!
+Delete this when you start working on your own Kedro project.
 """
 
+import logging
 from typing import Any, Dict, Tuple
 
-import logging
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
