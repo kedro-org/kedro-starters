@@ -1,0 +1,7 @@
+model_options:
+  test_size: 0.2
+  random_state: 3
+  features:
+    - sepal_width
+    - petal_length
+    - petal_width

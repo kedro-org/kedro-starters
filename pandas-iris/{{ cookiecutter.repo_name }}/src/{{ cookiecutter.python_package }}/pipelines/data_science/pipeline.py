@@ -6,29 +6,29 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import node, pipeline
 
-from .nodes import predict, report_accuracy, train_model
+from .nodes import split_data, train_model, evaluate_model
 
 
 def create_pipeline(**kwargs):
     return pipeline(
         [
             node(
-                train_model,
-                ["example_train_x", "example_train_y", "parameters"],
-                "example_model",
+                func=split_data,
+                inputs=["example_iris_data", "params:model_options"],
+                outputs=["X_train", "X_test", "y_train", "y_test"],
+                name="split",
+            ),
+            node(
+                func=train_model,
+                inputs=["X_train", "y_train"],
+                outputs="regressor",
                 name="train",
             ),
             node(
-                predict,
-                dict(model="example_model", test_x="example_test_x"),
-                "example_predictions",
-                name="predict",
-            ),
-            node(
-                report_accuracy,
-                ["example_predictions", "example_test_y"],
-                None,
-                name="report",
+                func=evaluate_model,
+                inputs=["regressor", "X_test", "y_test"],
+                outputs=None,
+                name="evaluate_model_node",
             ),
         ]
     )
