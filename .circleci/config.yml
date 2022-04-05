@@ -1,19 +1,17 @@
 version: 2.1
 
+
 executors:
-  py38:
+  docker:
+    parameters:
+      python_version:
+        type: string
     docker:
-      - image: circleci/python:3.8
-  py37:
-    docker:
-      - image: circleci/python:3.7
-  py36:
-    docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:<<parameters.python_version>>
+
 
 commands:
   setup_requirements:
-    description: Setup requirements
     parameters:
       python_version:
         type: string
@@ -23,81 +21,82 @@ commands:
           name: Grant CircleCI access to dependency locations
           command: |
             sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/<< parameters.python_version >>/site-packages
+            sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
       - run:
           name: Install pip setuptools
-          command: python -m pip install -U "pip==21.0.1" "setuptools>=38.0" wheel
+          command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
       - run:
-          command: |
-            sudo pip install -r test_requirements.txt
+          name: Install test requirements
+          command: sudo pip install -r test_requirements.txt
       - run:
           name: Pip freeze
           command: pip freeze
+
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
       - run:
           command: behave features/run.feature
+
   e2e_lint:
     description: Run `kedro lint` end to end tests for all starters
     steps:
       - run:
           command: behave features/lint.feature
 
+
 jobs:
   security_scan:
-    executor: py38
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: docker
+      python_version: <<parameters.python_version>>
     steps:
       - setup_requirements:
-          python_version: "python3.8"
+          python_version: <<parameters.python_version>>
       - run:
           command: bandit -ll -r .
-  e2e_38:
-    executor: py38
+
+  run:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: docker
+      python_version: <<parameters.python_version>>
     steps:
       - setup_requirements:
-          python_version: "python3.8"
+          python_version: <<parameters.python_version>>
       - e2e_run
-  e2e_37:
-    executor: py37
+
+  lint:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: docker
+      python_version: <<parameters.python_version>>
     steps:
       - setup_requirements:
-          python_version: "python3.7"
-      - e2e_run
-  e2e_36:
-    executor: py36
-    steps:
-      - setup_requirements:
-          python_version: "python3.6"
-      - e2e_run
-  lint_38:
-    executor: py38
-    steps:
-      - setup_requirements:
-          python_version: "python3.8"
-      - e2e_lint
-  lint_37:
-    executor: py37
-    steps:
-      - setup_requirements:
-          python_version: "python3.7"
-      - e2e_lint
-  lint_36:
-    executor: py36
-    steps:
-      - setup_requirements:
-          python_version: "python3.6"
+          python_version: <<parameters.python_version>>
       - e2e_lint
 
+
 workflows:
-  version: 2
+  version: 2.1
+
   build:
     jobs:
-      - security_scan
-      - e2e_38
-      - e2e_37
-      - e2e_36
-      - lint_38
-      - lint_37
-      - lint_36
+      - security_scan:
+          python_version: "3.8"
+      - run:
+          matrix:
+            parameters:
+              python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+      - lint:
+          matrix:
+            parameters:
+              python_version: [ "3.7", "3.8", "3.9", "3.10" ]
 

@@ -1,7 +1,7 @@
 # Here you can define all your data sets by using simple YAML syntax.
 #
 # Documentation for this file format can be found in "The Data Catalog"
-# Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 #
 # We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
 #
@@ -37,13 +37,13 @@
 #
 # The Data Catalog supports being able to reference the same file using two different DataSet implementations
 # (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
-# https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+# https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
 companies:
   type: pandas.CSVDataSet
   filepath: data/01_raw/companies.csv
   # more about layers in the Data Engineering Convention:
-  # https://kedro.readthedocs.io/en/stable/03_tutorial/06_visualise_pipeline.html#interact-with-data-engineering-convention
+  # https://kedro.readthedocs.io/en/stable/tutorial/visualise_pipeline.html#interact-with-data-engineering-convention
   layer: raw
 
 reviews:
@@ -55,8 +55,6 @@ shuttles:
   type: pandas.ExcelDataSet
   filepath: data/01_raw/shuttles.xlsx
   layer: raw
-  load_args:
-    engine: openpyxl
 
 preprocessed_companies:
   type: pandas.ParquetDataSet
