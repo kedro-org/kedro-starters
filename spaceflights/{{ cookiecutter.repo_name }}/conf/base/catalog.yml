@@ -56,12 +56,12 @@ shuttles:
   filepath: data/01_raw/shuttles.xlsx
   layer: raw
 
-preprocessed_companies:
+data_processing.preprocessed_companies:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/preprocessed_companies.pq
   layer: intermediate
 
-preprocessed_shuttles:
+data_processing.preprocessed_shuttles:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/preprocessed_shuttles.pq
   layer: intermediate
@@ -71,13 +71,13 @@ model_input_table:
   filepath: data/03_primary/model_input_table.pq
   layer: primary
 
-active_modelling_pipeline.regressor:
+data_science.active_modelling_pipeline.regressor:
   type: pickle.PickleDataSet
   filepath: data/06_models/regressor_active.pickle
   versioned: true
   layer: models
 
-candidate_modelling_pipeline.regressor:
+data_science.candidate_modelling_pipeline.regressor:
   type: pickle.PickleDataSet
   filepath: data/06_models/regressor_candidate.pickle
   versioned: true
