@@ -58,7 +58,7 @@ def evaluate_model(y_pred: pd.DataFrame, y_test: pd.DataFrame):
 
     Args:
         y_pred: Prediction data.
-        y_test: Testing data.
+        y_test: Testing data for species.
     """
     y_pred = y_pred.dropna()
     accuracy = (y_pred == y_test).sum() / len(y_test)
