@@ -1,7 +1,10 @@
+# This is a boilerplate parameters config generated for pipeline 'data_science'
+# using Kedro {{ cookiecutter.kedro_version }}.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://kedro.readthedocs.io/en/0.18.0/kedro_project_setup/configuration.html#parameters
+
 model_options:
-  test_size: 0.2
+  train_fraction: 0.8
   random_state: 3
-  features:
-    - sepal_width
-    - petal_length
-    - petal_width
+  target_column: species

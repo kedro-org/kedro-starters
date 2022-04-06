@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 # {{ cookiecutter.python_package }} documentation build
@@ -22,12 +21,13 @@ import re
 
 from kedro.framework.cli.utils import find_stylesheets
 from recommonmark.transform import AutoStructify
-from {{cookiecutter.python_package}} import __version__ as release
+
+from {{ cookiecutter.python_package }} import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
 project = "{{ cookiecutter.python_package }}"
-author = "QuantumBlack"
+author = "Kedro"
 
 # The short X.Y version.
 version = re.match(r"^([0-9]+\.[0-9]+).*", release).group(1)
@@ -117,9 +117,6 @@ html_static_path = ["_static"]
 
 html_show_sourcelink = False
 
-# Removes, from all docs, the copyright footer.
-html_show_copyright = False
-
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
@@ -153,7 +150,7 @@ latex_documents = [
         master_doc,
         "{{ cookiecutter.python_package }}.tex",
         "{{ cookiecutter.python_package }} Documentation",
-        "QuantumBlack",
+        "Kedro",
         "manual",
     )
 ]

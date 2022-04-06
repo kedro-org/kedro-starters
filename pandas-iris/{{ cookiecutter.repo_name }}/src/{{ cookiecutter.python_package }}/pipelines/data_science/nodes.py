@@ -1,22 +1,12 @@
-"""Example code for the nodes in the example pipeline. This code is meant
-just for illustrating basic Kedro features.
-
-Delete this when you start working on your own Kedro project.
+"""
+This is a boilerplate pipeline 'data_science'
+generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
 import logging
-from typing import Any, Dict, Tuple
-
+from typing import Dict, Tuple
 import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split
-
-def trans(x: pd.Series) -> pd.Series:
-    x = x.str.replace("%", "")
-    x = x.astype(float) / 100
-    return x
-
+import numpy as np
 
 def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     """Splits data into features and targets training and test sets.
@@ -27,40 +17,50 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     Returns:
         Split data.
     """
-    X = data[parameters["features"]]
-    y = data["sepal_length"]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
+
+    # Split to training and testing data
+    data_train = data.sample(
+        frac=parameters["train_fraction"], random_state=parameters["random_state"]
     )
+    data_test = data.drop(data_train.index)
+
+    X_train = data_train.drop(columns=parameters["target_column"])
+    X_test = data_test.drop(columns=parameters["target_column"])
+    y_train = data_train[parameters["target_column"]]
+    y_test = data_test[parameters["target_column"]]
+
     return X_train, X_test, y_train, y_test
 
-
-def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
-    """Trains the linear regression model.
+def train_model(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame) -> pd.DataFrame:
+    """Trains a model using 1-nearest neighbour classifier.
 
     Args:
-        X_train: Training data of independent features.
-        y_train: Training data for price.
+        X_train: Training data of features.
+        y_train: Training data for species.
+        X_test: Test data for features.
 
     Returns:
-        Trained model.
+        y_pred: Indexes from nearest neighbour.
     """
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-    return regressor
 
+    X_train_numpy = X_train.to_numpy()
+    X_test_numpy = X_test.to_numpy()
 
-def evaluate_model(
-    regressor: LinearRegression, X_test: pd.DataFrame, y_test: pd.Series
-):
-    """Calculates and logs the coefficient of determination.
+    squared_distances = np.sum((X_train_numpy[:, None, :] - X_test_numpy[None, :, :]) ** 2, axis=-1)
+    nearest_neighbour = squared_distances.argmin(axis=0)
+    y_pred = y_train.iloc[nearest_neighbour]
+    y_pred.index = X_test.index
+
+    return y_pred
+
+def evaluate_model(y_pred: pd.DataFrame, y_test: pd.DataFrame):
+    """Calculates and logs the accuracy.
 
     Args:
-        regressor: Trained model.
-        X_test: Testing data of independent features.
-        y_test: Testing data for price.
+        y_pred: Prediction data.
+        y_test: Testing data.
     """
-    y_pred = regressor.predict(X_test)
-    score = r2_score(y_test, y_pred)
+    y_pred = y_pred.dropna()
+    accuracy = (y_pred == y_test).sum() / len(y_test)
     logger = logging.getLogger(__name__)
-    logger.info("Model has a coefficient R^2 of %.3f on test data.", score)
+    logger.info("Model has a accuracy of %.3f on test data.", accuracy)

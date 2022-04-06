@@ -1,7 +1,10 @@
-"""Example code for the nodes in the example pipeline. This code is meant
-just for illustrating basic Kedro features.
-
-PLEASE DELETE THIS FILE ONCE YOU START WORKING ON YOUR OWN PROJECT!
+"""
+This is a boilerplate pipeline 'data_science'
+generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
-from .pipeline import create_pipeline  # NOQA
+from .pipeline import create_pipeline
+
+__all__ = ["create_pipeline"]
+
+__version__ = "0.1"
