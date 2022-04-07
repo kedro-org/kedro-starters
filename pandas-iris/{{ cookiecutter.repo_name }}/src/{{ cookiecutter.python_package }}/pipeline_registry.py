@@ -1,9 +1,10 @@
 """Project pipelines."""
 from typing import Dict
 
-from kedro.pipeline import Pipeline, pipeline
+from kedro.pipeline import Pipeline
 
 from {{ cookiecutter.python_package }} import pipeline as mp
+
 
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.

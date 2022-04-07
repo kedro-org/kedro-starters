@@ -5,8 +5,9 @@ generated using Kedro {{ cookiecutter.kedro_version }}
 
 import logging
 from typing import Dict, Tuple
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 
 
 def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
@@ -33,7 +34,9 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     return X_train, X_test, y_train, y_test
 
 
-def train_model(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame) -> pd.DataFrame:
+def train_model(
+    X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame
+) -> pd.DataFrame:
     """Trains a model using 1-nearest neighbour classifier.
 
     Args:
@@ -48,7 +51,9 @@ def train_model(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFra
     X_train_numpy = X_train.to_numpy()
     X_test_numpy = X_test.to_numpy()
 
-    squared_distances = np.sum((X_train_numpy[:, None, :] - X_test_numpy[None, :, :]) ** 2, axis=-1)
+    squared_distances = np.sum(
+        (X_train_numpy[:, None, :] - X_test_numpy[None, :, :]) ** 2, axis=-1
+    )
     nearest_neighbour = squared_distances.argmin(axis=0)
     y_pred = y_train.iloc[nearest_neighbour]
     y_pred.index = X_test.index
