@@ -36,7 +36,6 @@ def create_pipeline(**kwargs) -> Pipeline:
         pipe=pipeline_instance,
         inputs="model_input_table",
         namespace="candidate_modelling_pipeline",
-        parameters={"params:model_options": "params:model_options_experimental"},
     )
     return pipeline(
         pipe=ds_pipeline_1 + ds_pipeline_2,

@@ -68,7 +68,7 @@ def run_kedro_pipeline(context):
 def list_kedro_pipelines(context):
     """Behave step to list Kedro pipelines in a project."""
     context.result = subprocess.run(
-        [context.kedro, "pipeline", "list"], cwd=context.root_project_dir
+        [context.kedro, "registry", "list"], cwd=context.root_project_dir
     )
 
 
