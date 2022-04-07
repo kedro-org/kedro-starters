@@ -16,6 +16,6 @@ def register_pipelines() -> Dict[str, Pipeline]:
     my_pipeline = mp.create_pipeline()
 
     return {
-        "ds": my_pipeline,
+        "mp": my_pipeline,
         "__default__": my_pipeline,
     }
