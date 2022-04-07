@@ -8,6 +8,7 @@ from typing import Dict, Tuple
 import pandas as pd
 import numpy as np
 
+
 def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     """Splits data into features and targets training and test sets.
 
@@ -31,6 +32,7 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
 
     return X_train, X_test, y_train, y_test
 
+
 def train_model(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame) -> pd.DataFrame:
     """Trains a model using 1-nearest neighbour classifier.
 
@@ -52,6 +54,7 @@ def train_model(X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFra
     y_pred.index = X_test.index
 
     return y_pred
+
 
 def evaluate_model(y_pred: pd.DataFrame, y_test: pd.DataFrame):
     """Calculates and logs the accuracy.
