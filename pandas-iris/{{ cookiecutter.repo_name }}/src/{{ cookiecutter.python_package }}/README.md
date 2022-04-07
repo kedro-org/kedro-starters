@@ -6,7 +6,7 @@
 
 This modular pipeline:
 1. splits the data into training dataset and testing dataset using a configurable ratio found in `conf/base/parameters.yml`
-2. trains a simple 1-nearest neighbour model (`train` node) and makes prediction dataset.
+2. runs a simple 1-nearest neighbour model (`train` node) and makes prediction dataset.
 3. reports the model accuracy on a test set (`evaluate_model` node)
 
 ## Pipeline inputs
