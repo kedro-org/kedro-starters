@@ -5,7 +5,7 @@ generated using Kedro {{ cookiecutter.kedro_version }}
 
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import report_accuracy, split_data, make_predictions
+from .nodes import make_predictions, report_accuracy, split_data
 
 
 def create_pipeline(**kwargs) -> Pipeline:
