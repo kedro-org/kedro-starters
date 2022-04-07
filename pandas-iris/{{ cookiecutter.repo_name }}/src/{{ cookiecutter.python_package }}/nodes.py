@@ -34,10 +34,10 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     return X_train, X_test, y_train, y_test
 
 
-def train_model(
+def make_predictions(
     X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame
 ) -> pd.DataFrame:
-    """Trains a model using 1-nearest neighbour classifier.
+    """Uses 1-nearest neighbour classifier to create predictions.
 
     Args:
         X_train: Training data of features.
@@ -61,7 +61,7 @@ def train_model(
     return y_pred
 
 
-def evaluate_model(y_pred: pd.DataFrame, y_test: pd.DataFrame):
+def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
     """Calculates and logs the accuracy.
 
     Args:
