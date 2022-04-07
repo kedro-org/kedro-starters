@@ -182,7 +182,7 @@ texinfo_documents = [
         author,
         "{{ cookiecutter.python_package }}",
         "Project {{ cookiecutter.python_package }} codebase.",
-        "Data-Science",
+        "Nearest-Neighbour",
     )
 ]
 

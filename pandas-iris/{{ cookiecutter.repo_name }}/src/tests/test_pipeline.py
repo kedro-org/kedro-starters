@@ -1,5 +1,5 @@
 """
-This is a boilerplate test file for pipeline 'data_science'
+This is a boilerplate test file
 generated using Kedro {{ cookiecutter.kedro_version }}.
 Please add your pipeline tests here.
 

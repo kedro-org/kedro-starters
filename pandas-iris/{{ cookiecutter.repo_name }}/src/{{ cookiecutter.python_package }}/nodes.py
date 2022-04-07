@@ -1,5 +1,5 @@
 """
-This is a boilerplate pipeline 'data_science'
+This is a boilerplate pipeline
 generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
@@ -15,7 +15,7 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
 
     Args:
         data: Data containing features and target.
-        parameters: Parameters defined in parameters/data_science.yml.
+        parameters: Parameters defined in parameters.yml.
     Returns:
         Split data.
     """

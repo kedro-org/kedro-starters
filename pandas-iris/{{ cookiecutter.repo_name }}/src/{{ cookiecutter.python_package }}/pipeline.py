@@ -1,5 +1,5 @@
 """
-This is a boilerplate pipeline 'data_science'
+This is a boilerplate pipeline
 generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
