@@ -3,7 +3,7 @@ from typing import Dict
 
 from kedro.pipeline import Pipeline
 
-from {{ cookiecutter.python_package }} import pipeline as mp
+from {{ cookiecutter.python_package }}.pipeline import create_pipeline
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -13,9 +13,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
         A mapping from a pipeline name to a ``Pipeline`` object.
     """
 
-    my_pipeline = mp.create_pipeline()
+    my_pipeline = create_pipeline()
 
     return {
-        "mp": my_pipeline,
         "__default__": my_pipeline,
     }
