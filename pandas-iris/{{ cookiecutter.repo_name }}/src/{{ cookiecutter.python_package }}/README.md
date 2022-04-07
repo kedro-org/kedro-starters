@@ -5,7 +5,7 @@
 ## Overview
 
 This modular pipeline:
-1. splits the data into training dataset and testing dataset using a configurable ratio found in `conf/base/parameters/data_science.yml`
+1. splits the data into training dataset and testing dataset using a configurable ratio found in `conf/base/parameters.yml`
 2. trains a simple 1-nearest neighbour model (`train` node) and makes prediction dataset.
 3. reports the model accuracy on a test set (`evaluate_model` node)
 
@@ -22,7 +22,7 @@ This modular pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pandas.DataFrame` |
+| Type | `pandas.Series` |
 | Description | DataFrame containing train set of species. |
 
 ### `X_test`
@@ -36,7 +36,7 @@ This modular pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pandas.DataFrame` |
+| Type | `pandas.Series` |
 | Description | DataFrame containing test set of species |
 
 ### `parameters`
