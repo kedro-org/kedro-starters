@@ -4,14 +4,14 @@ generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
 import logging
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 import numpy as np
 import pandas as pd
 
 
-def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
-    """Splits data into features and targets training and test sets.
+def split_data(data: pd.DataFrame, parameters: Dict[str, Any]) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """Splits data into features and target training and test sets.
 
     Args:
         data: Data containing features and target.
@@ -20,7 +20,6 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
         Split data.
     """
 
-    # Split to training and testing data
     data_train = data.sample(
         frac=parameters["train_fraction"], random_state=parameters["random_state"]
     )
@@ -35,17 +34,17 @@ def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
 
 
 def make_predictions(
-    X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame
-) -> pd.DataFrame:
+    X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.Series
+) -> pd.Series:
     """Uses 1-nearest neighbour classifier to create predictions.
 
     Args:
         X_train: Training data of features.
-        y_train: Training data for species.
+        y_train: Training data for target.
         X_test: Test data for features.
 
     Returns:
-        y_pred: Indexes from nearest neighbour.
+        y_pred: Prediction of the target variable.
     """
 
     X_train_numpy = X_train.to_numpy()
@@ -61,13 +60,13 @@ def make_predictions(
     return y_pred
 
 
-def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
+def report_accuracy(y_pred: pd.Series, y_test: pd.Series):
     """Calculates and logs the accuracy.
 
     Args:
-        y_pred: Prediction data.
-        y_test: Testing data for species.
+        y_pred: Predicted target.
+        y_test: True target.
     """
     accuracy = (y_pred == y_test).sum() / len(y_test)
     logger = logging.getLogger(__name__)
-    logger.info("Model has a accuracy of %.3f on test data.", accuracy)
+    logger.info("Model has accuracy of %.3f on test data.", accuracy)

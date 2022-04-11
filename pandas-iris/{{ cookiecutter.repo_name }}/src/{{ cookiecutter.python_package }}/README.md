@@ -6,10 +6,28 @@
 
 This pipeline:
 1. splits the data into training dataset and testing dataset using a configurable ratio found in `conf/base/parameters.yml`
-2. runs a simple 1-nearest neighbour model (`make_prediction` node) and makes prediction dataset.
+2. runs a simple 1-nearest neighbour model (`make_prediction` node) and makes prediction dataset
 3. reports the model accuracy on a test set (`report_accuracy` node)
 
 ## Pipeline inputs
+
+### `example_iris_data`
+
+|      |                    |
+| ---- | ------------------ |
+| Type | `pandas.CSVDataSet` |
+| Description | Example iris data containing columns |
+
+
+### `parameters`
+
+|      |                    |
+| ---- | ------------------ |
+| Type | `dict` |
+| Description | Project parameter dictionary that must contain the following keys: `train_fraction` (the ratio used to determine the train-test split), `random_state` (random generator to ensure train-test split is deterministic) and `target_column` (identify the target column in the dataset) |
+
+
+## Pipeline intermediate outputs
 
 ### `X_train`
 
@@ -23,7 +41,7 @@ This pipeline:
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.Series` |
-| Description | DataFrame containing train set of species. |
+| Description | Series containing train set target. |
 
 ### `X_test`
 
@@ -37,20 +55,16 @@ This pipeline:
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.Series` |
-| Description | DataFrame containing test set of species |
-
-### `parameters`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `dict` |
-| Description | Project parameter dictionary that must contain the following keys: `train_fraction` (the ratio used to determine the train-test split), `random_state` (random generator to ensure train-test split is deterministic) and `target_column` (identify the target column in the dataset)  |
-
-## Pipeline outputs
+| Description | Series containing test set target |
 
 ### `y_pred`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pandas.DataFrame` |
+| Type | `pandas.Series` |
 | Description | Predictions from the 1-nearest neighbour model |
+
+
+## Pipeline outputs
+
+### `None`
