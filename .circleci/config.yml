@@ -32,6 +32,7 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
+            sudo apt-get update --allow-releaseinfo-change
             sudo apt-get update && \
             sudo apt-get install curl pandoc openjdk-8-jdk-headless -y && \
             sudo apt-get clean && \
@@ -44,7 +45,7 @@ commands:
           # So fixing it manually here.
           name: Fix Spark permissions
           command: sudo chmod -R u+x /home/circleci/miniconda/envs/kedro_builder/lib/
-          
+
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
