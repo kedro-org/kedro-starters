@@ -38,14 +38,6 @@ commands:
             rm -f /tmp/openjdk-8.tar.gz
             echo 'export JAVA_HOME=`/usr/lib/jvm -v 1.8.0_321`'
 
-
-      - run:
-          # Since recently Spark installation for some reason does not have enough permissions to execute
-          # /home/circleci/miniconda/envs/kedro_builder/lib/python3.X/site-packages/pyspark/bin/spark-class.
-          # So fixing it manually here.
-          name: Fix Spark permissions
-          command: sudo chmod -R u+x /home/circleci/miniconda/envs/kedro_builder/lib/
-
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
