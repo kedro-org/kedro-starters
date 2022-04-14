@@ -34,7 +34,7 @@ commands:
           command: |
             sudo apt-get update --allow-releaseinfo-change
             sudo apt-get update && \
-            sudo apt-get install curl pandoc openjdk-8-jdk -y && \
+            sudo apt-get install openjdk-8-jdk -y && \
             sudo apt-get clean && \
             sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
             sudo rm /etc/ssl/certs/java/cacerts && \
