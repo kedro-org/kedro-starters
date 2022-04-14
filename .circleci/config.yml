@@ -1,16 +1,5 @@
 version: 2.1
 
-machine:
-  environment:
-      JAVA_HOME: /usr/lib/jvm/java-8-oracle
-dependencies:
-  pre:
-    - sudo add-apt-repository -y ppa:webupd8team/java; sudo apt-get update
-    - echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-    - echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | sudo debconf-set-selections
-    - sudo apt-get -y install oracle-java8-installer
-    - sudo apt-get install oracle-java8-set-default
-
 executors:
   docker:
     parameters:
@@ -40,7 +29,22 @@ commands:
       - run:
           name: Pip freeze
           command: pip freeze
-
+      - run:
+          name: Install OpenJDK 8
+          command: |
+            sudo apt-get update && \
+            sudo apt-get install curl pandoc openjdk-8-jdk-headless -y && \
+            sudo apt-get clean && \
+            sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+            sudo rm /etc/ssl/certs/java/cacerts && \
+            sudo update-ca-certificates -f
+      - run:
+          # Since recently Spark installation for some reason does not have enough permissions to execute
+          # /home/circleci/miniconda/envs/kedro_builder/lib/python3.X/site-packages/pyspark/bin/spark-class.
+          # So fixing it manually here.
+          name: Fix Spark permissions
+          command: sudo chmod -R u+x /home/circleci/miniconda/envs/kedro_builder/lib/
+          
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
     steps:
