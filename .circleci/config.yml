@@ -8,7 +8,6 @@ executors:
         type: string
     docker:
       - image: circleci/python:<<parameters.python_version>>
-      - image: cimg/openjdk:8.0
 
 commands:
   setup_requirements:
@@ -36,10 +35,12 @@ commands:
     description: Run `kedro run` end to end tests for all starters
     steps:
       - run:
-          command: behave features/run.feature
+          name: Install OpenJDK 8
+          command: |
+            sudo apt-get install openjdk-8-jdk
+            java -version
       - run:
-          name: Setup Java Environment
-          command: echo 'export JAVA_HOME="/usr/libexec/java_home -v 1.8.0_321"' >> $BASH_ENV
+          command: behave features/run.feature
 
   e2e_lint:
     description: Run `kedro lint` end to end tests for all starters
