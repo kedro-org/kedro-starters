@@ -32,10 +32,12 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
-            sudo apt-get install software-properties-common --fix-missing
-            sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
-            sudo apt-get update && sudo apt-get install adoptopenjdk-8-hotspot
+            wget https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_linux_8u252b09.tar.gz -O /tmp/openjdk-8.tar.gz
+            sudo mkdir -p /usr/lib/jvm
+            sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
+            rm -f /tmp/openjdk-8.tar.gz
+            echo 'export JAVA_HOME=`/usr/lib/jvm -v 1.8.0_321`'
+
 
       - run:
           # Since recently Spark installation for some reason does not have enough permissions to execute
