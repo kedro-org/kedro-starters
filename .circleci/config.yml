@@ -37,11 +37,8 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            sudo apt-get install software-properties-common
-            sudo apt-get update
-            sudo add-apt-repository ppa:webupd8team/java
-            sudo apt-get update
-            sudo apt-get install oracle-java8-installer
+            sudo apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
+            sudo apt update && sudo apt install openjdk-8-jdk
             java -version
       - run:
           command: behave features/run.feature
