@@ -32,6 +32,7 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
+            echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list
             sudo apt-get install software-properties-common
             sudo apt-get update --fix-missing
             sudo add-apt-repository ppa:webupd8team/java
