@@ -36,7 +36,7 @@ commands:
             sudo mkdir -p /usr/lib/jvm
             sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
             rm -f /tmp/openjdk-8.tar.gz
-            echo 'export JAVA_HOME=`/usr/lib/jvm/openjdk-8u252`'
+            echo 'export JAVA_HOME=`/usr/lib/jvm/openjdk-8u252-b09`'
 
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
