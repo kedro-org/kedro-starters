@@ -8,7 +8,7 @@ executors:
         type: string
     docker:
       - image: circleci/python:<<parameters.python_version>>
-
+      - image: cimg/openjdk:8.0
 
 commands:
   setup_requirements:
