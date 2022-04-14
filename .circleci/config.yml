@@ -32,8 +32,11 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            sudo apt install openjdk-8-jdk
-            sudo apt clean
+            sudo apt-get install python-software-properties
+            sudo add-apt-repository ppa:webupd8team/java
+            sudo apt-get update
+            sudo apt-get install oracle-java8-installer
+            sudo apt-get clean
             sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
             sudo rm /etc/ssl/certs/java/cacerts
             sudo update-ca-certificates -f
