@@ -32,16 +32,12 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            sudo echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list
-            sudo apt-get install software-properties-common
-            sudo apt-get update --fix-missing
-            sudo add-apt-repository ppa:webupd8team/java
-            sudo apt-get update
-            sudo apt-get install oracle-java8-installer
-            sudo apt-get clean
-            sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-            sudo rm /etc/ssl/certs/java/cacerts
-            sudo update-ca-certificates -f
+            wget https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_8u322b06-debuginfo.tar.gz -O /tmp/openjdk-8.tar.gz
+            sudo mkdir -p /usr/lib/jvm
+            sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
+            rm -f /tmp/openjdk-8.tar.gz
+            sudo sh -c 'for bin in /usr/lib/jvm/jdk*/bin/*; do update-alternatives --install /usr/bin/$(basename $bin) $(basename $bin) $bin 100; done'
+            sudo sh -c 'for bin in /usr/lib/jvm/jdk*/bin/*; do update-alternatives --set $(basename $bin) $bin; done'
       - run:
           # Since recently Spark installation for some reason does not have enough permissions to execute
           # /home/circleci/miniconda/envs/kedro_builder/lib/python3.X/site-packages/pyspark/bin/spark-class.
