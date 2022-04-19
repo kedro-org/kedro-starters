@@ -32,11 +32,11 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            wget https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10_openj9-0.26.0/OpenJDK8U-jdk_aarch64_linux_openj9_8u292b10_openj9-0.26.0.tar.gz -O /tmp/openjdk-8.tar.gz
+            wget https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_8u322b06.tar.gz -O /tmp/openjdk-8.tar.gz
             sudo mkdir -p /usr/lib/jvm
             sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
             rm -f /tmp/openjdk-8.tar.gz
-            export JAVA_HOME=/usr/lib/jvm/openjdk-8u292-b10
+            export JAVA_HOME=/usr/lib/jvm/openjdk-8u322-b06
             export PATH=$PATH:$JAVA_HOME/bin
             export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
             echo $JAVA_HOME
