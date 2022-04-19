@@ -38,6 +38,9 @@ commands:
             rm -f /tmp/openjdk-8.tar.gz
             export JAVA_HOME=/usr/lib/jvm/openjdk-8u252-b09
             export PATH=$PATH:$JAVA_HOME/bin
+            echo $JAVA_HOME
+            java -version
+
 
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
