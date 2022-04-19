@@ -41,7 +41,7 @@ commands:
             source /etc/environment
             export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
             echo $JAVA_HOME
-            java --version
+            java -version
 
 
   e2e_run:
