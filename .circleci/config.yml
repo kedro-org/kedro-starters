@@ -38,8 +38,10 @@ commands:
             rm -f /tmp/openjdk-8.tar.gz
             export JAVA_HOME=/usr/lib/jvm/openjdk-8u322-b06
             export PATH=$PATH:$JAVA_HOME/bin
+            source /etc/environment
             export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
             echo $JAVA_HOME
+            java --version
 
 
   e2e_run:
