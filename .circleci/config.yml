@@ -32,9 +32,19 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            sudo add-apt-repository ppa:webupd8team/java
-            sudo apt-get update
-            sudo apt-get install oracle-java8-installer
+            wget https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_linux_8u252b09.tar.gz -O /tmp/openjdk-8.tar.gz
+            sudo mkdir -p /usr/lib/jvm
+            sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
+            rm -f /tmp/openjdk-8.tar.gz
+            export JAVA_HOME=/usr/lib/jvm/openjdk-8u252-b09
+            export PATH=$PATH:$JAVA_HOME/bin
+            export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
+            sudo rm /etc/ssl/certs/java/cacerts
+            sudo update-ca-certificates -f
+            sudo chmod -R u+x /home/circleci/miniconda/envs/kedro_builder/lib/
+            echo $JAVA_HOME
+            echo $SPARK_HOME
+            java -version
 
 
   e2e_run:
