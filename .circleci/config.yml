@@ -39,6 +39,8 @@ commands:
             export JAVA_HOME=/usr/lib/jvm/openjdk-8u252-b09
             export PATH=$PATH:$JAVA_HOME/bin
             export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
+            sudo update-alternative -install /usr/lib/java java /usr/lib/jvm/openjdk-8u252-b09/bin/java 1
+            sudo update-alternative -install /usr/lib/javac javac /usr/lib/jvm/openjdk-8u252-b09/bin/javac 1
             echo $JAVA_HOME
             java -version
 
