@@ -39,7 +39,6 @@ commands:
             export JAVA_HOME=/usr/lib/jvm/openjdk-8u252-b09
             export PATH=$PATH:$JAVA_HOME/bin
             export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
-            sudo chmod -R u+x /home/circleci/miniconda/envs/kedro_builder/lib/
             echo $JAVA_HOME
             echo $SPARK_HOME
             java -version
