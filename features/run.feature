@@ -14,6 +14,8 @@ Feature: Run all starters
     When I run the Kedro pipeline
     Then I should get a successful exit code
 
+    # Pyspark doesn't run the Kedro pipeline as no pipelines exist in this starter
+    # This starter acts as a basic example of implementing pyspark with Kedro.
   Scenario: Run a Kedro project created from pyspark
     Given I have prepared a config file
     And I have run a non-interactive kedro new with the starter pyspark
