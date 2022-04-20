@@ -30,7 +30,7 @@ commands:
           name: Pip freeze
           command: pip freeze
       - run:
-          name: Install OpenJDK 8
+          name: Install OpenJDK
           command: |
             sudo apt-get update
             sudo apt-get install default-jdk -y
