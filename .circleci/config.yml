@@ -6,7 +6,7 @@ executors:
       python_version:
         type: string
     docker:
-      - image: cimg/python:<<parameters.python_version>>
+      - image: circleci/python:<<parameters.python_version>>
 
 commands:
   setup_requirements:
@@ -19,6 +19,8 @@ commands:
           name: Grant CircleCI access to dependency locations
           command: |
             sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
+
       - run:
           name: Install pip setuptools
           command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel

@@ -32,12 +32,12 @@ class ProjectContext(KedroContext):
         """
 
         # Load the spark configuration in spark.yaml using the config loader
-        parameters = self._config_loader.get("spark*", "spark*/**")
+        parameters = self.config_loader.get("spark*", "spark*/**")
         spark_conf = SparkConf().setAll(parameters.items())
 
         # Initialise the spark session
         spark_session_conf = (
-            SparkSession.builder.appName(self._package_name)
+            SparkSession.builder.appName(self.package_name)
             .enableHiveSupport()
             .config(conf=spark_conf)
         )
