@@ -32,16 +32,8 @@ commands:
       - run:
           name: Install OpenJDK 8
           command: |
-            wget https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_8u322b06.tar.gz -O /tmp/openjdk-8.tar.gz
-            sudo mkdir -p /usr/lib/jvm
-            sudo tar xfvz /tmp/openjdk-8.tar.gz --directory /usr/lib/jvm
-            rm -f /tmp/openjdk-8.tar.gz
-            export JAVA_HOME=/usr/lib/jvm/openjdk-8u322-b06
-            source /etc/environment
-            export PYSPARK_SUBMIT_ARGS="--master local[2] pyspark-shell"
-            echo $JAVA_HOME
-            java -version
-
+            sudo apt-get update
+            sudp apt-get install default-jdk -y
 
   e2e_run:
     description: Run `kedro run` end to end tests for all starters
