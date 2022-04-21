@@ -7,10 +7,10 @@ import logging
 from typing import Dict, Tuple
 
 import numpy as np
-import pyspark.pandas as ps
+from pyspark.sql import DataFrame
 
 
-def split_data(data: ps.DataFrame, parameters: Dict) -> Tuple:
+def split_data(data: DataFrame, parameters: Dict) -> Tuple:
     """Splits data into features and targets training and test sets.
 
     Args:
@@ -21,13 +21,11 @@ def split_data(data: ps.DataFrame, parameters: Dict) -> Tuple:
     """
 
     # Split to training and testing data
-    data_train = data.sample(
-        frac=parameters["train_fraction"], random_state=parameters["random_state"]
-    )
-    data_test = data.drop(data_train.index)
+    data_train, data_test = data.randomSplit(weights=[parameters["train_fraction"], 1-parameters["train_fraction"]])
+    print(data_test)
 
-    X_train = data_train.drop(columns=parameters["target_column"])
-    X_test = data_test.drop(columns=parameters["target_column"])
+    X_train = data_train.drop(parameters["target_column"])
+    X_test = data_test.drop(parameters["target_column"])
     y_train = data_train[parameters["target_column"]]
     y_test = data_test[parameters["target_column"]]
 
@@ -35,8 +33,8 @@ def split_data(data: ps.DataFrame, parameters: Dict) -> Tuple:
 
 
 def make_predictions(
-    X_train: ps.DataFrame, X_test: ps.DataFrame, y_train: ps.DataFrame
-) -> ps.DataFrame:
+    X_train: DataFrame, X_test: DataFrame, y_train: DataFrame
+) -> DataFrame:
     """Uses 1-nearest neighbour classifier to create predictions.
 
     Args:
@@ -61,7 +59,7 @@ def make_predictions(
     return y_pred
 
 
-def report_accuracy(y_pred: ps.DataFrame, y_test: ps.DataFrame):
+def report_accuracy(y_pred: DataFrame, y_test: DataFrame):
     """Calculates and logs the accuracy.
 
     Args:
