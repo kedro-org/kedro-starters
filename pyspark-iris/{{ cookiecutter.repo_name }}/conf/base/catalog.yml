@@ -39,7 +39,7 @@
 # (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
 # https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 #
-# This is a data set used by the "Hello World" example pipeline provided with the project
+# This is a data set used by the iris classification example pipeline provided with this starter
 # template. Please feel free to remove it once you remove the example pipeline.
 
 example_iris_data:
