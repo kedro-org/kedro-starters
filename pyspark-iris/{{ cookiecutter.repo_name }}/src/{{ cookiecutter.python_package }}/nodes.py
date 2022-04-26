@@ -22,7 +22,9 @@ def split_data(data: DataFrame, parameters: Dict) -> Tuple:
     """
 
     # Split to training and testing data
-    data_train, data_test = data.randomSplit(weights=[parameters["train_fraction"], 1-parameters["train_fraction"]])
+    data_train, data_test = data.randomSplit(
+        weights=[parameters["train_fraction"], 1 - parameters["train_fraction"]]
+    )
 
     X_train = data_train.drop(parameters["target_column"])
     X_test = data_test.drop(parameters["target_column"])
