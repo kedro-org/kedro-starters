@@ -7,8 +7,8 @@ import logging
 from typing import Dict, Tuple
 
 import numpy as np
-from pyspark.sql import DataFrame
 import pandas as pd
+from pyspark.sql import DataFrame
 
 
 def split_data(data: DataFrame, parameters: Dict) -> Tuple:
