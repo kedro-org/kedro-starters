@@ -41,11 +41,11 @@ def make_predictions(
 
     Args:
         X_train: Training data of features.
-        y_train: Training data for species.
+        y_train: Training data for target.
         X_test: Test data for features.
 
     Returns:
-        y_pred: Indexes from nearest neighbour.
+        y_pred: Prediction of the target variable.
     """
 
     X_train_numpy = X_train.to_numpy()
@@ -65,8 +65,8 @@ def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
     """Calculates and logs the accuracy.
 
     Args:
-        y_pred: Prediction data.
-        y_test: Testing data for species.
+        y_pred: Predicted target.
+        y_test: True target.
     """
     accuracy = (y_pred == y_test).sum() / len(y_test)
     logger = logging.getLogger(__name__)

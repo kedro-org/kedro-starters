@@ -96,3 +96,11 @@ y_test@pyspark:
 y_test@pandas:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/y_test.parquet
+
+# This is an example how to use `MemoryDataSet` with Spark objects that aren't `DataFrame`'s.
+# In particular, the `assign` copy mode ensures that the `MemoryDataSet` will be assigned
+# the Spark object itself, not a deepcopy version of it, since deepcopy doesn't work with
+# Spark object generally.
+example_classifier:
+  type: MemoryDataSet
+  copy_mode: assign

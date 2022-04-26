@@ -15,28 +15,28 @@ This pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pyspark.pandas.DataFrame` |
+| Type | `pyspark.sql.DataFrame` |
 | Description | DataFrame containing train set features |
 
 ### `y_train`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pyspark.pandas.Series` |
+| Type | `pyspark.sql.Series` |
 | Description | DataFrame containing train set of species. |
 
 ### `X_test`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pyspark.pandas.DataFrame` |
+| Type | `pyspark.sql.DataFrame` |
 | Description | DataFrame containing test set features |
 
 ### `y_test`
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pyspark.pandas.Series` |
+| Type | `pyspark.sql.Series` |
 | Description | DataFrame containing test set of species |
 
 ### `parameters`
@@ -52,5 +52,5 @@ This pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pyspark.pandas.DataFrame` |
+| Type | `pyspark.sql.DataFrame` |
 | Description | Predictions from the 1-nearest neighbour model |
