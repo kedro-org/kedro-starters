@@ -47,16 +47,44 @@ example_iris_data:
   filepath: data/01_raw/iris.csv
   file_format: csv
   load_args:
-    header: true
-    inferSchema: true
+    header: True
+    inferSchema: True
   save_args:
-    sep: ","
-    header: true
+    sep: '|'
+    header: True
 
-# This is an example how to use `MemoryDataSet` with Spark objects that aren't `DataFrame`'s.
-# In particular, the `assign` copy mode ensures that the `MemoryDataSet` will be assigned
-# the Spark object itself, not a deepcopy version of it, since deepcopy doesn't work with
-# Spark object generally.
-example_classifier:
-  type: MemoryDataSet
-  copy_mode: assign
+X_train@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/X_train.parquet
+  file_format: parquet
+
+X_train@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/X_train.parquet
+
+X_test@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/X_test.parquet
+  file_format: parquet
+
+X_test@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/X_test.parquet
+
+y_train@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/y_train.parquet
+  file_format: parquet
+
+y_train@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/y_train.parquet
+
+y_test@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/y_test.parquet
+  file_format: parquet
+
+y_test@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/y_test.parquet

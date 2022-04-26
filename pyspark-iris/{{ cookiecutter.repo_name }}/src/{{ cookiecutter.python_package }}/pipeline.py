@@ -14,18 +14,18 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=split_data,
                 inputs=["example_iris_data", "params:model_options"],
-                outputs=["X_train", "X_test", "y_train", "y_test"],
+                outputs=["X_train@pyspark", "X_test@pyspark", "y_train@pyspark", "y_test@pyspark"],
                 name="split",
             ),
             node(
                 func=make_predictions,
-                inputs=["X_train", "X_test", "y_train"],
+                inputs=["X_train@pandas", "X_test@pandas", "y_train@pandas"],
                 outputs="y_pred",
                 name="make_predictions",
             ),
             node(
                 func=report_accuracy,
-                inputs=["y_pred", "y_test"],
+                inputs=["y_pred", "y_test@pandas"],
                 outputs=None,
                 name="report_accuracy",
             ),

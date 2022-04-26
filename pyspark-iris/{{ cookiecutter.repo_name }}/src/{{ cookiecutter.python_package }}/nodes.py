@@ -8,6 +8,7 @@ from typing import Dict, Tuple
 
 import numpy as np
 from pyspark.sql import DataFrame
+import pandas as pd
 
 
 def split_data(data: DataFrame, parameters: Dict) -> Tuple:
@@ -22,18 +23,19 @@ def split_data(data: DataFrame, parameters: Dict) -> Tuple:
 
     # Split to training and testing data
     data_train, data_test = data.randomSplit(weights=[parameters["train_fraction"], 1-parameters["train_fraction"]])
-    print(data_test)
 
     X_train = data_train.drop(parameters["target_column"])
     X_test = data_test.drop(parameters["target_column"])
-    y_train = data_train[parameters["target_column"]]
-    y_test = data_test[parameters["target_column"]]
+    y_train = data_train.select(parameters["target_column"])
+    y_test = data_test.select(parameters["target_column"])
+
+    print(y_train)
 
     return X_train, X_test, y_train, y_test
 
 
 def make_predictions(
-    X_train: DataFrame, X_test: DataFrame, y_train: DataFrame
+    X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame
 ) -> DataFrame:
     """Uses 1-nearest neighbour classifier to create predictions.
 
@@ -59,7 +61,7 @@ def make_predictions(
     return y_pred
 
 
-def report_accuracy(y_pred: DataFrame, y_test: DataFrame):
+def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
     """Calculates and logs the accuracy.
 
     Args:
