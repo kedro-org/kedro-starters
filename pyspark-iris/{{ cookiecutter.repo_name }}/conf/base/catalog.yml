@@ -53,6 +53,8 @@ example_iris_data:
     sep: '|'
     header: True
 
+# We need to set mode to 'overwrite' in save_args so when saving the dataset it is replaced each time it is run
+# for all SparkDataSets.
 X_train@pyspark:
   type: spark.SparkDataSet
   filepath: data/02_intermediate/X_train.parquet

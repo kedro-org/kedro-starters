@@ -31,8 +31,6 @@ def split_data(data: DataFrame, parameters: Dict) -> Tuple:
     y_train = data_train.select(parameters["target_column"])
     y_test = data_test.select(parameters["target_column"])
 
-    print(y_train)
-
     return X_train, X_test, y_train, y_test
 
 
@@ -72,4 +70,4 @@ def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
     """
     accuracy = (y_pred == y_test).sum() / len(y_test)
     logger = logging.getLogger(__name__)
-    logger.info("Model has a accuracy of %.3f on test data.", accuracy)
+    logger.info("Model has an accuracy of %.3f on test data.", accuracy)
