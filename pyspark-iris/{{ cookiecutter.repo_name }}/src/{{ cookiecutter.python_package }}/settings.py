@@ -4,7 +4,7 @@ https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 from {{cookiecutter.python_package}}.context import ProjectContext
 
 # Instantiated project hooks.
-# from {{cookiecutter.python_package}}.hooks import ProjectHooks
+# from {{ cookiecutter.python_package }}.hooks import ProjectHooks
 # HOOKS = (ProjectHooks(),)
 
 # Installed plugins for which to disable hook auto-registration.
@@ -19,6 +19,7 @@ from {{cookiecutter.python_package}}.context import ProjectContext
 # }
 
 # Class that manages Kedro's library components.
+# from kedro.framework.context import KedroContext
 CONTEXT_CLASS = ProjectContext
 
 # Directory that holds configuration.

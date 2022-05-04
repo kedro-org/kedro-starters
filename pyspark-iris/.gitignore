@@ -4,6 +4,7 @@
 # ignore all local configuration
 conf/local/**
 !conf/local/.gitkeep
+.telemetry
 
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
@@ -20,7 +21,7 @@ logs/**
 !.gitkeep
 
 # also keep the example dataset
-!data/01_raw/*.csv
+!data/01_raw/iris.csv
 
 
 ##########################
