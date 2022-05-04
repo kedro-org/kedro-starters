@@ -50,7 +50,6 @@ example_iris_data:
     header: True
     inferSchema: True
   save_args:
-    sep: '|'
     header: True
 
 # We need to set mode to 'overwrite' in save_args so when saving the dataset it is replaced each time it is run
@@ -58,9 +57,8 @@ example_iris_data:
 X_train@pyspark:
   type: spark.SparkDataSet
   filepath: data/02_intermediate/X_train.parquet
-  file_format: parquet
   save_args:
-    mode: 'overwrite'
+    mode: overwrite
 
 X_train@pandas:
   type: pandas.ParquetDataSet
@@ -69,9 +67,8 @@ X_train@pandas:
 X_test@pyspark:
   type: spark.SparkDataSet
   filepath: data/02_intermediate/X_test.parquet
-  file_format: parquet
   save_args:
-    mode: 'overwrite'
+    mode: overwrite
 
 X_test@pandas:
   type: pandas.ParquetDataSet
@@ -80,9 +77,8 @@ X_test@pandas:
 y_train@pyspark:
   type: spark.SparkDataSet
   filepath: data/02_intermediate/y_train.parquet
-  file_format: parquet
   save_args:
-    mode: 'overwrite'
+    mode: overwrite
 
 y_train@pandas:
   type: pandas.ParquetDataSet
@@ -91,9 +87,8 @@ y_train@pandas:
 y_test@pyspark:
   type: spark.SparkDataSet
   filepath: data/02_intermediate/y_test.parquet
-  file_format: parquet
   save_args:
-    mode: 'overwrite'
+    mode: overwrite
 
 y_test@pandas:
   type: pandas.ParquetDataSet

@@ -61,7 +61,7 @@ def make_predictions(
     return y_pred
 
 
-def report_accuracy(y_pred: pd.DataFrame, y_test: pd.DataFrame):
+def report_accuracy(y_pred: pd.Series, y_test: pd.Series):
     """Calculates and logs the accuracy.
 
     Args:

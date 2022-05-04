@@ -4,7 +4,7 @@
 
 ## Overview
 
-[Transcoding](https://kedro.readthedocs.io/en/stable/data/data_catalog.html#transcoding-datasets) is used to convert the spark dataframes into pandas dataframes after splitting the data into training and testing sets.
+[Transcoding](https://kedro.readthedocs.io/en/stable/data/data_catalog.html#transcoding-datasets) is used to convert the Spark DataFrames into pandas DataFrames after splitting the data into training and testing sets.
 
 This pipeline:
 1. splits the data into training dataset and testing dataset using a configurable ratio found in `conf/base/parameters.yml`
