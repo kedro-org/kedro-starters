@@ -223,5 +223,3 @@ def setup(app):
     for stylesheet in find_stylesheets():
         app.add_css_file(stylesheet)
     # enable rendering RST tables in Markdown
-    
-    

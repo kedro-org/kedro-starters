@@ -22,7 +22,8 @@ import re
 
 from kedro.framework.cli.utils import find_stylesheets
 
-from {{cookiecutter.python_package}} import __version__ as release
+from {{ cookiecutter.python_package }} import __version__ as release
+
 
 # -- Project information -----------------------------------------------------
 
@@ -226,6 +227,3 @@ def setup(app):
     # add Kedro stylesheets
     for stylesheet in find_stylesheets():
         app.add_css_file(stylesheet)
-    # enable rendering RST tables in Markdown
-    
-    
