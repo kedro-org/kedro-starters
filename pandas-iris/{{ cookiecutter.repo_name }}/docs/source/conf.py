@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 
 # {{ cookiecutter.python_package }} documentation build
@@ -22,7 +21,7 @@ import re
 
 from kedro.framework.cli.utils import find_stylesheets
 
-from {{cookiecutter.python_package}} import __version__ as release
+from {{ cookiecutter.python_package }} import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
@@ -117,9 +116,6 @@ html_static_path = ["_static"]
 
 html_show_sourcelink = False
 
-# Removes, from all docs, the copyright footer.
-html_show_copyright = False
-
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
@@ -185,7 +181,7 @@ texinfo_documents = [
         author,
         "{{ cookiecutter.python_package }}",
         "Project {{ cookiecutter.python_package }} codebase.",
-        "Data-Science",
+        "Nearest-Neighbour",
     )
 ]
 

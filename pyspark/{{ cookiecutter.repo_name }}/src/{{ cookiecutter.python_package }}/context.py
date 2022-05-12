@@ -37,7 +37,7 @@ class ProjectContext(KedroContext):
 
         # Initialise the spark session
         spark_session_conf = (
-            SparkSession.builder.appName(self.package_name)
+            SparkSession.builder.appName(self._package_name)
             .enableHiveSupport()
             .config(conf=spark_conf)
         )

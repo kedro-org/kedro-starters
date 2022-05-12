@@ -31,19 +31,13 @@ Out of the box, Kedro's `MemoryDataSet` works with Spark's `DataFrame`. However,
 
 ### An example machine learning pipeline that uses only `PySpark` and `Kedro`
 
-![Iris Pipeline Visualisation](./images/spark_iris_pipeline.png)
+![Iris Pipeline Visualisation](./images/iris_pipeline.png)
 
-This Kedro starter uses the simple and familiar [Iris dataset](https://www.kaggle.com/uciml/iris). It contains the code for an example machine learning pipeline that trains a random forest classifier to classify an iris. 
+This Kedro starter uses the simple and familiar [Iris dataset](https://www.kaggle.com/uciml/iris). It contains the code for an example machine learning pipeline that runs a 1-nearest neighbour classifier to classify an iris. 
+[Transcoding](https://kedro.readthedocs.io/en/stable/data/data_catalog.html#transcoding-datasets) is used to convert the Spark Dataframes into pandas DataFrames after splitting the data into training and testing sets.
 
-The pipeline includes two modular pipelines: one for data engineering and one for data science.
+The pipeline includes:
 
-The data engineering pipeline includes:
-
-* A node to transform multiple features into a single-column features vector using `VectorAssembler`, as well as convert a textual representation of the label column into a numerical one using `StringIndexer`
-* A node to split the transformed data into training dataset and testing dataset using a configurable ratio
-
-The data science pipeline includes:
-
-* A node to train the random forest classifier using `pyspark.ml.classification.RandomForestClassifier`
-* A node to make predictions using this classifier on the testing dataset
-* A node to evaluate the model based on its predictions using `pyspark.ml.evaluation.MulticlassClassificationEvaluator`
+* A node to split the data into training dataset and testing dataset using a configurable ratio
+* A node to run a simple 1-nearest neighbour classifier and make predictions
+* A node to report the accuracy of the predictions performed by the model
