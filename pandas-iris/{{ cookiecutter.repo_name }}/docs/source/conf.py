@@ -21,7 +21,7 @@
 import re
 
 from kedro.framework.cli.utils import find_stylesheets
-from recommonmark.transform import AutoStructify
+
 from {{cookiecutter.python_package}} import __version__ as release
 
 # -- Project information -----------------------------------------------------
@@ -53,8 +53,8 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.mathjax",
     "nbsphinx",
-    "recommonmark",
     "sphinx_copybutton",
+    "myst_parser"
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
@@ -227,5 +227,5 @@ def setup(app):
     for stylesheet in find_stylesheets():
         app.add_css_file(stylesheet)
     # enable rendering RST tables in Markdown
-    app.add_config_value("recommonmark_config", {"enable_eval_rst": True}, True)
-    app.add_transform(AutoStructify)
+    
+    
