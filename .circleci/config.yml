@@ -82,20 +82,19 @@ commands:
             sudo apt-get install default-jdk -y
             echo $JAVA_HOME
             java -version
-            
+
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
-      steps:
-        - run:
-            command: behave features/run.feature
-
+    steps:
+      - run:
+          command: behave features/run.feature
 
   win_e2e_lint:
-    description: Run `kedro lint` end to end tests for all starters
-      steps:
-        - run:
-            command: behave features/lint.feature
-
+    description: Run `kedro lint` end to end tests for all starters on Windows
+    steps:
+      - run:
+          command: behave features/lint.feature
+  
 jobs:
   security_scan:
     parameters:
