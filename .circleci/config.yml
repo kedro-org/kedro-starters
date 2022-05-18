@@ -18,11 +18,11 @@ commands:
         type: string
     steps:
       - checkout
-      - run:
-          name: Grant CircleCI access to dependency locations
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
+      # - run:
+      #     name: Grant CircleCI access to dependency locations
+      #     command: |
+      #       sudo chown -R circleci:circleci /usr/local/bin
+      #       sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
 
       - run:
           name: Install pip setuptools
@@ -60,11 +60,11 @@ commands:
         type: string
     steps:
       - checkout
-      - run:
-          name: Grant CircleCI access to dependency locations
-          command: |
-            subinacl -R circleci:circleci /usr/local/bin
-            subinacl -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
+      # - run:
+      #     name: Grant CircleCI access to dependency locations
+      #     command: |
+      #       subinacl -R circleci:circleci /usr/local/bin
+      #       subinacl -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
 
       - run:
           name: Install pip setuptools
