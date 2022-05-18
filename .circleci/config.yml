@@ -56,33 +56,33 @@ commands:
   # Windows-specific commands
   win_setup_requirements:
     parameters:
-        python_version:
-          type: string
-      steps:
-        - checkout
-        - run:
-            name: Grant CircleCI access to dependency locations
-            command: |
-              sudo chown -R circleci:circleci /usr/local/bin
-              sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
+      python_version:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Grant CircleCI access to dependency locations
+          command: |
+            sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
 
-        - run:
-            name: Install pip setuptools
-            command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
-        - run:
-            name: Install test requirements
-            command: sudo pip install -r test_requirements.txt
-        - run:
-            name: Pip freeze
-            command: pip freeze
-        - run:
-            name: Install OpenJDK
-            command: |
-              sudo apt-get update
-              sudo apt-get install default-jdk -y
-              echo $JAVA_HOME
-              java -version
-
+      - run:
+          name: Install pip setuptools
+          command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
+      - run:
+          name: Install test requirements
+          command: sudo pip install -r test_requirements.txt
+      - run:
+          name: Pip freeze
+          command: pip freeze
+      - run:
+          name: Install OpenJDK
+          command: |
+            sudo apt-get update
+            sudo apt-get install default-jdk -y
+            echo $JAVA_HOME
+            java -version
+            
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
       steps:
