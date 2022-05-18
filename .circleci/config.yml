@@ -49,7 +49,13 @@ commands:
     steps:
       - run:
           command: behave features/lint.feature
+  
+  # Windows-specific commands
+  win_setup_requirements:
 
+  win_e2e_run:
+
+  win_e2e_lint:
 
 jobs:
   security_scan:
@@ -88,6 +94,11 @@ jobs:
       - setup_requirements:
           python_version: <<parameters.python_version>>
       - e2e_lint
+  
+  # Windows-specific jobs
+  win_run:
+
+  win_lint:
 
 
 workflows:
@@ -105,4 +116,8 @@ workflows:
           matrix:
             parameters:
               python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+
+      - win_run:
+
+      - win_lint:
 
