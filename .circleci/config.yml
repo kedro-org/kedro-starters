@@ -140,7 +140,6 @@ jobs:
         type: string
     executor:
       name: win/default
-      python_version: <<parameters.python_version>>
     steps:
       - setup_requirements:
           python_version: <<parameters.python_version>>
@@ -152,7 +151,6 @@ jobs:
         type: string
     executor:
       name: win/default
-      python_version: <<parameters.python_version>>
     steps:
       - setup_requirements:
           python_version: <<parameters.python_version>>
