@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.4.0
+
 executors:
   docker:
     parameters:
@@ -52,10 +55,46 @@ commands:
   
   # Windows-specific commands
   win_setup_requirements:
+    parameters:
+        python_version:
+          type: string
+      steps:
+        - checkout
+        - run:
+            name: Grant CircleCI access to dependency locations
+            command: |
+              sudo chown -R circleci:circleci /usr/local/bin
+              sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
+
+        - run:
+            name: Install pip setuptools
+            command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
+        - run:
+            name: Install test requirements
+            command: sudo pip install -r test_requirements.txt
+        - run:
+            name: Pip freeze
+            command: pip freeze
+        - run:
+            name: Install OpenJDK
+            command: |
+              sudo apt-get update
+              sudo apt-get install default-jdk -y
+              echo $JAVA_HOME
+              java -version
 
   win_e2e_run:
+    description: Run `kedro run` end to end tests for all starters on Windows
+      steps:
+        - run:
+            command: behave features/run.feature
+
 
   win_e2e_lint:
+    description: Run `kedro lint` end to end tests for all starters
+      steps:
+        - run:
+            command: behave features/lint.feature
 
 jobs:
   security_scan:
@@ -97,8 +136,28 @@ jobs:
   
   # Windows-specific jobs
   win_run:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: win/default
+      python_version: <<parameters.python_version>>
+    steps:
+      - setup_requirements:
+          python_version: <<parameters.python_version>>
+      - e2e_run
 
   win_lint:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: win/default
+      python_version: <<parameters.python_version>>
+    steps:
+      - setup_requirements:
+          python_version: <<parameters.python_version>>
+      - e2e_lint
 
 
 workflows:
@@ -118,6 +177,12 @@ workflows:
               python_version: [ "3.7", "3.8", "3.9", "3.10" ]
 
       - win_run:
+          matrix:
+                parameters:
+                  python_version: [ "3.7", "3.8", "3.9", "3.10" ]
 
       - win_lint:
+        matrix:
+            parameters:
+              python_version: [ "3.7", "3.8", "3.9", "3.10" ]
 
