@@ -141,7 +141,7 @@ jobs:
     executor:
       name: win/default
     steps:
-      - setup_requirements:
+      - win_setup_requirements:
           python_version: <<parameters.python_version>>
       - e2e_run
 
@@ -152,7 +152,7 @@ jobs:
     executor:
       name: win/default
     steps:
-      - setup_requirements:
+      - win_setup_requirements:
           python_version: <<parameters.python_version>>
       - e2e_lint
 
