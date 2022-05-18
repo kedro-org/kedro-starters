@@ -71,15 +71,15 @@ commands:
           command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
       - run:
           name: Install test requirements
-          command: sudo pip install -r test_requirements.txt
+          command: pip install -r test_requirements.txt
       - run:
           name: Pip freeze
           command: pip freeze
       - run:
           name: Install OpenJDK
           command: |
-            sudo apt-get update
-            sudo apt-get install default-jdk -y
+            apt-get update
+            apt-get install default-jdk -y
             echo $JAVA_HOME
             java -version
 
