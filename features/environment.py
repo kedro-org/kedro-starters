@@ -15,7 +15,7 @@ def create_new_venv() -> Path:
         path to created venv
     """
     # Create venv
-    venv_dir = Path(tempfile.mkdtemp())
+    venv_dir = Path(tempfile.mkdtemp()).resolve()
     venv.main([str(venv_dir)])
     return venv_dir
 
@@ -23,7 +23,13 @@ def create_new_venv() -> Path:
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
     context.venv_dir = create_new_venv()
-    bin_dir = context.venv_dir / "bin"
+    
+    if os.name == "posix":
+        bin_dir = context.venv_dir / "bin"
+    else:
+        bin_dir = context.venv_dir / "Scripts"
+    
+    context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
     context.python = str(bin_dir / "python")
     context.kedro = str(bin_dir / "kedro")
@@ -40,7 +46,7 @@ def before_scenario(context, scenario):
     }
     context.starters_paths = starters_paths
     subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
-    context.temp_dir = Path(tempfile.mkdtemp())
+    context.temp_dir = Path(tempfile.mkdtemp()).resolve()
 
 
 def after_scenario(context, scenario):
