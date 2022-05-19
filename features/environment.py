@@ -11,6 +11,8 @@ from typing import Set
 
 _PATHS_TO_REMOVE: Set[Path] = set()
 
+from features.steps.sh_run import run
+
 # def create_new_venv() -> Path:
 #     """Create a new venv.
 #     Returns:
@@ -21,6 +23,13 @@ _PATHS_TO_REMOVE: Set[Path] = set()
 #     venv.main([str(venv_dir)])
 #     return venv_dir
 
+def call(cmd, env, verbose=False):
+    res = run(cmd, env=env)
+    if res.returncode or verbose:
+        print(">", " ".join(cmd))
+        print(res.stdout)
+        print(res.stderr)
+    assert res.returncode == 0
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
