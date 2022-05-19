@@ -1,0 +1,5 @@
+{
+    "project_name": "standalone-datacatalog",
+    "repo_name": "{{ cookiecutter.project_name.replace(' ', '-').lower().strip('-') }}",
+    "kedro_version": "{{ cookiecutter.kedro_version }}"
+}

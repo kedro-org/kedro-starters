@@ -124,10 +124,6 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# IPython
-.ipython/profile_default/history.sqlite
-.ipython/profile_default/startup/README
-
 # pyenv
 .python-version
 

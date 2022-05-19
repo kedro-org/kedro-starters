@@ -5,7 +5,6 @@ airflow_settings.yaml
 logs/
 
 # All Kedro project files, except data/ and conf/
-.ipython/
 docs/
 notebooks/
 src/

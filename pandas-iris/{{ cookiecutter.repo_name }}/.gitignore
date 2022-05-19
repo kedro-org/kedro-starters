@@ -128,10 +128,6 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# IPython
-.ipython/profile_default/history.sqlite
-.ipython/profile_default/startup/README
-
 # pyenv
 .python-version
 
@@ -143,6 +139,7 @@ celerybeat-schedule
 
 # Environments
 .env
+.envrc
 .venv
 env/
 venv/
