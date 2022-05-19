@@ -3,4 +3,5 @@ behave>=1.2.6, <2.0
 black~=22.0
 isort~=5.0
 PyYAML>=4.2, <6.0
+psutil==5.8.0
 git+https://github.com/kedro-org/kedro.git@main#egg=kedro
