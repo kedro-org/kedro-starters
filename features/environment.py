@@ -18,7 +18,6 @@ def create_new_venv() -> Path:
         path to created venv
     """
     # Create venv
-    # venv_dir = Path(tempfile.mkdtemp()).resolve()
     venv_dir = _create_tmp_dir()
     venv.main([str(venv_dir)])
     return venv_dir
@@ -45,19 +44,6 @@ def before_scenario(context, scenario):
     context.pip = str(bin_dir / "pip")
     context.kedro = str(bin_dir / "kedro")
     context.python = str(bin_dir / "python")
-
-    # # clone the environment, remove any condas and venvs and insert our venv
-    # context.env = os.environ.copy()
-    # path = context.env["PATH"].split(os.pathsep)
-    # path = [p for p in path if not (Path(p).parent / "pyvenv.cfg").is_file()]
-    # path = [p for p in path if not (Path(p).parent / "conda-meta").is_dir()]
-    # path = [str(bin_dir)] + path
-    # context.env["PATH"] = os.pathsep.join(path)
-    #
-    # # Create an empty pip.conf file and point pip to it
-    # pip_conf_path = context.venv_dir / "pip.conf"
-    # pip_conf_path.touch()
-    # context.env["PIP_CONFIG_FILE"] = str(pip_conf_path)
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
