@@ -47,8 +47,9 @@ def before_scenario(context, scenario):
     
     context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
-    context.python = str(bin_dir / "python")
     context.kedro = str(bin_dir / "kedro")
+    context.python = str(bin_dir / "python")
+
     starters_root = Path(__file__).parents[1]
     starter_names = [
         "astro-airflow-iris",
