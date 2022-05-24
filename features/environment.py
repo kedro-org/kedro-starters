@@ -8,6 +8,10 @@ import tempfile
 import venv
 from pathlib import Path
 
+from typing import Set
+
+_PATHS_TO_REMOVE: Set[Path] = set()
+
 
 def create_new_venv() -> Path:
     """Create a new venv.
@@ -15,10 +19,16 @@ def create_new_venv() -> Path:
         path to created venv
     """
     # Create venv
-    venv_dir = Path(tempfile.mkdtemp()).resolve()
+    # venv_dir = Path(tempfile.mkdtemp()).resolve()
+    venv_dir = _create_tmp_dir()
     venv.main([str(venv_dir)])
     return venv_dir
 
+def _create_tmp_dir() -> Path:
+    """Create a temp directory and add it to _PATHS_TO_REMOVE"""
+    tmp_dir = Path(tempfile.mkdtemp()).resolve()
+    _PATHS_TO_REMOVE.add(tmp_dir)
+    return tmp_dir
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
@@ -47,11 +57,17 @@ def before_scenario(context, scenario):
     context.starters_paths = starters_paths
     subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
     context.temp_dir = Path(tempfile.mkdtemp()).resolve()
+    _PATHS_TO_REMOVE.add(context.temp_dir)
 
+
+# def after_scenario(context, scenario):
+#     rmtree(str(context.temp_dir))
+#     rmtree(str(context.venv_dir))
 
 def after_scenario(context, scenario):
-    rmtree(str(context.temp_dir))
-    rmtree(str(context.venv_dir))
+    for path in _PATHS_TO_REMOVE:
+        # ignore errors when attempting to remove already removed directories
+        shutil.rmtree(path, ignore_errors=True)
 
 
 def rmtree(top):
