@@ -32,12 +32,18 @@ def _create_tmp_dir() -> Path:
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
-    context.venv_dir = create_new_venv()
+    kedro_install_venv_dir = create_new_venv()
+    context.venv_dir = kedro_install_venv_dir
+
+    ## Setup context with venv logic
+    ##context = _setup_context_with_venv(context, kedro_install_venv_dir)
+    ##
     
     if os.name == "posix":
         bin_dir = context.venv_dir / "bin"
     else:
         bin_dir = context.venv_dir / "Scripts"
+        path_sep = ";"
     
     context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
