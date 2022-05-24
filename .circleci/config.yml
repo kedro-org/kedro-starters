@@ -118,6 +118,14 @@ commands:
     description: Run `kedro run` end to end tests for all starters on Windows
     steps:
       - run:
+          command: |
+          name: Setup Hadoop binary
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
+            New-Item -ItemType directory -Path C:\hadoop\bin
+            mv .\winutils.exe C:\hadoop\bin
+            setx /m HADOOP_HOME "C:\hadoop\"
+      - run:
           command: conda activate kedro-starters; behave features/run.feature
 
   win_e2e_lint:
