@@ -24,11 +24,13 @@ def create_new_venv() -> Path:
     venv.main([str(venv_dir)])
     return venv_dir
 
+
 def _create_tmp_dir() -> Path:
     """Create a temp directory and add it to _PATHS_TO_REMOVE"""
     tmp_dir = Path(tempfile.mkdtemp()).resolve()
     _PATHS_TO_REMOVE.add(tmp_dir)
     return tmp_dir
+
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
@@ -38,17 +40,30 @@ def before_scenario(context, scenario):
     ## Setup context with venv logic
     ##context = _setup_context_with_venv(context, kedro_install_venv_dir)
     ##
-    
+
     if os.name == "posix":
         bin_dir = context.venv_dir / "bin"
+        path_sep = ":"
     else:
         bin_dir = context.venv_dir / "Scripts"
         path_sep = ";"
-    
+
     context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
     context.kedro = str(bin_dir / "kedro")
     context.python = str(bin_dir / "python")
+
+    # clone the environment, remove any condas and venvs and insert our venv
+    context.env = os.environ.copy()
+    path = context.env["PATH"].split(path_sep)
+    path = [p for p in path if not (Path(p).parent / "pyvenv.cfg").is_file()]
+    path = [p for p in path if not (Path(p).parent / "conda-meta").is_dir()]
+    path = [str(bin_dir)] + path
+    # Activate environment
+    context.env["PATH"] = path_sep.join(path)
+    # Windows thinks the pip version check warning is a failure
+    # so disable it here.
+    context.env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
@@ -62,7 +77,7 @@ def before_scenario(context, scenario):
         starter: str(starters_root / starter) for starter in starter_names
     }
     context.starters_paths = starters_paths
-    subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
+    subprocess.run([context.pip, "install", "-r", "test_requirements.txt"], env=context.env)
     context.temp_dir = Path(tempfile.mkdtemp()).resolve()
     _PATHS_TO_REMOVE.add(context.temp_dir)
 
