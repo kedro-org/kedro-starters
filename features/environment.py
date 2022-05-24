@@ -37,50 +37,50 @@ def before_scenario(context, scenario):
     tmp_dir = Path(tempfile.mkdtemp()).resolve()
     _PATHS_TO_REMOVE.add(tmp_dir)
     # venv.main([str(tmp_dir)])
-    # context.venv_dir = tmp_dir
+    context.venv_dir = tmp_dir
 
     ## Setup context with venv logic
     ##context = _setup_context_with_venv(context, kedro_install_venv_dir)
     ##
 
-    # if os.name == "posix":
-    #     bin_dir = context.venv_dir / "bin"
-    # else:
-    #     bin_dir = context.venv_dir / "Scripts"
-    #
-    # context.bin_dir = bin_dir
-    # context.pip = str(bin_dir / "pip")
-    # context.kedro = str(bin_dir / "kedro")
-    # context.python = str(bin_dir / "python")
-    #
-    # # clone the environment, remove any condas and venvs and insert our venv
-    # context.env = os.environ.copy()
-    # path = context.env["PATH"].split(os.pathsep)
-    # path = [p for p in path if not (Path(p).parent / "pyvenv.cfg").is_file()]
-    # path = [p for p in path if not (Path(p).parent / "conda-meta").is_dir()]
-    # path = [str(bin_dir)] + path
-    # context.env["PATH"] = os.pathsep.join(path)
-    #
-    # # Create an empty pip.conf file and point pip to it
-    # pip_conf_path = context.venv_dir / "pip.conf"
-    # pip_conf_path.touch()
-    # context.env["PIP_CONFIG_FILE"] = str(pip_conf_path)
-    #
-    # starters_root = Path(__file__).parents[1]
-    # starter_names = [
-    #     "astro-airflow-iris",
-    #     "pandas-iris",
-    #     "pyspark",
-    #     "pyspark-iris",
-    #     "spaceflights",
-    # ]
-    # starters_paths = {
-    #     starter: str(starters_root / starter) for starter in starter_names
-    # }
-    # context.starters_paths = starters_paths
-    # subprocess.run([context.pip, "install", "-r", "test_requirements.txt"], env=context.env)
-    # context.temp_dir = Path(tempfile.mkdtemp()).resolve()
-    # _PATHS_TO_REMOVE.add(context.temp_dir)
+    if os.name == "posix":
+        bin_dir = context.venv_dir / "bin"
+    else:
+        bin_dir = context.venv_dir / "Scripts"
+
+    context.bin_dir = bin_dir
+    context.pip = str(bin_dir / "pip")
+    context.kedro = str(bin_dir / "kedro")
+    context.python = str(bin_dir / "python")
+
+    # clone the environment, remove any condas and venvs and insert our venv
+    context.env = os.environ.copy()
+    path = context.env["PATH"].split(os.pathsep)
+    path = [p for p in path if not (Path(p).parent / "pyvenv.cfg").is_file()]
+    path = [p for p in path if not (Path(p).parent / "conda-meta").is_dir()]
+    path = [str(bin_dir)] + path
+    context.env["PATH"] = os.pathsep.join(path)
+
+    # Create an empty pip.conf file and point pip to it
+    pip_conf_path = context.venv_dir / "pip.conf"
+    pip_conf_path.touch()
+    context.env["PIP_CONFIG_FILE"] = str(pip_conf_path)
+
+    starters_root = Path(__file__).parents[1]
+    starter_names = [
+        "astro-airflow-iris",
+        "pandas-iris",
+        "pyspark",
+        "pyspark-iris",
+        "spaceflights",
+    ]
+    starters_paths = {
+        starter: str(starters_root / starter) for starter in starter_names
+    }
+    context.starters_paths = starters_paths
+    subprocess.run([context.pip, "install", "-r", "test_requirements.txt"], env=context.env)
+    context.temp_dir = Path(tempfile.mkdtemp()).resolve()
+    _PATHS_TO_REMOVE.add(context.temp_dir)
 
 
 # def after_scenario(context, scenario):
