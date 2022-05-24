@@ -43,10 +43,8 @@ def before_scenario(context, scenario):
 
     if os.name == "posix":
         bin_dir = context.venv_dir / "bin"
-        path_sep = ":"
     else:
         bin_dir = context.venv_dir / "Scripts"
-        path_sep = ";"
 
     context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
@@ -55,15 +53,16 @@ def before_scenario(context, scenario):
 
     # clone the environment, remove any condas and venvs and insert our venv
     context.env = os.environ.copy()
-    path = context.env["PATH"].split(path_sep)
+    path = context.env["PATH"].split(os.pathsep)
     path = [p for p in path if not (Path(p).parent / "pyvenv.cfg").is_file()]
     path = [p for p in path if not (Path(p).parent / "conda-meta").is_dir()]
     path = [str(bin_dir)] + path
-    # Activate environment
-    context.env["PATH"] = path_sep.join(path)
-    # Windows thinks the pip version check warning is a failure
-    # so disable it here.
-    context.env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
+    context.env["PATH"] = os.pathsep.join(path)
+
+    # Create an empty pip.conf file and point pip to it
+    pip_conf_path = context.venv_dir / "pip.conf"
+    pip_conf_path.touch()
+    context.env["PIP_CONFIG_FILE"] = str(pip_conf_path)
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
