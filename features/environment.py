@@ -34,10 +34,8 @@ def _create_tmp_dir() -> Path:
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
-    tmp_dir = Path(tempfile.mkdtemp()).resolve()
-    _PATHS_TO_REMOVE.add(tmp_dir)
-    # venv.main([str(tmp_dir)])
-    context.venv_dir = tmp_dir
+    kedro_install_venv_dir = create_new_venv()
+    context.venv_dir = kedro_install_venv_dir
 
     ## Setup context with venv logic
     ##context = _setup_context_with_venv(context, kedro_install_venv_dir)
