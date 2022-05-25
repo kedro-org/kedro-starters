@@ -68,7 +68,7 @@ commands:
     steps:
       - run:
           command: behave features/lint.feature
-  
+
   # Windows-specific commands
   win_setup_conda:
     # Miniconda3 is pre-installed on the machine:
@@ -90,22 +90,25 @@ commands:
       python_version:
         type: string
     steps:
-      # - checkout
-      - run:
-          name: Activate conda environment
-          command: conda activate kedro-starters
       - run:
           name: Install pip setuptools
-          command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
+          command: |
+            conda activate kedro-starters
+            python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
       - run:
           name: Install test requirements
-          command: pip install -r test_requirements.txt
+          command: |
+            conda activate kedro-starters
+            pip install -r test_requirements.txt
       - run:
           name: Pip freeze
-          command: pip freeze
+          command: |
+            conda activate kedro-starters
+            pip freeze
       - run:
           name: Install OpenJDK
           command: |
+            conda activate kedro-starters
             apt-get update
             apt-get install default-jdk -y
             echo $JAVA_HOME
@@ -115,14 +118,18 @@ commands:
     description: Run `kedro run` end to end tests for all starters on Windows
     steps:
       - run:
-          command: behave features/run.feature
+          command: |
+            conda activate kedro-starters 
+            behave features/run.feature
 
   win_e2e_lint:
     description: Run `kedro lint` end to end tests for all starters on Windows
     steps:
       - run:
-          command: behave features/lint.feature
-  
+          command: |
+            conda activate kedro-starters 
+            behave features/lint.feature
+
 jobs:
   security_scan:
     parameters:
@@ -160,7 +167,7 @@ jobs:
       - setup_requirements:
           python_version: <<parameters.python_version>>
       - e2e_lint
-  
+
   # Windows-specific jobs
   win_run:
     parameters:

@@ -2,7 +2,6 @@
 
 import os
 import shutil
-import stat
 import subprocess
 import tempfile
 import venv
@@ -19,10 +18,10 @@ def create_new_venv() -> Path:
         path to created venv
     """
     # Create venv
-    # venv_dir = Path(tempfile.mkdtemp()).resolve()
     venv_dir = _create_tmp_dir()
     venv.main([str(venv_dir)])
     return venv_dir
+
 
 def _create_tmp_dir() -> Path:
     """Create a temp directory and add it to _PATHS_TO_REMOVE"""
@@ -30,21 +29,17 @@ def _create_tmp_dir() -> Path:
     _PATHS_TO_REMOVE.add(tmp_dir)
     return tmp_dir
 
+
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
     kedro_install_venv_dir = create_new_venv()
     context.venv_dir = kedro_install_venv_dir
 
-    ## Setup context with venv logic
-    ##context = _setup_context_with_venv(context, kedro_install_venv_dir)
-    ##
-    
     if os.name == "posix":
         bin_dir = context.venv_dir / "bin"
     else:
         bin_dir = context.venv_dir / "Scripts"
-        path_sep = ";"
-    
+
     context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
     context.kedro = str(bin_dir / "kedro")
@@ -67,19 +62,7 @@ def before_scenario(context, scenario):
     _PATHS_TO_REMOVE.add(context.temp_dir)
 
 
-# def after_scenario(context, scenario):
-#     rmtree(str(context.temp_dir))
-#     rmtree(str(context.venv_dir))
-
 def after_scenario(context, scenario):
     for path in _PATHS_TO_REMOVE:
         # ignore errors when attempting to remove already removed directories
         shutil.rmtree(path, ignore_errors=True)
-
-
-def rmtree(top):
-    if os.name != "posix":
-        for root, _, files in os.walk(top, topdown=False):
-            for name in files:
-                os.chmod(os.path.join(root, name), stat.S_IWUSR)
-    shutil.rmtree(top)
