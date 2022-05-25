@@ -105,14 +105,6 @@ commands:
           command: |
             conda activate kedro-starters
             pip freeze
-      - run:
-          name: Install OpenJDK
-          command: |
-            conda activate kedro-starters
-            apt-get update
-            apt-get install default-jdk -y
-            echo $JAVA_HOME
-            java -version
 
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
