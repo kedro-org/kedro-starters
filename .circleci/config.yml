@@ -118,13 +118,17 @@ commands:
     description: Run `kedro run` end to end tests for all starters on Windows
     steps:
       - run:
-          command: conda activate kedro-starters; behave features/run.feature
+          command: |
+            conda activate kedro-starters 
+            behave features/run.feature
 
   win_e2e_lint:
     description: Run `kedro lint` end to end tests for all starters on Windows
     steps:
       - run:
-          command: conda activate kedro-starters; behave features/lint.feature
+          command: |
+            conda activate kedro-starters 
+            behave features/lint.feature
 
 jobs:
   security_scan:
