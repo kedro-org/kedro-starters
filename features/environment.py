@@ -10,7 +10,13 @@ from pathlib import Path
 from typing import Set
 
 _PATHS_TO_REMOVE: Set[Path] = set()
+_PYSPARK_IRIS_TAG = "pyspark_iris"
 
+def before_all(context):
+    pass
+
+    context.scenario_metadata_dict = {}
+    context.feature_metadata = {'skip_scenario': True}
 
 def create_new_venv() -> Path:
     """Create a new venv.
@@ -32,6 +38,12 @@ def _create_tmp_dir() -> Path:
 
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
+
+    # Skip pyspark-iris on Windows CI (for now)
+    if _PYSPARK_IRIS_TAG in scenario.tags and os.name != "posix":
+        scenario.skip("pyspark-iris is not set up for Windows CI")
+        return
+
     kedro_install_venv_dir = create_new_venv()
     context.venv_dir = kedro_install_venv_dir
 
