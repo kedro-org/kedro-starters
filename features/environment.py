@@ -12,11 +12,6 @@ from typing import Set
 _PATHS_TO_REMOVE: Set[Path] = set()
 _PYSPARK_IRIS_TAG = "pyspark_iris"
 
-def before_all(context):
-    pass
-
-    context.scenario_metadata_dict = {}
-    context.feature_metadata = {'skip_scenario': True}
 
 def create_new_venv() -> Path:
     """Create a new venv.
