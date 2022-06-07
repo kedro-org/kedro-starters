@@ -69,7 +69,7 @@ def before_scenario(context, scenario):
     _PATHS_TO_REMOVE.add(context.temp_dir)
 
 
-def after_scenario(context, scenario):
+def after_all():
     for path in _PATHS_TO_REMOVE:
         # ignore errors when attempting to remove already removed directories
         shutil.rmtree(path, ignore_errors=True)
