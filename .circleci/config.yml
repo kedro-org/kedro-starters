@@ -21,11 +21,8 @@ commands:
           command: python --version
       - run:
           name: Install Python dependencies
-          command: |
-            pip install git+https://github.com/kedro-org/kedro@main
-            cd package && pip install -r requirements.txt -U
-            pip install -r test_requirements.txt -U
-            cd ..
+          command: pip install -r test_requirements.txt -U
+            
       - run:
           name: Echo package versions
           command: |
