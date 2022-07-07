@@ -2,11 +2,15 @@
 
 import os
 import shutil
-import stat
 import subprocess
 import tempfile
 import venv
 from pathlib import Path
+
+from typing import Set
+
+_PATHS_TO_REMOVE: Set[Path] = set()
+_PYSPARK_IRIS_TAG = "pyspark_iris"
 
 
 def create_new_venv() -> Path:
@@ -15,18 +19,39 @@ def create_new_venv() -> Path:
         path to created venv
     """
     # Create venv
-    venv_dir = Path(tempfile.mkdtemp())
+    venv_dir = _create_tmp_dir()
     venv.main([str(venv_dir)])
     return venv_dir
 
 
+def _create_tmp_dir() -> Path:
+    """Create a temp directory and add it to _PATHS_TO_REMOVE"""
+    tmp_dir = Path(tempfile.mkdtemp()).resolve()
+    _PATHS_TO_REMOVE.add(tmp_dir)
+    return tmp_dir
+
+
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
-    context.venv_dir = create_new_venv()
-    bin_dir = context.venv_dir / "bin"
+
+    # Skip pyspark-iris on Windows CI (for now)
+    if _PYSPARK_IRIS_TAG in scenario.tags and os.name != "posix":
+        scenario.skip("pyspark-iris is not set up for Windows CI")
+        return
+
+    kedro_install_venv_dir = create_new_venv()
+    context.venv_dir = kedro_install_venv_dir
+
+    if os.name == "posix":
+        bin_dir = context.venv_dir / "bin"
+    else:
+        bin_dir = context.venv_dir / "Scripts"
+
+    context.bin_dir = bin_dir
     context.pip = str(bin_dir / "pip")
-    context.python = str(bin_dir / "python")
     context.kedro = str(bin_dir / "kedro")
+    context.python = str(bin_dir / "python")
+
     starters_root = Path(__file__).parents[1]
     starter_names = [
         "astro-airflow-iris",
@@ -40,17 +65,11 @@ def before_scenario(context, scenario):
     }
     context.starters_paths = starters_paths
     subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
-    context.temp_dir = Path(tempfile.mkdtemp())
+    context.temp_dir = Path(tempfile.mkdtemp()).resolve()
+    _PATHS_TO_REMOVE.add(context.temp_dir)
 
 
-def after_scenario(context, scenario):
-    rmtree(str(context.temp_dir))
-    rmtree(str(context.venv_dir))
-
-
-def rmtree(top):
-    if os.name != "posix":
-        for root, _, files in os.walk(top, topdown=False):
-            for name in files:
-                os.chmod(os.path.join(root, name), stat.S_IWUSR)
-    shutil.rmtree(top)
+def after_all(context):
+    for path in _PATHS_TO_REMOVE:
+        # ignore errors when attempting to remove already removed directories
+        shutil.rmtree(path, ignore_errors=True)

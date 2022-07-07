@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@2.4.1
+
 executors:
   docker:
     parameters:
@@ -9,18 +12,31 @@ executors:
       - image: circleci/python:<<parameters.python_version>>
 
 commands:
+##
+  setup_python_env:
+    description: Setup Python environment
+    steps:
+      - run:
+          name: Install Python
+          command: python --version
+      - run:
+          name: Install Python dependencies
+          command: pip install -r test_requirements.txt -U
+            
+      - run:
+          name: Echo package versions
+          command: |
+            python -V
+            pip -V
+            kedro -V
+##
+
   setup_requirements:
     parameters:
       python_version:
         type: string
     steps:
       - checkout
-      - run:
-          name: Grant CircleCI access to dependency locations
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python<<parameters.python_version>>/site-packages
-
       - run:
           name: Install pip setuptools
           command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
@@ -50,6 +66,58 @@ commands:
       - run:
           command: behave features/lint.feature
 
+  # Windows-specific commands
+  win_setup_conda:
+    # Miniconda3 is pre-installed on the machine:
+    # https://circleci.com/docs/2.0/hello-world-windows/
+    description: Setup conda
+    parameters:
+      python_version:
+        type: string
+    steps:
+      - run:
+          name: Initialize conda
+          command: conda init powershell
+      - run:
+          name: Create 'kedro-starters' conda environment
+          command: conda create --name kedro-starters python=<<parameters.python_version>> -y
+
+  win_setup_requirements:
+    parameters:
+      python_version:
+        type: string
+    steps:
+      - run:
+          name: Install pip setuptools
+          command: |
+            conda activate kedro-starters
+            python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
+      - run:
+          name: Install test requirements
+          command: |
+            conda activate kedro-starters
+            pip install -r test_requirements.txt
+      - run:
+          name: Pip freeze
+          command: |
+            conda activate kedro-starters
+            pip freeze
+
+  win_e2e_run:
+    description: Run `kedro run` end to end tests for all starters on Windows
+    steps:
+      - run:
+          command: |
+            conda activate kedro-starters 
+            behave features/run.feature
+
+  win_e2e_lint:
+    description: Run `kedro lint` end to end tests for all starters on Windows
+    steps:
+      - run:
+          command: |
+            conda activate kedro-starters 
+            behave features/lint.feature
 
 jobs:
   security_scan:
@@ -89,6 +157,35 @@ jobs:
           python_version: <<parameters.python_version>>
       - e2e_lint
 
+  # Windows-specific jobs
+  win_run:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - win_setup_conda:
+          python_version: <<parameters.python_version>>
+      - win_setup_requirements:
+          python_version: <<parameters.python_version>>
+      - win_e2e_run
+
+  win_lint:
+    parameters:
+      python_version:
+        type: string
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - win_setup_conda:
+          python_version: <<parameters.python_version>>
+      - win_setup_requirements:
+          python_version: <<parameters.python_version>>
+      - win_e2e_lint
+
 
 workflows:
   version: 2.1
@@ -106,3 +203,12 @@ workflows:
             parameters:
               python_version: [ "3.7", "3.8", "3.9", "3.10" ]
 
+      - win_run:
+          matrix:
+                parameters:
+                  python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+
+      - win_lint:
+          matrix:
+                parameters:
+                  python_version: [ "3.7", "3.8", "3.9", "3.10" ]
