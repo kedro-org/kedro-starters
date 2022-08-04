@@ -102,6 +102,22 @@ commands:
           command: |
             conda activate kedro-starters
             pip freeze
+      - run:
+          name: Install Java 8
+          command: |
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
+            Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
+      - run:
+          name: Create Inbound rules for Java
+          command: |
+            New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
+            New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
+      - run:
+          name: Set Java environment variables
+          command: |
+            [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
+            setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
 
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
