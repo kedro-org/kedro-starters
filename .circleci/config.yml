@@ -202,7 +202,6 @@ jobs:
       - checkout
       - win_setup_conda:
           python_version: <<parameters.python_version>>
-      - win_setup_env:
       - win_setup_requirements:
           python_version: <<parameters.python_version>>
       - win_e2e_run
@@ -217,7 +216,6 @@ jobs:
       - checkout
       - win_setup_conda:
           python_version: <<parameters.python_version>>
-      - win_setup_env:
       - win_setup_requirements:
           python_version: <<parameters.python_version>>
       - win_e2e_lint
