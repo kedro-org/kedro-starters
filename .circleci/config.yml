@@ -109,12 +109,12 @@ commands:
             $ProgressPreference = "SilentlyContinue"
             Invoke-WebRequest https://aka.ms/vs/16/release/vc_redist.x64.exe -OutFile vc_redist.x64.exe
             .\vc_redist.x64.exe /S /v/qn
-            - run:
-                name: Install Java 8
-                command: |
-                  $ProgressPreference = "SilentlyContinue"
-                  Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
-                  Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
+      - run:
+          name: Install Java 8
+          command: |
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
+            Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
       - run:
           name: Create Inbound rules for Java
           command: |
