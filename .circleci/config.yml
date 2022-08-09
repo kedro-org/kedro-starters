@@ -123,7 +123,6 @@ commands:
             [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
             setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
             echo $JAVA_HOME
-            java -version
       - run:
           name: Setup Hadoop binary
           command: |
