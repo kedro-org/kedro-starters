@@ -106,8 +106,6 @@ commands:
           name: Uninstall OpenJDK
           command: |
             choco uninstall openjdk -x
-            echo $JAVA_HOME
-            java -version
       - run:
           name: Install Java 8
           command: |
@@ -124,6 +122,8 @@ commands:
           command: |
             [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
             setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
+            echo $JAVA_HOME
+            java -version
       - run:
           name: Setup Hadoop binary
           command: |
