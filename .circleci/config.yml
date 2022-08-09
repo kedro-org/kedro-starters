@@ -109,7 +109,27 @@ commands:
       - run:
           name: Install Java 8
           command: |
-            choco install openjdk
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_windows_11.0.16_8.zip -OutFile OpenJDK8U.zip
+            Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
+      - run:
+          name: Create Inbound rules for Java
+          command: |
+            New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-11.0.16_8\bin\java.exe" -Action Allow
+            New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-11.0.16_8\bin\java.exe" -Action Allow
+      - run:
+          name: Set Java environment variables
+          command: |
+            [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-11.0.16_8\bin", "Machine")
+            setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-11.0.16_8"
+      - run:
+          name: Setup Hadoop binary
+          command: |
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest https://github.com/cdarlint/winutils/tree/master/hadoop-3.2.2/bin/winutils.exe -OutFile winutils.exe
+            New-Item -ItemType directory -Path C:\hadoop\bin
+            mv .\winutils.exe C:\hadoop\bin
+            setx /m HADOOP_HOME "C:\hadoop\"
       - run:
           name: Install 'make' command
           command: choco install make
