@@ -106,7 +106,7 @@ commands:
           # Required for Tensorflow tests
           name: Install OpenJDK
           command: |
-            choco install openjdk
+            choco install openjdk --version=11.0.16 --allow-downgrade
             echo $JAVA_HOME
             java -version
       - run:
