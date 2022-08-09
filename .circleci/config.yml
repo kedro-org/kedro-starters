@@ -109,7 +109,7 @@ commands:
       - run:
           name: Install Java 8
           command: |
-            choco install openjdk --version=11.0
+            choco install openjdk
       - run:
           name: Install 'make' command
           command: choco install make
