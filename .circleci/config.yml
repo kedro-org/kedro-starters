@@ -134,9 +134,6 @@ commands:
             Move-Item .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
             setx /m path "%path%;C:\hadoop\bin"
-      - run:
-          name: Install 'make' command
-          command: choco install make
 
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
