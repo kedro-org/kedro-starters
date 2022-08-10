@@ -129,7 +129,6 @@ commands:
             Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
             Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin/hadoop.dll -OutFile hadoop.dll
             New-Item -ItemType directory -Path C:\hadoop\bin
-            copy .\hadoop.dll C:\Windows\System32
             mv .\winutils.exe C:\hadoop\bin
             mv .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
