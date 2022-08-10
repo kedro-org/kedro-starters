@@ -110,24 +110,24 @@ commands:
           name: Install Java 8
           command: |
             $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.16%2B8/OpenJDK11U-jdk_x64_windows_11.0.16_8.zip -OutFile OpenJDK8U.zip
+            Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
             Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
       - run:
           name: Create Inbound rules for Java
           command: |
-            New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-11.0.16_8\bin\java.exe" -Action Allow
-            New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-11.0.16_8\bin\java.exe" -Action Allow
+            New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
+            New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
       - run:
           name: Set Java environment variables
           command: |
-            [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-11.0.16_8\bin", "Machine")
-            setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-11.0.16_8"
+            [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
+            setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
       - run:
           name: Setup Hadoop binary
           command: |
             $ProgressPreference = "SilentlyContinue"
             Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
-            Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin/hadoop.dll -OutFile hadoop.dll
+            Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.3/bin/hadoop.dll -OutFile hadoop.dll
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
             Copy-Item .\hadoop.dll C:\Windows\System32
