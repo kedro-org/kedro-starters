@@ -126,7 +126,7 @@ commands:
           name: Setup Hadoop binary
           command: |
             $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest https://github.com/cdarlint/winutils/tree/master/hadoop-2.6.1/bin/winutils.exe -OutFile winutils.exe
+            Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin/winutils.exe -OutFile winutils.exe
             New-Item -ItemType directory -Path C:\hadoop\bin
             mv .\winutils.exe C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
