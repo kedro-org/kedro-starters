@@ -130,9 +130,10 @@ commands:
             Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.4/bin/hadoop.dll -OutFile hadoop.dll
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
+            Copy-Item .\hadoop.dll C:\Windows\System32
             Move-Item .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
-            pathman /au "C:\hadoop\bin"
+            setx /m path "%path%;C:\hadoop\bin"
       - run:
           name: Install 'make' command
           command: choco install make
