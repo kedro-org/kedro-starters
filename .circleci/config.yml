@@ -133,9 +133,10 @@ commands:
             Copy-Item .\hadoop.dll C:\Windows\System32
             Move-Item .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
-            setx /M PATH "$env:path%;C:\hadoop"
+            $newPath = 'C:\hadoop\'
+            $oldPath = [Environment]::GetEnvironmentVariable('PATH', 'Machine');
+            [Environment]::SetEnvironmentVariable('PATH', "$newPath;$oldPath",'Machine');
             echo $env:path
-            echo PATH
       - run:
           name: Install 'make' command
           command: choco install make
