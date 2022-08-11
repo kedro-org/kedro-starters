@@ -133,7 +133,6 @@ commands:
             Copy-Item .\hadoop.dll C:\Windows\System32
             Move-Item .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
-            setx /m PATH %PATH%;"C:\hadoop\bin"
       - run:
           name: Install 'make' command
           command: choco install make
