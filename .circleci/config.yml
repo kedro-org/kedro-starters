@@ -132,7 +132,6 @@ commands:
             Move-Item .\winutils.exe C:\hadoop\bin
             Move-Item .\hadoop.dll C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop\"
-            setx /M PATH "%PATH%;C:\hadoop\bin"
       - run:
           name: Install 'make' command
           command: choco install make
