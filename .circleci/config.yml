@@ -126,14 +126,14 @@ commands:
           name: Setup Hadoop binary
           command: |
             $ProgressPreference = "SilentlyContinue"
-            Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
-            Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/hadoop.dll -OutFile hadoop.dll
+            Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true -OutFile winutils.exe
+            Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true -OutFile hadoop.dll
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
             Copy-Item .\hadoop.dll C:\Windows\System32
             Move-Item .\hadoop.dll C:\hadoop\bin
-            setx /m HADOOP_HOME "C:\hadoop\"
-            $newPath = 'C:\hadoop\'
+            setx /m HADOOP_HOME "C:\hadoop"
+            $newPath = 'C:\hadoop'
             $oldPath = [Environment]::GetEnvironmentVariable('PATH', 'Machine');
             [Environment]::SetEnvironmentVariable('PATH', "$newPath;$oldPath",'Machine');
             echo $env:path
