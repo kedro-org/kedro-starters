@@ -110,6 +110,7 @@ commands:
             Move-Item .\hadoop.dll C:\Windows\System32
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
+            setx /m HADOOP_HOME "C:\hadoop"
 
   win_e2e_run:
     description: Run `kedro run` end to end tests for all starters on Windows
