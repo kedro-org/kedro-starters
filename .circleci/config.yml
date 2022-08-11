@@ -127,7 +127,7 @@ commands:
           command: |
             $ProgressPreference = "SilentlyContinue"
             Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
-            Invoke-WebRequest https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.3/bin/hadoop.dll -OutFile hadoop.dll
+            Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/hadoop.dll -OutFile hadoop.dll
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
             Copy-Item .\hadoop.dll C:\Windows\System32
