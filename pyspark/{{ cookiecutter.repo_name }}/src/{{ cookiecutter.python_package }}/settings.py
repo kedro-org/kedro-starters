@@ -3,7 +3,8 @@ from the Kedro defaults. For further information, including these default values
 https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 
 # Instantiated project hooks.
-from {{cookiecutter.python_package}}.hooks import SparkHooks
+from pyspark_hooks.hooks import SparkHooks
+
 HOOKS = (SparkHooks(),)
 
 # Installed plugins for which to disable hook auto-registration.
