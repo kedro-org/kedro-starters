@@ -1,11 +1,10 @@
 """Project settings. There is no need to edit this file unless you want to change values
 from the Kedro defaults. For further information, including these default values, see
 https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
-from {{cookiecutter.python_package}}.context import ProjectContext
 
 # Instantiated project hooks.
-# from {{ cookiecutter.python_package }}.hooks import ProjectHooks
-# HOOKS = (ProjectHooks(),)
+from {{cookiecutter.python_package}}.hooks import SparkHooks
+HOOKS = (SparkHooks(),)
 
 # Installed plugins for which to disable hook auto-registration.
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
@@ -20,7 +19,7 @@ from {{cookiecutter.python_package}}.context import ProjectContext
 
 # Class that manages Kedro's library components.
 # from kedro.framework.context import KedroContext
-CONTEXT_CLASS = ProjectContext
+# CONTEXT_CLASS = KedroContext
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
