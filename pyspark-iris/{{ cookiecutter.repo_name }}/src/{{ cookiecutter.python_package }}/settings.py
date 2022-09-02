@@ -4,7 +4,6 @@ https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 
 # Instantiated project hooks.
 from {{cookiecutter.python_package}}.hooks import SparkHooks
-
 HOOKS = (SparkHooks(),)
 
 # Installed plugins for which to disable hook auto-registration.
