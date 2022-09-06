@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Set
 
 _PATHS_TO_REMOVE: Set[Path] = set()
-_PYSPARK_IRIS_TAG = "pyspark_iris"
 
 
 def create_new_venv() -> Path:

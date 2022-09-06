@@ -23,7 +23,6 @@ Feature: Run all starters
     When I execute the CLI command to list Kedro pipelines
     Then I should get a successful exit code
 
-  @pyspark_iris
   Scenario: Run a Kedro project created from pyspark-iris
     Given I have prepared a config file
     And I have run a non-interactive kedro new with the starter pyspark-iris
