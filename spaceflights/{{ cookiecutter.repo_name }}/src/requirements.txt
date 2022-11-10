@@ -5,7 +5,8 @@ isort~=5.0
 jupyter~=1.0
 jupyterlab_server>=2.11.1, <2.16.0
 jupyterlab~=3.0
-kedro~=0.18.3
+kedro~={{ cookiecutter.kedro_version }}
+kedro-datasets[pandas.CSVDataSet, pandas.ExcelDataSet, pandas.ParquetDataSet]
 kedro-telemetry~=0.2.0
 nbstripout~=0.4
 pytest-cov~=3.0
