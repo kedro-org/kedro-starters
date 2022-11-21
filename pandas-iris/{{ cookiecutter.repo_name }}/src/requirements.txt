@@ -5,6 +5,7 @@ isort~=5.0
 jupyter~=1.0
 jupyterlab~=3.0
 kedro~={{ cookiecutter.kedro_version }}
+kedro-viz
 kedro-datasets[pandas.CSVDataSet]
 kedro-telemetry~=0.2.0
 nbstripout~=0.4
