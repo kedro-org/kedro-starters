@@ -21,8 +21,7 @@
 import re
 
 from kedro.framework.cli.utils import find_stylesheets
-
-from {{ cookiecutter.python_package }} import __version__ as release
+from {{cookiecutter.python_package}} import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
