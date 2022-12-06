@@ -42,43 +42,30 @@
 companies:
   type: pandas.CSVDataSet
   filepath: data/01_raw/companies.csv
-  # more about layers in the Data Engineering Convention:
-  # https://kedro.readthedocs.io/en/stable/tutorial/visualise_pipeline.html#interact-with-data-engineering-convention
-  layer: raw
 
 reviews:
   type: pandas.CSVDataSet
   filepath: data/01_raw/reviews.csv
-  layer: raw
 
 shuttles:
   type: pandas.ExcelDataSet
   filepath: data/01_raw/shuttles.xlsx
-  layer: raw
+  load_args:
+    engine: openpyxl # Use modern Excel engine, it is the default since Kedro 0.18.0
 
-data_processing.preprocessed_companies:
+preprocessed_companies:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/preprocessed_companies.pq
-  layer: intermediate
 
-data_processing.preprocessed_shuttles:
+preprocessed_shuttles:
   type: pandas.ParquetDataSet
   filepath: data/02_intermediate/preprocessed_shuttles.pq
-  layer: intermediate
 
 model_input_table:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/model_input_table.pq
-  layer: primary
 
-data_science.active_modelling_pipeline.regressor:
+regressor:
   type: pickle.PickleDataSet
-  filepath: data/06_models/regressor_active.pickle
+  filepath: data/06_models/regressor.pickle
   versioned: true
-  layer: models
-
-data_science.candidate_modelling_pipeline.regressor:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/regressor_candidate.pickle
-  versioned: true
-  layer: models
