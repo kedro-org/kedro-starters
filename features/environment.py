@@ -57,7 +57,7 @@ def before_scenario(context, scenario):
         starter: str(starters_root / starter) for starter in starter_names
     }
     context.starters_paths = starters_paths
-    subprocess.run([context.pip, "install", "-r", "test_requirements.txt"])
+    subprocess.run([context.python, "-m", "pip", "install", "-r", "test_requirements.txt"])
     context.temp_dir = Path(tempfile.mkdtemp()).resolve()
     _PATHS_TO_REMOVE.add(context.temp_dir)
 
