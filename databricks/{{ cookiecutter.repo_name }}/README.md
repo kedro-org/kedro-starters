@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a sample Kedro project, which was generated using `Kedro 0.18.4`.
+This is a sample Kedro project, which was generated using `Kedro {{ cookiecutter.kedro_version }}`.
 
 Take a look at the [Kedro documentation](https://kedro.readthedocs.io) for more info on Kedro.
 
@@ -143,7 +143,7 @@ include = ["src/<PACKAGE NAME>/conf/**/.gitkeep"]
 exclude = ["src/<PACKAGE NAME>/conf/local/*.yml"]
 ```
 
-Where `<PACKAGE NAME>` is the name of your package, in this case `poetry-spaceflights`.
+Where `<PACKAGE NAME>` is the name of your package, in this case `{{ cookiecutter.python_package }}`.
 
 ### Creating a wheel
 
