@@ -7,7 +7,7 @@ project_version = "{{ cookiecutter.kedro_version }}"
 name = "{{ cookiecutter.python_package }}"
 version = "0.1.0"
 description = ""
-authors = [""]
+authors = ["PLACEHOLDER"]
 readme = "README.md"
 packages = [
     { include = "{{ cookiecutter.python_package }}", from = "src" },
