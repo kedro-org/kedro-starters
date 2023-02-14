@@ -1,0 +1,11 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+test_input:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/input.csv
+
+test_output:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/output_${env}.csv

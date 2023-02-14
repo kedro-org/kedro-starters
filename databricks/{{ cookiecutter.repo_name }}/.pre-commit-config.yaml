@@ -1,0 +1,47 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_language_version:
+  python: python3.9
+
+repos:
+  -   repo: local
+      hooks:
+      -   id: black
+          name: black
+          language: system
+          entry: poetry run black src
+          files: src
+          pass_filenames: false
+      -   id: mypy
+          name: mypy
+          language: system
+          entry: poetry run mypy src
+          files: src
+          pass_filenames: false
+          args: ["--ignore-missing-imports"]
+      -   id: flake8
+          name: flake8
+          language: system
+          entry: poetry run flake8 src
+          files: src
+          pass_filenames: false
+          types: [python]
+      -   id: isort
+          name: isort
+          language: system
+          entry: poetry run isort src
+          files: src
+          pass_filenames: false
+          args: ["--profile", "black"]
+      -   id: pylint
+          name: pylint
+          language: system
+          entry: poetry run pylint src
+          files: src
+          pass_filenames: false
+      -   id: pytest
+          name: pytest
+          language: system
+          files: src/
+          pass_filenames: false
+          entry: poetry run pytest
