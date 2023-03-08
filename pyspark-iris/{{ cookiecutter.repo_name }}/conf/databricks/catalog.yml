@@ -1,0 +1,103 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# An example data set definition can look as follows:
+#
+#bikes:
+#  type: pandas.CSVDataSet
+#  filepath: "data/01_raw/bikes.csv"
+#
+#weather:
+#  type: spark.SparkDataSet
+#  filepath: s3a://your_bucket/data/01_raw/weather*
+#  file_format: csv
+#  credentials: dev_s3
+#  load_args:
+#    header: True
+#    inferSchema: True
+#  save_args:
+#    sep: '|'
+#    header: True
+#
+#scooters:
+#  type: pandas.SQLTableDataSet
+#  credentials: scooters_credentials
+#  table_name: scooters
+#  load_args:
+#    index_col: ['name']
+#    columns: ['name', 'gear']
+#  save_args:
+#    if_exists: 'replace'
+#    # if_exists: 'fail'
+#    # if_exists: 'append'
+#
+# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+#
+# This is a data set used by the iris classification example pipeline provided with this starter
+# template. Please feel free to remove it once you remove the example pipeline.
+
+example_iris_data:
+  type: spark.SparkDataSet
+  filepath: data/01_raw/iris.csv
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    header: True
+
+# We need to set mode to 'overwrite' in save_args so when saving the dataset it is replaced each time it is run
+# for all SparkDataSets.
+X_train@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/X_train.parquet
+  save_args:
+    mode: overwrite
+
+X_train@pandas:
+  type: pandas.ParquetDataSet
+  filepath: /dbfs/root/projects/iris-databricks/data/02_intermediate/X_train.parquet
+
+X_test@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/X_test.parquet
+  save_args:
+    mode: overwrite
+
+X_test@pandas:
+  type: pandas.ParquetDataSet
+  filepath: /dbfs/root/projects/iris-databricks/data/02_intermediate/X_test.parquet
+
+y_train@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/y_train.parquet
+  save_args:
+    mode: overwrite
+
+y_train@pandas:
+  type: pandas.ParquetDataSet
+  filepath: /dbfs/root/projects/iris-databricks/data/02_intermediate/y_train.parquet
+
+y_test@pyspark:
+  type: spark.SparkDataSet
+  filepath: data/02_intermediate/y_test.parquet
+  save_args:
+    mode: overwrite
+
+y_test@pandas:
+  type: pandas.ParquetDataSet
+  filepath: /dbfs/root/projects/iris-databricks/data/02_intermediate/y_test.parquet
+
+# This is an example how to use `MemoryDataSet` with Spark objects that aren't `DataFrame`'s.
+# In particular, the `assign` copy mode ensures that the `MemoryDataSet` will be assigned
+# the Spark object itself, not a deepcopy version of it, since deepcopy doesn't work with
+# Spark object generally.
+example_classifier:
+  type: MemoryDataSet
+  copy_mode: assign
