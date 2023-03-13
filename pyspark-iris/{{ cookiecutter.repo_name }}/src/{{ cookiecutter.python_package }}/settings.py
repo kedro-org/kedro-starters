@@ -11,7 +11,7 @@ HOOKS = (SparkHooks(),)
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
 
 # Class that manages storing KedroSession data.
-# from kedro.framework.session.store import ShelveStore
+# from kedro.framework.session.shelvestore import ShelveStore
 # SESSION_STORE_CLASS = ShelveStore
 # Keyword arguments to pass to the `SESSION_STORE_CLASS` constructor.
 # SESSION_STORE_ARGS = {
