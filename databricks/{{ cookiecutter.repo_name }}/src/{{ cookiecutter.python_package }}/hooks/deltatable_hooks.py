@@ -4,6 +4,7 @@ from typing import Any, Dict, List
 from kedro.framework.hooks import hook_impl
 from kedro.io import DataCatalog, DataSetError
 from kedro.pipeline import Pipeline
+from pyspark import SparkConf
 from pyspark.sql import SparkSession
 
 logger = logging.getLogger(__name__)
@@ -13,6 +14,24 @@ class ManagedTableHooks:
     """
     Create or update delta-tables used in catalog
     """
+    @hook_impl
+    def after_context_created(self, context) -> None:
+        """Initialises a SparkSession using the config
+        defined in project's conf folder.
+        """
+
+        # Load the spark configuration in spark.yaml using the config loader
+        parameters = context.config_loader.get("spark*", "spark*/**")
+        spark_conf = SparkConf().setAll(parameters.items())
+
+        # Initialise the spark session
+        spark_session_conf = (
+            SparkSession.builder.appName(context._package_name)
+            .enableHiveSupport()
+            .config(conf=spark_conf)
+        )
+        _spark_session = spark_session_conf.getOrCreate()
+        _spark_session.sparkContext.setLogLevel("WARN")
 
     @hook_impl
     def after_pipeline_run(
@@ -123,16 +142,7 @@ class ManagedTableHooks:
 
 def _get_spark():
     return (
-        SparkSession.builder.config(
-            "spark.jars.packages",
-            "io.delta:delta-core_2.12:1.2.1",
-        )
-        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-        .config(
-            "spark.sql.catalog.spark_catalog",
-            "org.apache.spark.sql.delta.catalog.DeltaCatalog",
-        )
-        .getOrCreate()
+        SparkSession.builder.getOrCreate()
     )
 
 

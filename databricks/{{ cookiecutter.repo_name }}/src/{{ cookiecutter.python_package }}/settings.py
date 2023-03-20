@@ -2,13 +2,10 @@
 from the Kedro defaults. For further information, including these default values, see
 https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 import logging
-from pathlib import Path
 
 from kedro.config import TemplatedConfigLoader
 
 logger = logging.getLogger(__name__)
-
-CONF_SOURCE = Path(__file__).parent / "conf"
 
 
 # Class that enables a dynamic catalog based on runtime parameters
@@ -41,13 +38,17 @@ class EnvConfigLoader(TemplatedConfigLoader):
 
 
 CONFIG_LOADER_CLASS = EnvConfigLoader  # pylint: disable=invalid-name
+
 CONFIG_LOADER_ARGS = {
     "globals_pattern": "*globals.yml",
+    "config_patterns": {
+        "parameters": ["parameters*", "parameters*/**", "**/parameters*"],
+    }
 }
 
-# Instantiated managed table hooks.
-# from {{ cookiecutter.python_package }}.hooks import ManagedTableHooks
-# HOOKS = (ManagedTableHooks(),)
+# Instantiated spark and managed table hooks
+from {{ cookiecutter.python_package }}.hooks import  SparkHooks, ManagedTableHooks
+HOOKS = (SparkHooks(), ManagedTableHooks())
 
 # Installed plugins for which to disable hook auto-registration.
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
@@ -63,19 +64,6 @@ CONFIG_LOADER_ARGS = {
 # Class that manages Kedro's library components.
 # from kedro.framework.context import KedroContext
 # CONTEXT_CLASS = KedroContext
-
-# Directory that holds configuration.
-# CONF_SOURCE = "conf"
-# Class that manages how configuration is loaded.
-# CONFIG_LOADER_CLASS = ConfigLoader
-
-# Keyword arguments to pass to the `CONFIG_LOADER_CLASS` constructor.
-# CONFIG_LOADER_ARGS = {
-#       "config_patterns": {
-#           "spark" : ["spark*/"],
-#           "parameters": ["parameters*", "parameters*/**", "**/parameters*"],
-#       }
-# }
 
 # Class that manages the Data Catalog.
 # from kedro.io import DataCatalog

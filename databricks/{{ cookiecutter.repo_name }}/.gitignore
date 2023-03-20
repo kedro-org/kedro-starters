@@ -2,8 +2,8 @@
 # KEDRO PROJECT
 
 # ignore all local configuration
-src/{{ cookiecutter.python_package }}/conf/local/**
-!src/{{ cookiecutter.python_package }}/conf/local/.gitkeep
+conf/local/**
+!conf/local/.gitkeep
 
 .telemetry
 

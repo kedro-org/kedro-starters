@@ -1,0 +1,38 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+iris_csv:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/iris.csv
+
+iris_bronze:
+  type: kedro_datasets.databricks.ManagedTableDataSet
+  table: iris
+  database: bronze${catalog_suffix}
+  dataframe_type: pandas
+
+iris_silver:
+  type: kedro_datasets.databricks.ManagedTableDataSet
+  table: iris
+  database: silver${catalog_suffix}
+  dataframe_type: pandas
+  
+iris_features:
+  type: kedro_datasets.databricks.ManagedTableDataSet
+  table: iris_features
+  database: silver${catalog_suffix}
+  
+iris_predictions:
+  type: kedro_datasets.databricks.ManagedTableDataSet
+  table: iris_predictions
+  database: gold${catalog_suffix}
+  
+regression_model:
+  type: kedro_datasets.databricks.mlflow.model.MLFlowModel
+  flavor: mlflow.spark
+  model_name: spaceflights_model
+
+accuracy:
+  type: kedro_datasets.databricks.mlflow.metrics.MLFlowMetrics
+  prefix: iris
