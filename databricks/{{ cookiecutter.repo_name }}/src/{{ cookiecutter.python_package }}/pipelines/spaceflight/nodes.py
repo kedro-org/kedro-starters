@@ -39,4 +39,4 @@ def generate_predictions(data):
     accuracy = evaluator.evaluate(prediction)
     print(accuracy)
     
-    return prediction, model, {"accuracy": accuracy}
+    return prediction

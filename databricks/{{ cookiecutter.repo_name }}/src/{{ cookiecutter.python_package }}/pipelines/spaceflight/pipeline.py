@@ -12,6 +12,6 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(lambda x: x, "iris_csv", "iris_bronze", name="raw_to_bronze"),
             node(generate_features, "iris_bronze", "iris_features", name="features"),
-            node(generate_predictions, "iris_features", ["iris_predictions", "regression_model", "accuracy"]),
+            node(generate_predictions, "iris_features", "iris_predictions"),
         ]
     )

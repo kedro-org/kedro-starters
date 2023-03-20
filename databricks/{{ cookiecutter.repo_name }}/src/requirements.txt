@@ -6,7 +6,7 @@ isort~=5.0
 jupyter~=1.0
 jupyterlab~=3.0
 kedro~={{ cookiecutter.kedro_version }}
-kedro-datasets@git+https://github.com/dannyrfar/kedro-plugins/#egg=version_subpkg&subdirectory=kedro-datasets
+kedro-datasets~=1.0.2
 kedro-telemetry~=0.2.0
 nbstripout~=0.4
 mlflow~=2.1.1

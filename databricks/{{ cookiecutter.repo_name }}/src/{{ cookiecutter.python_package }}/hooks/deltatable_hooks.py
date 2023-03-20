@@ -208,7 +208,8 @@ def create_or_alter_table(
 def is_table_exists(
     table_name: str, catalog_name: str = "main", database_name: str = "default"
 ) -> bool:
-    _get_spark().sql(f"USE CATALOG {catalog_name}")
+    if catalog_name:
+        _get_spark().sql(f"USE CATALOG {catalog_name}")
     try:
         return (
             _get_spark()
@@ -224,13 +225,22 @@ def is_table_exists(
 def is_database_exists(
     catalog_name: str = "main", database_name: str = "default"
 ) -> bool:
-    return (
-        _get_spark()
-        .sql(f"SHOW SCHEMAS IN `{catalog_name}`")
-        .filter(f"databaseName = '{database_name}'")
-        .count()
-        > 0
-    )
+    if catalog_name:
+        return (
+            _get_spark()
+            .sql(f"SHOW SCHEMAS IN `{catalog_name}`")
+            .filter(f"databaseName = '{database_name}'")
+            .count()
+            > 0
+        )
+    else:
+        return (
+            _get_spark()
+            .sql(f"SHOW SCHEMAS")
+            .filter(f"namespace = '{database_name}'")
+            .count()
+            > 0
+        )
 
 
 def create_table(
@@ -265,10 +275,12 @@ def create_table(
 
 
 def create_database(catalog_name: str, database_name: str, owner: str) -> None:
-    logger.info("Creating database: " + catalog_name + "." + database_name)
-    _get_spark().sql(f"USE CATALOG {catalog_name};")
+    full_database_path = catalog_name + "." + database_name if catalog_name else database_name
+    logger.info("Creating database: " + full_database_path)
+    if catalog_name:
+        _get_spark().sql(f"USE CATALOG {catalog_name};")
     _get_spark().sql(f"CREATE SCHEMA IF NOT EXISTS {database_name};")
-    logger.info("Database: " + catalog_name + "." + database_name + " created.")
+    logger.info("Database: " + full_database_path + " created.")
     if owner:
         _get_spark().sql(
             f"ALTER SCHEMA {catalog_name}.{database_name} OWNER TO `{owner}`;"

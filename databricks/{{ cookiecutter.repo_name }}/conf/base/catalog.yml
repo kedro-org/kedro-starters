@@ -12,12 +12,6 @@ iris_bronze:
   database: bronze${catalog_suffix}
   dataframe_type: pandas
 
-iris_silver:
-  type: kedro_datasets.databricks.ManagedTableDataSet
-  table: iris
-  database: silver${catalog_suffix}
-  dataframe_type: pandas
-  
 iris_features:
   type: kedro_datasets.databricks.ManagedTableDataSet
   table: iris_features
