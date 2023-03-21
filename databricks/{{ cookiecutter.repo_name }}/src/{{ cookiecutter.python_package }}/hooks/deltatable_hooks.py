@@ -45,10 +45,10 @@ class ManagedTableHooks:
                 continue  # ignore MemoryDataSets
 
             if cls_name == "ManagedTableDataSet":
-                delta_catalog = ds_obj._catalog
-                database = ds_obj._database
-                table = ds_obj._table
-                owner_group = ds_obj._owner_group
+                delta_catalog = ds_obj._table.catalog
+                database = ds_obj._table.database
+                table = ds_obj._table.table
+                owner_group = ds_obj._table.owner_group
                 if owner_group:
                     _get_spark().sql(
                         f"ALTER TABLE {delta_catalog}.{database}"
@@ -88,13 +88,13 @@ class ManagedTableHooks:
                 continue  # ignore MemoryDataSets
 
             if cls_name == "ManagedTableDataSet":
-                delta_catalog = ds_obj._catalog
-                database = ds_obj._database
-                table = ds_obj._table
-                schema = ds_obj._schema
-                owner_group = ds_obj._owner_group
-                partition_columns = ds_obj._partition_columns
-                table_location = ds_obj._full_table_address
+                delta_catalog = ds_obj._table.catalog
+                database = ds_obj._table.database
+                table = ds_obj._table.table
+                schema = ds_obj._table.schema()
+                owner_group = ds_obj._table.owner_group
+                partition_columns = ds_obj._table.partition_columns
+                table_location = ds_obj._table.full_table_location()
                 if not is_database_exists(
                     delta_catalog, database
                 ) or not is_table_exists(table, delta_catalog, database):
@@ -110,13 +110,13 @@ class ManagedTableHooks:
                 continue  # ignore MemoryDataSets
 
             if cls_name == "ManagedTableDataSet":
-                delta_catalog = ds_obj._catalog
-                database = ds_obj._database
-                table = ds_obj._table
-                schema = ds_obj._schema
-                owner_group = ds_obj._owner_group
-                partition_columns = ds_obj._partition_columns
-                table_location = ds_obj._full_table_address
+                delta_catalog = ds_obj._table.catalog
+                database = ds_obj._table.database
+                table = ds_obj._table.table
+                schema = ds_obj._table.schema()
+                owner_group = ds_obj._table.owner_group
+                partition_columns = ds_obj._table.partition_columns
+                table_location = ds_obj._table.full_table_location()
 
                 if not is_database_exists(delta_catalog, database):
                     create_database(delta_catalog, database, owner_group)
@@ -237,7 +237,7 @@ def is_database_exists(
         return (
             _get_spark()
             .sql(f"SHOW SCHEMAS")
-            .filter(f"namespace = '{database_name}'")
+            .filter(f"databaseName = '{database_name}'")
             .count()
             > 0
         )
