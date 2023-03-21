@@ -44,4 +44,8 @@ loggers:
     level: INFO
 
 root:
-  handlers: [rich, info_file_handler, error_file_handler]
+  # File-based logging is disabled by default so that the starter works immediately on Databricks Repos.
+  # See https://docs.kedro.org/en/stable/logging/logging.html#disable-file-based-logging for more.
+  # To enable file-based logging, change the below line to:
+  # handlers: [rich, info_file_handler, error_file_handler]
+  handlers: [rich]
