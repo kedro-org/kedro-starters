@@ -1,4 +1,5 @@
 import logging
+import ast
 from typing import Any, Dict, List
 
 from kedro.framework.hooks import hook_impl
@@ -131,7 +132,7 @@ class ManagedTableHooks:
                     )
         if catalog.layers:
             for dataset_name in list(catalog.layers.get("monitoring", [])):
-                dataset = eval(f"catalog.datasets.{dataset_name}")
+                dataset = ast.literal_eval(f"catalog.datasets.{dataset_name}")
                 delta_catalog = dataset._catalog
                 database = dataset._database
                 # schema = dataset._schema
