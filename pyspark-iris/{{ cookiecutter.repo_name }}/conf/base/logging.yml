@@ -17,17 +17,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: INFO
     formatter: simple
-    filename: logs/info.log
-    maxBytes: 10485760 # 10MB
-    backupCount: 20
-    encoding: utf8
-    delay: True
-
-  error_file_handler:
-    class: logging.handlers.RotatingFileHandler
-    level: ERROR
-    formatter: simple
-    filename: logs/errors.log
+    filename: info.log
     maxBytes: 10485760 # 10MB
     backupCount: 20
     encoding: utf8
@@ -47,5 +37,5 @@ root:
   # File-based logging is disabled by default so that the starter works immediately on Databricks Repos.
   # See https://docs.kedro.org/en/stable/logging/logging.html#disable-file-based-logging for more.
   # To enable file-based logging, change the below line to:
-  # handlers: [rich, info_file_handler, error_file_handler]
+  # handlers: [rich, info_file_handler]
   handlers: [rich]
