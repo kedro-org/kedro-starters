@@ -44,7 +44,7 @@
 
 example_iris_data:
   type: spark.SparkDataSet
-  filepath: /dbfs/root/projects/iris-databricks/data/01_raw/iris.csv
+  filepath: /dbfs/FileStore/iris-databricks/data/01_raw/iris.csv
   file_format: csv
   load_args:
     header: True
