@@ -1,0 +1,42 @@
+version: 1
+
+disable_existing_loggers: False
+
+formatters:
+  simple:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+
+  info_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: simple
+    filename: /dbfs/FileStore/iris-databricks/info.log
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf8
+    delay: True
+
+  rich:
+    class: rich.logging.RichHandler
+
+loggers:
+  kedro:
+    level: INFO
+
+  iris_databricks:
+    level: INFO
+
+root:
+  # File-based logging is disabled by default so that the starter works immediately on Databricks Repos.
+  # See https://docs.kedro.org/en/stable/logging/logging.html#disable-file-based-logging for more.
+  # To enable file-based logging, change the below line to:
+  # handlers: [rich, info_file_handler]
+  handlers: [info_file_handler]
+
