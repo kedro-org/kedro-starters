@@ -8,7 +8,7 @@ This repository is a fork of the `pyspark-iris` starter that has been modified t
 
 ## Getting started
 
-The starter template can be used to start a new project using the [`starter` option](https://kedro.readthedocs.io/en/stable/get_started/starters.html) in `kedro new`:
+The starter template can be used to start a new project using the [`starter` option](https://docs.kedro.org/en/stable/kedro_project_setup/starters.html) in `kedro new`:
 
 ```bash
 kedro new --starter=databricks-iris
