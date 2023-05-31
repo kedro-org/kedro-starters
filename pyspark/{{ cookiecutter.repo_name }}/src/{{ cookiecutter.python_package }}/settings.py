@@ -11,27 +11,30 @@ HOOKS = (SparkHooks(),)
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
 
 # Class that manages storing KedroSession data.
-# from kedro.framework.session.shelvestore import ShelveStore
-# SESSION_STORE_CLASS = ShelveStore
+# from kedro.framework.session.store import BaseSessionStore
+# SESSION_STORE_CLASS = BaseSessionStore
 # Keyword arguments to pass to the `SESSION_STORE_CLASS` constructor.
 # SESSION_STORE_ARGS = {
 #     "path": "./sessions"
 # }
 
-# Class that manages Kedro's library components.
-# from kedro.framework.context import KedroContext
-# CONTEXT_CLASS = KedroContext
-
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
 
 # Class that manages how configuration is loaded.
-# from kedro.config import TemplatedConfigLoader
-# CONFIG_LOADER_CLASS = TemplatedConfigLoader
+# from kedro.config import OmegaConfigLoader
+# CONFIG_LOADER_CLASS = OmegaConfigLoader
 # Keyword arguments to pass to the `CONFIG_LOADER_CLASS` constructor.
 # CONFIG_LOADER_ARGS = {
-#     "globals_pattern": "*globals.yml",
+#       "config_patterns": {
+#           "spark" : ["spark*/"],
+#           "parameters": ["parameters*", "parameters*/**", "**/parameters*"],
+#       }
 # }
+
+# Class that manages Kedro's library components.
+# from kedro.framework.context import KedroContext
+# CONTEXT_CLASS = KedroContext
 
 # Class that manages the Data Catalog.
 # from kedro.io import DataCatalog
