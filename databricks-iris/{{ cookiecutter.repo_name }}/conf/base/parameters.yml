@@ -1,0 +1,3 @@
+train_fraction: 0.8
+random_state: 3
+target_column: species
