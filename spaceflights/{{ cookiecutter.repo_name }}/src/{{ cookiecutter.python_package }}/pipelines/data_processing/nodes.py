@@ -12,7 +12,7 @@ def _parse_percentage(x: pd.Series) -> pd.Series:
 
 
 def _parse_money(x: pd.Series) -> pd.Series:
-    x = x.str.replace("$", "", regex=True).str.replace(",", "")
+    x = x.str.replace("$", "").str.replace(",", "")
     x = x.astype(float)
     return x
 
