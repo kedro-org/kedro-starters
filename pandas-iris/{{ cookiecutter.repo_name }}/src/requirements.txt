@@ -5,7 +5,7 @@ ipython~=8.10; python_version >= '3.8'
 isort~=5.0
 jupyter~=1.0
 jupyterlab~=3.0
-kedro~={{ cookiecutter.kedro_version }}
+kedro @ git+https://github.com/kedro-org/kedro.git@refactor/remove-deprecatedenummeta
 kedro-viz~=6.0
 kedro-datasets[pandas.CSVDataSet]~=1.0
 kedro-telemetry~=0.2.0
