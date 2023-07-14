@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The code in this repository demonstrates best practice when working with Kedro and PySpark on Databricks. It contains a Kedro starter template with some initial configuration and an example pipeline, it accompanies the documentation on [developing and deploying Kedro projects on Databricks](https://docs.kedro.org/en/stable/integrations/index.html#databricks-integration).
+The code in this repository demonstrates best practice when working with Kedro and PySpark on Databricks. It contains a Kedro starter template with some initial configuration and an example pipeline, it accompanies the documentation on [developing and deploying Kedro projects on Databricks](https://docs.kedro.org/en/stable/deployment/databricks/index.html).
 
 This repository is a fork of the `pyspark-iris` starter that has been modified to run natively on Databricks.
 
