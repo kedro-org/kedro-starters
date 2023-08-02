@@ -1,0 +1,18 @@
+name: Release kedro-starters
+
+on:
+  repository_dispatch:
+    types:
+      - release-triggered
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{github.event.client_payload.version}}
+        name: ${{github.event.client_payload.version}} Starters
+        draft: false
+        prerelease: false
