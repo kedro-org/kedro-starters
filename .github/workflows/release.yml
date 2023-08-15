@@ -1,0 +1,22 @@
+# NOTE: This workflow is triggered by "Trigger kedro-starters Release" workflow
+# on the kedro-org/kedro repository when a new release of Kedro is published:
+# https://github.com/kedro-org/kedro/blob/main/.github/workflows/release-starters.yml
+
+name: Release kedro-starters
+
+on:
+  repository_dispatch:
+    types:
+      - release-triggered
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{github.event.client_payload.version}}
+        name: ${{github.event.client_payload.version}} Starters
+        draft: false
+        prerelease: false
