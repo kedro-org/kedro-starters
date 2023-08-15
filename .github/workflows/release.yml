@@ -1,3 +1,7 @@
+# NOTE: This workflow is triggered by "Trigger kedro-starters Release" workflow
+# on the kedro-org/kedro repository when a new release of Kedro is published:
+# https://github.com/kedro-org/kedro/blob/main/.github/workflows/release-starters.yml
+
 name: Release kedro-starters
 
 on:
