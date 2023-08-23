@@ -22,8 +22,8 @@ HOOKS = (SparkHooks(),)
 # CONF_SOURCE = "conf"
 
 # Class that manages how configuration is loaded.
-# from kedro.config import OmegaConfigLoader
-# CONFIG_LOADER_CLASS = OmegaConfigLoader
+from kedro.config import OmegaConfigLoader
+CONFIG_LOADER_CLASS = OmegaConfigLoader
 # Keyword arguments to pass to the `CONFIG_LOADER_CLASS` constructor.
 CONFIG_LOADER_ARGS = {
     "config_patterns": {
