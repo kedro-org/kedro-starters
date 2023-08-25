@@ -2,5 +2,5 @@ bandit>=1.6.2, <2.0
 behave>=1.2.6, <2.0
 black~=22.0
 isort~=5.0
-PyYAML>=4.2, <6.0
+PyYAML>=4.2, <7.0
 git+https://github.com/kedro-org/kedro.git@main#egg=kedro
