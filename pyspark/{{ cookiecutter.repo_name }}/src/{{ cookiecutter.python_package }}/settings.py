@@ -3,7 +3,7 @@ from the Kedro defaults. For further information, including these default values
 https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 
 # Instantiated project hooks.
-from {{cookiecutter.python_package}}.hooks import SparkHooks # noqa: E402
+from {{cookiecutter.python_package}}.hooks import SparkHooks  # noqa: E402
 
 HOOKS = (SparkHooks(),)
 
@@ -22,7 +22,7 @@ HOOKS = (SparkHooks(),)
 # CONF_SOURCE = "conf"
 
 # Class that manages how configuration is loaded.
-from kedro.config import OmegaConfigLoader # noqa: # noqa: E402
+from kedro.config import OmegaConfigLoader  # noqa: # noqa: E402
 
 CONFIG_LOADER_CLASS = OmegaConfigLoader
 # Keyword arguments to pass to the `CONFIG_LOADER_CLASS` constructor.
