@@ -5,6 +5,7 @@ https://kedro.readthedocs.io/en/stable/kedro_project_setup/settings.html."""
 # Instantiated project hooks.
 from {{cookiecutter.python_package}}.hooks import SparkHooks  # noqa: import-outside-toplevel
 
+# Hooks are executed in a Last-In-First-Out (LIFO) order.
 HOOKS = (SparkHooks(),)
 
 # Installed plugins for which to disable hook auto-registration.
