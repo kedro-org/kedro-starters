@@ -42,7 +42,7 @@ Let's assume that the new project is created at `/path/to/your/project`.
 cp -fR {conf,data} `/path/to/your/project`
 ```
 
-Congratulations! You now have a Kedro project setup with a fully functional `DataCatalog`. You can then explore the documentation on how to write [nodes and pipelines](https://kedro.readthedocs.io/en/latest/nodes_and_pipelines/nodes.html) to process this data.
+Congratulations! You now have a Kedro project setup with a fully functional `DataCatalog`. You can then explore the documentation on how to write [nodes and pipelines](https://docs.kedro.org/en/latest/nodes_and_pipelines/nodes.html) to process this data.
 
 ### Limitation
 
