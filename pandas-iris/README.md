@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The code in this repository demonstrates best practice when working with Kedro. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro Iris dataset example](https://kedro.readthedocs.io/en/stable/get_started/example_project.html).
+The code in this repository demonstrates best practice when working with Kedro. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro Iris dataset example](https://docs.kedro.org/en/stable/get_started/new_project.html).
 
 
 ### An example pipeline using only native `Kedro`
