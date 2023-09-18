@@ -50,7 +50,7 @@ Out of the box, Kedro's `MemoryDataSet` works with Spark's `DataFrame`. However,
 ![Iris Pipeline Visualisation](./images/iris_pipeline.png)
 
 This Kedro starter uses the simple and familiar [Iris dataset](https://www.kaggle.com/uciml/iris). It contains the code for an example machine learning pipeline that runs a 1-nearest neighbour classifier to classify an iris.
-[Transcoding](https://kedro.readthedocs.io/en/stable/data/data_catalog.html#transcoding-datasets) is used to convert the Spark Dataframes into pandas DataFrames after splitting the data into training and testing sets.
+[Transcoding](https://docs.kedro.org/en/stable/data/data_catalog_yaml_examples.html#read-the-same-file-using-two-different-datasets) is used to convert the Spark Dataframes into pandas DataFrames after splitting the data into training and testing sets.
 
 The pipeline includes:
 

@@ -17,4 +17,4 @@ The `base` folder is for shared configuration, such as non-sensitive and project
 WARNING: Please do not put access credentials in the base configuration folder.
 
 ## Find out more
-You can find out more about configuration from the [Kedro documentation](https://kedro.readthedocs.io/).
+You can find out more about configuration from the [Kedro documentation](https://docs.kedro.org).
