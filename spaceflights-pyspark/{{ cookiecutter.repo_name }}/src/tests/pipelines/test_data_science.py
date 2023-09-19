@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from {{ cookiecutter.repo_name }}.pipelines.data_science.nodes import split_data
+from {{ cookiecutter.python_package }}.pipelines.data_science.nodes import split_data
 
 
 @pytest.fixture
