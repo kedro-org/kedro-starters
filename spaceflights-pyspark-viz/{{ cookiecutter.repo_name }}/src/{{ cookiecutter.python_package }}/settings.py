@@ -3,7 +3,7 @@ from the Kedro defaults. For further information, including these default values
 https://docs.kedro.org/en/stable/kedro_project_setup/settings.html."""
 
 # Instantiated project hooks.
-from {{ cookiecutter.python_package }}.hooks import SparkHooks
+from {{cookiecutter.python_package}}.hooks import SparkHooks
 from kedro_viz.integrations.kedro.sqlite_store import SQLiteStore
 from pathlib import Path
 
@@ -31,12 +31,11 @@ from kedro.config import OmegaConfigLoader  # noqa: import-outside-toplevel
 
 CONFIG_LOADER_CLASS = OmegaConfigLoader
 # Keyword arguments to pass to the `CONFIG_LOADER_CLASS` constructor.
-# CONFIG_LOADER_ARGS = {
-#       "config_patterns": {
-#           "spark" : ["spark*/"],
-#           "parameters": ["parameters*", "parameters*/**", "**/parameters*"],
-#       }
-# }
+CONFIG_LOADER_ARGS = {
+      "config_patterns": {
+          "spark" : ["spark*/", "spark*/**"],
+      }
+}
 
 # Class that manages Kedro's library components.
 # from kedro.framework.context import KedroContext
