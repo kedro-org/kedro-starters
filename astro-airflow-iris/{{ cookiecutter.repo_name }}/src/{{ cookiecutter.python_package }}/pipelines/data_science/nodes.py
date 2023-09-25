@@ -3,8 +3,6 @@ just for illustrating basic Kedro features.
 
 Delete this when you start working on your own Kedro project.
 """
-# pylint: disable=invalid-name
-
 import logging
 from typing import Any, Dict
 
