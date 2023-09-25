@@ -75,7 +75,7 @@ def list_kedro_pipelines(context):
 @when("I lint the project")
 def lint_project(context):
     context.result = subprocess.run(
-        [context.kedro, "lint", "--check-only"], cwd=context.root_project_dir
+        ["ruff", "check"], cwd=context.root_project_dir
     )
 
 
