@@ -75,8 +75,9 @@ def list_kedro_pipelines(context):
 @when("I lint the project")
 def lint_project(context):
     context.result = subprocess.run(
-        ["ruff", "check"], cwd=context.root_project_dir
+        [context.python, "-m", "ruff", "check", "src"], cwd=context.root_project_dir
     )
+    print(context.result.stdout)
 
 
 @then("I should get a successful exit code")
