@@ -77,7 +77,6 @@ def lint_project(context):
     context.result = subprocess.run(
         [context.python, "-m", "ruff", "check", "src"], cwd=context.root_project_dir
     )
-    print(context.result.stdout)
 
 
 @then("I should get a successful exit code")
