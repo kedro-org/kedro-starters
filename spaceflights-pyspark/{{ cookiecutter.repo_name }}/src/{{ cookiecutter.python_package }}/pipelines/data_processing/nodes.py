@@ -1,5 +1,6 @@
 import pandas as pd
-from pyspark.sql import DataFrame as SparkDataFrame, Column
+from pyspark.sql import Column
+from pyspark.sql import DataFrame as SparkDataFrame
 from pyspark.sql.functions import regexp_replace
 from pyspark.sql.types import DoubleType
 
