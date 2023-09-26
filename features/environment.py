@@ -52,6 +52,7 @@ def before_scenario(context, scenario):
         "pyspark",
         "pyspark-iris",
         "spaceflights",
+        "spaceflights-pyspark",
     ]
     starters_paths = {
         starter: str(starters_root / starter) for starter in starter_names
