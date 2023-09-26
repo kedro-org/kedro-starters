@@ -6,7 +6,7 @@ This is a variation of the [spaceflights tutorial project](https://docs.kedro.or
 
 The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and two example pipelines, and originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
 
-To use this starter, create a new Kedro project using the commands below. To make sure you have the required dependencies, run it in your virtual environment (see [our documentation about virtual environments](https://docs.kedro.org/en/stable/get_started/install.html#virtual-environments) for guidance on how to get set up):
+To use this starter, create a new Kedro project using the commands below. To make sure you have the required dependencies, run it in your virtual environment (see [our documentation about virtual environments](https://docs.kedro.org/en/stable/get_started/install.html#create-a-virtual-environment-for-your-kedro-project) for guidance on how to get set up):
 
 ```bash
 pip install kedro
@@ -39,6 +39,6 @@ This Kedro starter contains the initialisation code for `SparkSession` in the `P
 ### Uses transcoding to handle the same data in different formats
 
 In some cases it can be desirable to handle one dataset in different ways, for example to load a parquet file into your pipeline using `pandas` and to save it using `spark`. In this starter, one of the input datasets `shuttles`, is an excel file. 
-It's not possible to load an excel file directly into Spark, so we use transcoding to save the file as a `pandas.CSVDataSet` first which then allows us to load it as a `spark.SparkDataSet` further on in the pipeline.
+It's not possible to load an excel file directly into Spark, so we use transcoding to save the file as a `pandas.CSVDataset` first which then allows us to load it as a `spark.SparkDataset` further on in the pipeline.
  
 
