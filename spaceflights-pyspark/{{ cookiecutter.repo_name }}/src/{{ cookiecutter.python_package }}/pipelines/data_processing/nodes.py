@@ -33,6 +33,9 @@ def preprocess_companies(companies: SparkDataFrame) -> SparkDataFrame:
     """
     companies = companies.withColumn("iata_approved", _is_true(companies.iata_approved))
     companies = companies.withColumn("company_rating", _parse_percentage(companies.company_rating))
+
+    # Drop columns that aren't used for model training
+    companies = companies.drop('company_location', 'total_fleet_count')
     return companies
 
 
@@ -54,7 +57,16 @@ def preprocess_shuttles(shuttles: SparkDataFrame) -> SparkDataFrame:
     shuttles = shuttles.withColumn("d_check_complete", _is_true(shuttles.d_check_complete))
     shuttles = shuttles.withColumn("moon_clearance_complete", _is_true(shuttles.moon_clearance_complete))
     shuttles = shuttles.withColumn("price", _parse_money(shuttles.price))
+
+    # Drop columns that aren't used for model training
+    shuttles = shuttles.drop('shuttle_location', 'shuttle_type', 'engine_type', 'engine_vendor', 'cancellation_policy')
     return shuttles
+
+
+def preprocess_reviews(reviews: SparkDataFrame) -> SparkDataFrame:
+    # Drop columns that aren't used for model training
+    reviews = reviews.drop('review_scores_comfort', 'review_scores_amenities', 'review_scores_trip', 'review_scores_crew', 'review_scores_location', 'review_scores_price', 'number_of_reviews', 'reviews_per_month')
+    return reviews
 
 
 def create_model_input_table(
@@ -71,9 +83,7 @@ def create_model_input_table(
 
     """
     # Rename columns to prevent duplicates
-    # Shuttles
     shuttles = shuttles.withColumnRenamed("id", "shuttle_id")
-    # Companies
     companies = companies.withColumnRenamed("id", "company_id")
 
     rated_shuttles = shuttles.join(reviews, "shuttle_id", how="left")

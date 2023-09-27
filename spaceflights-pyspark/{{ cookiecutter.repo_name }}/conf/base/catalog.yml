@@ -107,6 +107,18 @@ preprocessed_shuttles:
     header: True
     mode: overwrite
 
+preprocessed_reviews:
+  filepath: data/02_intermediate/preprocessed_reviews.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
 model_input_table@spark:
   filepath: data/03_primary/model_input_table.parquet
   type: spark.SparkDataSet
