@@ -1,3 +1,5 @@
+from typing import Tuple, Dict
+
 import pandas as pd
 from pyspark.sql import Column
 from pyspark.sql import DataFrame as SparkDataFrame
@@ -22,7 +24,7 @@ def _parse_money(x: Column) -> Column:
     return x
 
 
-def preprocess_companies(companies: SparkDataFrame) -> SparkDataFrame:
+def preprocess_companies(companies: SparkDataFrame) -> Tuple[SparkDataFrame, Dict]:
     """Preprocesses the data for companies.
 
     Args:
@@ -36,7 +38,7 @@ def preprocess_companies(companies: SparkDataFrame) -> SparkDataFrame:
 
     # Drop columns that aren't used for model training
     companies = companies.drop('company_location', 'total_fleet_count')
-    return companies
+    return companies, {"columns": companies.columns, "data_type": "companies"}
 
 
 def load_shuttles_to_csv(shuttles: pd.DataFrame) -> pd.DataFrame:

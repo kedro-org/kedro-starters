@@ -11,13 +11,15 @@ HOOKS = (SparkHooks(),)
 # Installed plugins for which to disable hook auto-registration.
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
 
+
+from kedro_viz.integrations.kedro.sqlite_store import SQLiteStore  # noqa: E402
+from pathlib import Path  # noqa: E402
 # Class that manages storing KedroSession data.
-# from kedro.framework.session.store import BaseSessionStore
-# SESSION_STORE_CLASS = BaseSessionStore
+
+SESSION_STORE_CLASS = SQLiteStore
 # Keyword arguments to pass to the `SESSION_STORE_CLASS` constructor.
-# SESSION_STORE_ARGS = {
-#     "path": "./sessions"
-# }
+SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / "data")}
+
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
