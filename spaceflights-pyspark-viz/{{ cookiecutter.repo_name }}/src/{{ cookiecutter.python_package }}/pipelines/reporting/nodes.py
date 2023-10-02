@@ -1,9 +1,9 @@
-import plotly.express as px
-import pandas as pd
+import plotly.express as px  # noqa:  F401
 import matplotlib.pyplot as plt
-import seaborn as sn
-from pyspark.sql import DataFrame as SparkDataFrame, Column
+import pandas as pd
 import plotly.graph_objs as go
+import seaborn as sn
+from pyspark.sql import DataFrame as SparkDataFrame
 from pyspark.sql import SparkSession
 
 # This function uses plotly.express
