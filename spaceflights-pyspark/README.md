@@ -6,11 +6,11 @@ This is a variation of the [spaceflights tutorial project](https://docs.kedro.or
 
 The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and two example pipelines, and originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
 
-To use this starter, create a new Kedro project using the commands below. To make sure you have the required dependencies, run it in your virtual environment (see [our documentation about virtual environments](https://docs.kedro.org/en/stable/get_started/install.html#create-a-virtual-environment-for-your-kedro-project) for guidance on how to get set up):
+To use this starter, create a new Kedro project and select `pyspark` as add-on.
 
 ```bash
 pip install kedro
-kedro new --starter=spaceflights-pyspark
+kedro new
 cd <my-project-name>  # change directory into newly created project directory
 ```
 
