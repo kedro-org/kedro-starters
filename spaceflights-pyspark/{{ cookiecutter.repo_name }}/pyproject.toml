@@ -1,0 +1,28 @@
+[tool.kedro]
+package_name = "{{ cookiecutter.python_package }}"
+project_name = "{{ cookiecutter.project_name }}"
+kedro_init_version = "{{ cookiecutter.kedro_version }}"
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/{{ cookiecutter.python_package }} -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+[tool.ruff]
+line-length = 88
+show-fixes = true
+select = [
+    "F",   # Pyflakes
+    "W",   # pycodestyle
+    "E",   # pycodestyle
+    "I",   # isort
+    "UP",  # pyupgrade
+    "PL",  # Pylint
+    "T201", # Print Statement
+]
+ignore = ["E501"]  # Black takes care of line-too-long
