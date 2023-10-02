@@ -59,7 +59,7 @@ def preprocess_shuttles(shuttles: SparkDataFrame) -> SparkDataFrame:
     shuttles = shuttles.withColumn("price", _parse_money(shuttles.price))
 
     # Drop columns that aren't used for model training
-    shuttles = shuttles.drop('shuttle_location', 'shuttle_type', 'engine_type', 'engine_vendor', 'cancellation_policy')
+    shuttles = shuttles.drop('shuttle_location', 'engine_type', 'engine_vendor', 'cancellation_policy')
     return shuttles
 
 
