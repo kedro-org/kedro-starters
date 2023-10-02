@@ -23,7 +23,7 @@ def dummy_parameters():
 class TestDataScienceNodes:
     def test_split_data(self, dummy_data, dummy_parameters):
         X_train, X_test, y_train, y_test = split_data(dummy_data, dummy_parameters["model_options"])
-        assert len(X_train) == 2
+        assert len(X_train) == 2  # noqa: PLR2004
+        assert len(y_train) == 2  # noqa: PLR2004
         assert len(X_test) == 1
-        assert len(y_train) == 2
         assert len(y_test) == 1
