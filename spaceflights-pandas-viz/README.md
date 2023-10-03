@@ -1,4 +1,4 @@
-# The `spaceflights-viz` Kedro starter
+# The `spaceflights-pandas-viz` Kedro starter
 
 ## Overview
 
@@ -10,7 +10,7 @@ To use this starter, create a new Kedro project using the commands below. To mak
 
 ```bash
 pip install kedro
-kedro new --starter=spaceflights-viz
+kedro new --starter=spaceflights-pandas-viz
 cd <my-project-name>  # change directory into newly created project directory
 ```
 

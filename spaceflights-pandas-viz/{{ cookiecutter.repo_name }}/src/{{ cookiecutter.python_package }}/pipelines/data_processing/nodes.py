@@ -1,5 +1,7 @@
+from typing import Dict, Tuple
+
 import pandas as pd
-from typing import Tuple, Dict
+
 
 def _is_true(x: pd.Series) -> pd.Series:
     return x == "t"

@@ -41,3 +41,10 @@ Feature: Lint all starters
     And I have installed the Kedro project's dependencies
     When I lint the project
     Then I should get a successful exit code
+
+  Scenario: Lint spaceflights-pandas-viz starter
+    Given I have prepared a config file
+    And I have run a non-interactive kedro new with the starter spaceflights-pandas-viz
+    And I have installed the Kedro project's dependencies
+    When I lint the project
+    Then I should get a successful exit code
