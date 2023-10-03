@@ -6,6 +6,7 @@ import seaborn as sn
 from pyspark.sql import DataFrame as SparkDataFrame
 from pyspark.sql import SparkSession
 
+
 # This function uses plotly.express
 def compare_passenger_capacity_exp(preprocessed_shuttles: SparkDataFrame):
     spark = SparkSession.builder.appName("PassengerCapacityComparison").getOrCreate()
