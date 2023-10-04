@@ -54,6 +54,7 @@ def before_scenario(context, scenario):
         "spaceflights",
         "spaceflights-pyspark",
         "spaceflights-pandas-viz",
+        "spaceflights-pyspark-viz",
     ]
     starters_paths = {
         starter: str(starters_root / starter) for starter in starter_names

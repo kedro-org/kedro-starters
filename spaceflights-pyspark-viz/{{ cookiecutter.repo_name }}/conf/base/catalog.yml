@@ -1,0 +1,174 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# An example data set definition can look as follows:
+#
+#bikes:
+#  type: pandas.CSVDataSet
+#  filepath: "data/01_raw/bikes.csv"
+#
+#weather:
+#  type: spark.SparkDataSet
+#  filepath: s3a://your_bucket/data/01_raw/weather*
+#  file_format: csv
+#  credentials: dev_s3
+#  load_args:
+#    header: True
+#    inferSchema: True
+#  save_args:
+#    sep: '|'
+#    header: True
+#
+#scooters:
+#  type: pandas.SQLTableDataSet
+#  credentials: scooters_credentials
+#  table_name: scooters
+#  load_args:
+#    index_col: ['name']
+#    columns: ['name', 'gear']
+#  save_args:
+#    if_exists: 'replace'
+#    # if_exists: 'fail'
+#    # if_exists: 'append'
+#
+# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://docs.kedro.org/en/stable/data/data_catalog.html
+
+companies:
+  filepath: data/01_raw/companies.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+reviews:
+  filepath: data/01_raw/reviews.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+shuttles@excel:
+  type: pandas.ExcelDataSet
+  filepath: data/01_raw/shuttles.xlsx
+
+shuttles@csv:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/shuttles.csv
+
+shuttles@spark:
+  filepath: data/02_intermediate/shuttles.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+preprocessed_companies:
+  filepath: data/02_intermediate/preprocessed_companies.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+preprocessed_shuttles:
+  filepath: data/02_intermediate/preprocessed_shuttles.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+preprocessed_reviews:
+  filepath: data/02_intermediate/preprocessed_reviews.csv
+  type: spark.SparkDataSet
+  file_format: csv
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+model_input_table@spark:
+  filepath: data/03_primary/model_input_table.parquet
+  type: spark.SparkDataSet
+  file_format: parquet
+  load_args:
+    header: True
+    inferSchema: True
+  save_args:
+    sep: ','
+    header: True
+    mode: overwrite
+
+model_input_table@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/03_primary/model_input_table.parquet
+
+regressor:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/regressor.pickle
+  versioned: true
+
+metrics:
+  type: tracking.MetricsDataSet
+  filepath: data/09_tracking/metrics.json
+
+companies_columns:
+  type: tracking.JSONDataSet
+  filepath: data/09_tracking/companies_columns.json
+
+shuttle_passenger_capacity_plot_exp:
+  type: plotly.PlotlyDataSet
+  filepath: data/08_reporting/shuttle_passenger_capacity_plot_exp.json
+  versioned: true
+  plotly_args:
+    type: bar
+    fig:
+      x: shuttle_type
+      y: passenger_capacity
+      orientation: h
+    layout:
+      xaxis_title: Shuttles
+      yaxis_title: Average passenger capacity
+      title: Shuttle Passenger capacity
+
+shuttle_passenger_capacity_plot_go:
+  type: plotly.JSONDataSet
+  filepath: data/08_reporting/shuttle_passenger_capacity_plot_go.json
+  versioned: true
+
+dummy_confusion_matrix:
+  type: matplotlib.MatplotlibWriter
+  filepath: data/08_reporting/dummy_confusion_matrix.png
+  versioned: true
