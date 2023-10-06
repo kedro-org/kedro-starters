@@ -53,6 +53,7 @@ def before_scenario(context, scenario):
         "pyspark-iris",
         "spaceflights",
         "spaceflights-pyspark",
+        "spaceflights-pandas-viz",
         "spaceflights-pyspark-viz",
     ]
     starters_paths = {
