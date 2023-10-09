@@ -1,4 +1,4 @@
 jupyter~=1.0
 kedro~={{ cookiecutter.kedro_version }}
-kedro-datasets[pandas.CSVDataSet]~=1.0
+kedro-datasets[pandas.CSVDataset]~=1.0
 kedro-telemetry~=0.2.0

@@ -17,7 +17,7 @@ This pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `spark.SparkDataSet` |
+| Type | `spark.SparkDataset` |
 | Description | Example iris data containing columns |
 
 

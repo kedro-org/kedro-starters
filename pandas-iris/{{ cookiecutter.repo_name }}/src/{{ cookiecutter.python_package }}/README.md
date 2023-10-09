@@ -15,7 +15,7 @@ This pipeline:
 
 |      |                    |
 | ---- | ------------------ |
-| Type | `pandas.CSVDataSet` |
+| Type | `pandas.CSVDataset` |
 | Description | Example iris data containing columns |
 
 
