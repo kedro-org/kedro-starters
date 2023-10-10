@@ -4,5 +4,5 @@
 # Link: https://docs.kedro.org/en/latest/data/data_catalog.html
 
 example_iris_data:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/iris.csv
