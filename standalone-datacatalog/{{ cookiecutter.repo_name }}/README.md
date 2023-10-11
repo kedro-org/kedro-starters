@@ -7,7 +7,7 @@ The project was generated using `Kedro {{ cookiecutter.kedro_version }}`.
 
 ## Prerequisites
 
-To use this project, you need to have `kedro`, `kedro-datasets[pandas.CSVDataSet]` and `jupyter` installed. They are included in the `requirements.txt` file, which can be installed with `pip`:
+To use this project, you need to have `kedro`, `kedro-datasets[pandas.CSVDataset]` and `jupyter` installed. They are included in the `requirements.txt` file, which can be installed with `pip`:
 
 ```bash
 pip install -r requirements.txt

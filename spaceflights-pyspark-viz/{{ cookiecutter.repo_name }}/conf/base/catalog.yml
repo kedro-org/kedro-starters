@@ -8,11 +8,11 @@
 # An example data set definition can look as follows:
 #
 #bikes:
-#  type: pandas.CSVDataSet
+#  type: pandas.CSVDataset
 #  filepath: "data/01_raw/bikes.csv"
 #
 #weather:
-#  type: spark.SparkDataSet
+#  type: spark.SparkDataset
 #  filepath: s3a://your_bucket/data/01_raw/weather*
 #  file_format: csv
 #  credentials: dev_s3
@@ -24,7 +24,7 @@
 #    header: True
 #
 #scooters:
-#  type: pandas.SQLTableDataSet
+#  type: pandas.SQLTableDataset
 #  credentials: scooters_credentials
 #  table_name: scooters
 #  load_args:
@@ -35,13 +35,13 @@
 #    # if_exists: 'fail'
 #    # if_exists: 'append'
 #
-# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# The Data Catalog supports being able to reference the same file using two different Dataset implementations
 # (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
 # https://docs.kedro.org/en/stable/data/data_catalog.html
 
 companies:
   filepath: data/01_raw/companies.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -53,7 +53,7 @@ companies:
 
 reviews:
   filepath: data/01_raw/reviews.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -64,16 +64,16 @@ reviews:
     mode: overwrite
 
 shuttles@excel:
-  type: pandas.ExcelDataSet
+  type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
 shuttles@csv:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/02_intermediate/shuttles.csv
 
 shuttles@spark:
   filepath: data/02_intermediate/shuttles.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -85,7 +85,7 @@ shuttles@spark:
 
 preprocessed_companies:
   filepath: data/02_intermediate/preprocessed_companies.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -97,7 +97,7 @@ preprocessed_companies:
 
 preprocessed_shuttles:
   filepath: data/02_intermediate/preprocessed_shuttles.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -109,7 +109,7 @@ preprocessed_shuttles:
 
 preprocessed_reviews:
   filepath: data/02_intermediate/preprocessed_reviews.csv
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: csv
   load_args:
     header: True
@@ -121,7 +121,7 @@ preprocessed_reviews:
 
 model_input_table@spark:
   filepath: data/03_primary/model_input_table.parquet
-  type: spark.SparkDataSet
+  type: spark.SparkDataset
   file_format: parquet
   load_args:
     header: True
@@ -132,24 +132,24 @@ model_input_table@spark:
     mode: overwrite
 
 model_input_table@pandas:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/03_primary/model_input_table.parquet
 
 regressor:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/regressor.pickle
   versioned: true
 
 metrics:
-  type: tracking.MetricsDataSet
+  type: tracking.MetricsDataset
   filepath: data/09_tracking/metrics.json
 
 companies_columns:
-  type: tracking.JSONDataSet
+  type: tracking.JSONDataset
   filepath: data/09_tracking/companies_columns.json
 
 shuttle_passenger_capacity_plot_exp:
-  type: plotly.PlotlyDataSet
+  type: plotly.PlotlyDataset
   filepath: data/08_reporting/shuttle_passenger_capacity_plot_exp.json
   versioned: true
   plotly_args:
@@ -164,7 +164,7 @@ shuttle_passenger_capacity_plot_exp:
       title: Shuttle Passenger capacity
 
 shuttle_passenger_capacity_plot_go:
-  type: plotly.JSONDataSet
+  type: plotly.JSONDataset
   filepath: data/08_reporting/shuttle_passenger_capacity_plot_go.json
   versioned: true
 

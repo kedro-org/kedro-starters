@@ -5,7 +5,7 @@
 #
 # We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
 #
-# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# The Data Catalog supports being able to reference the same file using two different Dataset implementations
 # (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
 # https://docs.kedro.org/en/latest/data/data_catalog.html
 #
