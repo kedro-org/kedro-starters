@@ -8,7 +8,7 @@ from kedro.templates.project.hooks.utils import (
 
 def main():
     current_dir = Path.cwd()
-    requirements_file_path = current_dir / "requirements.txt"
+    requirements_file_path = current_dir / "src/requirements.txt"
     pyproject_file_path = current_dir / "pyproject.toml"
     python_package_name = '{{ cookiecutter.python_package }}'
 
