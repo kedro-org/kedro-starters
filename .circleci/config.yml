@@ -149,8 +149,6 @@ jobs:
     executor:
       name: docker
       python_version: <<parameters.python_version>>
-    environment:
-      SKIP_POST_GEN: "true"
     steps:
       - setup_requirements:
           python_version: <<parameters.python_version>>
@@ -163,8 +161,6 @@ jobs:
     executor:
       name: docker
       python_version: <<parameters.python_version>>
-    environment:
-      SKIP_POST_GEN: "true"
     steps:
       - setup_requirements:
           python_version: <<parameters.python_version>>
@@ -177,8 +173,6 @@ jobs:
         type: string
     executor:
       name: win/default
-    environment:
-      SKIP_POST_GEN: "true"
     steps:
       - checkout
       - win_setup_conda:
@@ -193,8 +187,6 @@ jobs:
         type: string
     executor:
       name: win/default
-    environment:
-      SKIP_POST_GEN: "true"
     steps:
       - checkout
       - win_setup_conda:
