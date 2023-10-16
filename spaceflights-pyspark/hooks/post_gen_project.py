@@ -1,10 +1,12 @@
 from pathlib import Path
+import os
 
 from kedro.templates.project.hooks.utils import (
     parse_add_ons_input,
     setup_template_add_ons,
     sort_requirements,
 )
+
 
 def main():
     current_dir = Path.cwd()
@@ -24,5 +26,8 @@ def main():
     # Sort requirements.txt file in alphabetical order
     sort_requirements(requirements_file_path)
 
+
 if __name__ == "__main__":
-    main()
+    # If SKIP_POST_GEN is set in the environment, do nothing and return
+    if os.environ.get("SKIP_POST_GEN") != "true":
+        main()
