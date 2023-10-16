@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+if os.environ.get("SKIP_POST_GEN"):
+    print("Skipping post generation.")
+    exit(0)
 
 from kedro.templates.project.hooks.utils import (
     parse_add_ons_input,
@@ -28,6 +31,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # If SKIP_POST_GEN is set in the environment, do nothing and return
-    if os.environ.get("SKIP_POST_GEN") != "true":
-        main()
+    main()
