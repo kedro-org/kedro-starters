@@ -206,18 +206,18 @@ workflows:
       - run:
           matrix:
             parameters:
-              python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+              python_version: [ "3.8", "3.9", "3.10" ]
       - lint:
           matrix:
             parameters:
-              python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+              python_version: [ "3.8", "3.9", "3.10" ]
 
       - win_run:
           matrix:
                 parameters:
-                  python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+                  python_version: [ "3.8", "3.9", "3.10" ]
 
       - win_lint:
           matrix:
                 parameters:
-                  python_version: [ "3.7", "3.8", "3.9", "3.10" ]
+                  python_version: [ "3.8", "3.9", "3.10" ]
