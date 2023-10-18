@@ -3,7 +3,7 @@ ipython~=8.10; python_version >= '3.8'
 jupyter~=1.0
 jupyterlab~=3.0
 kedro~={{ cookiecutter.kedro_version }}
-kedro-viz~=6.0
+git+https://github.com/kedro-org/kedro-viz.git@main#egg=kedro-viz
 kedro-datasets[pandas.CSVDataset]~=1.0
 kedro-telemetry~=0.2.0
 pytest-cov~=3.0
