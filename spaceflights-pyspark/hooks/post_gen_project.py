@@ -27,4 +27,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    selected_add_ons = "{{ cookiecutter.add_ons }}"
+    selected_add_ons_list = parse_add_ons_input(selected_add_ons)
+
+    if "6" in selected_add_ons_list:
+        main()
