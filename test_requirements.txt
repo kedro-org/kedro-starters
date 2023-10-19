@@ -3,4 +3,4 @@ behave>=1.2.6, <2.0
 black~=22.0
 PyYAML>=4.2, <7.0
 ruff~=0.0.290
-git+https://github.com/kedro-org/kedro.git@pyspark-add-on-flow#egg=kedro
+git+https://github.com/kedro-org/kedro.git@develop#egg=kedro
