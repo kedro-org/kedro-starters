@@ -26,5 +26,7 @@ if __name__ == "__main__":
     # Parse the add-ons to get a list
     selected_add_ons_list = parse_add_ons_input(selected_add_ons)
 
+    # Execute the script only if the PySpark add-on (represented by "6") is selected.
+    # This ensures the script doesn't run with kedro new --starter but only with the add-ons flow option.
     if "6" in selected_add_ons_list:
         main(selected_add_ons_list)
