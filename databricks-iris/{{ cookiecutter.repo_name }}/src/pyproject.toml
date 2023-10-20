@@ -11,7 +11,7 @@ dynamic = ["dependencies"]
 exclude = ["tests"]
 
 [project.scripts]
-"databricks_run = {{ cookiecutter.python_package }}.databricks_run:main"
+databricks_run = "{{ cookiecutter.python_package }}.databricks_run:main"
 
 [project.optional-dependencies]
 docs = [
