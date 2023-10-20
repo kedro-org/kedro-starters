@@ -26,3 +26,41 @@ select = [
     "T201", # Print Statement
 ]
 ignore = ["E501"]  # Black takes care of line-too-long
+
+[tool.ruff]
+select = [
+    "F",  # Pyflakes
+    "E",  # Pycodestyle
+    "W",  # Pycodestyle
+    "UP",  # pyupgrade
+    "I",  # isort
+    "PL", # Pylint
+]
+ignore = ["E501"]  # Black takes care of line-too-long
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/{{ cookiecutter.python_package }} -ra
+"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+docs = [
+    "docutils<0.18.0",
+    "sphinx~=3.4.3",
+    "sphinx_rtd_theme==0.5.1",
+    "nbsphinx==0.8.1",
+    "sphinx-autodoc-typehints==1.11.1",
+    "sphinx_copybutton==0.3.1",
+    "ipykernel>=5.3, <7.0",
+    "Jinja2<3.1.0",
+    "myst-parser~=0.17.2",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
