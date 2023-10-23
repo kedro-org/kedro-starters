@@ -51,7 +51,7 @@ def before_scenario(context, scenario):
         "pandas-iris",
         "pyspark",
         "pyspark-iris",
-        "spaceflights",
+        "spaceflights-pandas",
         "spaceflights-pyspark",
         "spaceflights-pandas-viz",
         "spaceflights-pyspark-viz",

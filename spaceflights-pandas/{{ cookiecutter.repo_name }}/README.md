@@ -116,4 +116,3 @@ To automatically strip out all output cell contents before committing to `git`, 
 
 > *Note:* Your output cells will be retained locally.
 
-
