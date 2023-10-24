@@ -3,7 +3,7 @@
 This is a bare minimum setup for you to use a core component of Kedro in the exploratory phase of a project. Specifically, it enables you to use Kedro to configure and explore data sources in Jupyter notebook through the [DataCatalog](https://docs.kedro.org/en/stable/data/data_catalog.html) feature.
 Later on, you can build a full pipeline using the same configuration.
 
-The project was generated using `Kedro {{ cookiecutter.kedro_version }}`.
+The project was generated using `kedro {{ cookiecutter.kedro_version }}`.
 
 ## Prerequisites
 

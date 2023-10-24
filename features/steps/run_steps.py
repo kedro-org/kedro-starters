@@ -49,7 +49,7 @@ def create_project_from_config_file(context, starter_name):
 
 @given("I have installed the Kedro project's dependencies")
 def install_project_dependencies(context):
-    reqs_path = "src/requirements.txt"
+    reqs_path = "requirements.txt"
     res = subprocess.run(
         [context.pip, "install", "-r", reqs_path, "-U"], cwd=context.root_project_dir
     )
