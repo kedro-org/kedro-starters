@@ -24,7 +24,7 @@ cd <my-project-name>  # change directory into newly created project directory
 Install the required dependencies:
 
 ```bash
-pip install -r src/requirements.txt
+pip install -r requirements.txt
 ```
 
 Now you can run the project:

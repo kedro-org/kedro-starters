@@ -9,7 +9,7 @@ from kedro.templates.project.hooks.utils import (
 
 def main(selected_add_ons_list):
     current_dir = Path.cwd()
-    requirements_file_path = current_dir / "src/requirements.txt"
+    requirements_file_path = current_dir / "requirements.txt"
     pyproject_file_path = current_dir / "pyproject.toml"
     python_package_name = '{{ cookiecutter.python_package }}'
 
