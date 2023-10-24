@@ -7,7 +7,7 @@ jupyterlab~=3.0
 kedro~={{ cookiecutter.kedro_version }}
 kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset]~=1.0
 kedro-telemetry~=0.2.0
-git+https://github.com/kedro-org/kedro-viz.git@main#egg=kedro-viz&subdirectory=package
+kedro-viz @ git+https://github.com/kedro-org/kedro-viz.git@main#subdirectory=package
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=7.2
