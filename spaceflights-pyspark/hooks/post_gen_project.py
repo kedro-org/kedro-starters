@@ -1,10 +1,11 @@
 from pathlib import Path
 
 from kedro.templates.project.hooks.utils import (
-    parse_add_ons_input,
+
     setup_template_add_ons,
     sort_requirements,
 )
+from kedro.framework.cli.starters import _parse_add_ons_input
 
 
 def main(selected_add_ons_list):
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     # Get the selected add-ons from cookiecutter
     selected_add_ons = "{{ cookiecutter.add_ons }}"
     # Parse the add-ons to get a list
-    selected_add_ons_list = parse_add_ons_input(selected_add_ons)
+    selected_add_ons_list = _parse_add_ons_input(selected_add_ons)
 
     # Execute the script only if the PySpark add-on (represented by "6") is selected.
     # This ensures the script doesn't run with kedro new --starter but only with the add-ons flow option.
