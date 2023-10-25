@@ -1,10 +1,11 @@
 from pathlib import Path
 
 from kedro.templates.project.hooks.utils import (
-    parse_add_ons_input,
+
     setup_template_add_ons,
     sort_requirements,
 )
+from kedro.framework.cli.starters import _parse_add_ons_input
 
 
 def main(selected_add_ons_list):
