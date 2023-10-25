@@ -38,7 +38,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install test requirements
         run: make install-test-requirements
-      - name: Setup Hadoop binaru
+      - name: Setup Hadoop binary
         if: matrix.os == 'windows-latest'
         run: |
             Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true -OutFile winutils.exe
@@ -47,8 +47,11 @@ jobs:
             New-Item -ItemType directory -Path C:\hadoop\bin
             Move-Item .\winutils.exe C:\hadoop\bin
             setx /m HADOOP_HOME "C:\hadoop"
+            echo "C:\hadoop" >> $env:HADOOP_HOME
       - name: Run `kedro run` end to end tests for all starters
-        run: behave features/run.feature
+        run: |
+          echo HADOOP_HOME
+          behave features/run.feature
 
   lint:
     strategy:
