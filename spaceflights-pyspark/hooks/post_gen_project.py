@@ -15,7 +15,7 @@ def main(selected_add_ons):
     python_package_name = '{{ cookiecutter.python_package }}'
 
     # Handle template directories and requirements according to selected add-ons
-    setup_template_add_ons(selected_add_ons_list, requirements_file_path, pyproject_file_path, python_package_name)
+    setup_template_add_ons(selected_add_ons, requirements_file_path, pyproject_file_path, python_package_name)
 
     # Sort requirements.txt file in alphabetical order
     sort_requirements(requirements_file_path)
