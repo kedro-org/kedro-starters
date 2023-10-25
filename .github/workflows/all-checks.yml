@@ -39,8 +39,8 @@ jobs:
       - name: Install test requirements
         run: make install-test-requirements
       - name: Setup Hadoop binaru
-          if: matrix.os == 'windows-latest'
-          run: |
+        if: matrix.os == 'windows-latest'
+        run: |
             Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true -OutFile winutils.exe
             Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true -OutFile hadoop.dll
             Move-Item .\hadoop.dll C:\Windows\System32
@@ -65,5 +65,5 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install test requirements
         run: make install-test-requirements
-     - name: Run linter for all starters
+      - name: Run linter for all starters
         run: behave features/lint.feature
