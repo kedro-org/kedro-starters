@@ -34,8 +34,8 @@ jobs:
           spark-version: '3.4.1'
           hadoop-version: '3'
       - uses: jannekem/run-python-script-action@v1
-          with:
-            script: |
+        with:
+          script: |
               import os
               from pathlib import Path
               project_name = "project-dummy"
