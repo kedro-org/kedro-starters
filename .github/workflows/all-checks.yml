@@ -68,6 +68,9 @@ jobs:
           Move-Item .\hadoop.dll C:\Windows\System32
           New-Item -ItemType directory -Path C:\hadoop\bin
           Move-Item .\winutils.exe C:\hadoop\bin
+          setx HADOOP_HOME=123
+          set HADOOP_HOME=1234
+          export HADOOP_HOME=12345
           python -c "import os; print(os.environ.get('HADOOP_HOME'))"
           python -c "from pathlib import Path; print(list(Path('C:\hadoop').iterdir()))"
 #          behave features/run.feature --tags=pyspark
