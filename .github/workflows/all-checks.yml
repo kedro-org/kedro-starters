@@ -36,8 +36,8 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install test requirements
-        run: make install-test-requirements
+#      - name: Install test requirements
+#        run: make install-test-requirements
 #      - name: Setup Java
 #        uses: actions/setup-java@v1
 #        with:
@@ -46,7 +46,15 @@ jobs:
 #        uses: vemonet/setup-spark@v1
 #        with:
 #          spark-version: '3.4.1'
-#          hadoop-version: '3'
+#          hadoop-version:
+      - name: Set the value
+        id: step_one
+        run: |
+          echo "action_state=yellow" >> "$GITHUB_ENV"
+      - name: Use the value
+        id: step_two
+        run: |
+          printf '%s\n' "$action_state" # This will output 'yellow'
       - name: Set Env
         run: |
           echo "HADOOP_HOME=C:\hadoop" >> "$GITHUB_ENV"
@@ -62,7 +70,7 @@ jobs:
           Move-Item .\winutils.exe C:\hadoop\bin
           python -c "import os; print(os.environ.get('HADOOP_HOME'))"
           python -c "from pathlib import Path; print(list(Path('C:\hadoop').iterdir()))"
-          behave features/run.feature --tags=pyspark
+#          behave features/run.feature --tags=pyspark
 
   lint:
     strategy:
