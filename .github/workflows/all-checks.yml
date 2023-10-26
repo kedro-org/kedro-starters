@@ -41,9 +41,10 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '11'
-      - uses: beyondstorage/setup-hdfs@master
+      - uses: vemonet/setup-spark@v1
         with:
-          hdfs-version: '3.3.1'
+          spark-version: '3.4.1'
+          hadoop-version: '3'
       - name: Run `kedro run` end to end tests for all starters
         run: |
           behave features/run.feature
