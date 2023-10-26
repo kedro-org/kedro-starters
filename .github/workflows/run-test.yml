@@ -37,6 +37,7 @@ jobs:
         with:
           script: |
               import os
+              import yaml
               from pathlib import Path
               project_name = "project-dummy"
               config = {
