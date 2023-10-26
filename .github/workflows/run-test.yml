@@ -1,0 +1,58 @@
+name: Run test on Kedro Starters
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  spaceflights-pyspark:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        python-version: [ "3.8", "3.9", "3.10", "3.11" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python ${{inputs.python-version}}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test requirements
+        run: make install-test-requirements
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Setup spark
+        uses: vemonet/setup-spark@v1
+        with:
+          spark-version: '3.4.1'
+          hadoop-version: '3'
+      - uses: jannekem/run-python-script-action@v1
+          with:
+            script: |
+              import os
+              from pathlib import Path
+              project_name = "project-dummy"
+              config = {
+                      "project_name": project_name,
+                      "repo_name": project_name,
+                      "output_dir": os.getcwd(),
+                      "python_package": project_name.replace("-", "_"),
+                      "include_example": False,
+              }
+              with Path("config.yml").open("w") as config_file:
+                yaml.dump(config, config_file, default_flow_style=False)
+      - name: Create a new project with starter
+        run: kedro new --starter=kedro-starters/pyspark-iris --config=config.yml
+      - name: Install project reqa
+        run: |
+          cd project-dummy
+          pip install -r requirements.txt
+      - name: Kedro run
+        run: kedro run
