@@ -50,7 +50,7 @@ jobs:
               with Path("config.yml").open("w") as config_file:
                 yaml.dump(config, config_file, default_flow_style=False)
       - name: Create a new project with starter
-        run: kedro new --starter=kedro-starters/pyspark-iris --config=config.yml
+        run: kedro new --starter=./kedro-starters/pyspark-iris --config=config.yml
       - name: Install project reqa
         run: |
           cd project-dummy
