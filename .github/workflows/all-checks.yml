@@ -49,32 +49,9 @@ jobs:
 #        with:
 #          spark-version: '3.4.1'
 #          hadoop-version:
-      - name: Set the value
-        id: step_one
-        run: |
-          echo "action_state=yellow" >> $GITHUB_ENV
-      - name: Use the value
-        id: step_two
-        run: |
-          printf '%s\n' "$action_state" # This will output 'yellow'
-      - name: Set Env
-        run: |
-          echo "HADOOP_HOME=C:\hadoop" >> $GITHUB_ENV
-          echo "action_state=yellow" >> $GITHUB_ENV
       - name: Run `kedro run` end to end tests for all starters
         run: |
-          printf '%s\n' "$action_state"
-          printf '%s\n' "$HADOOP_HOME"
-          Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true -OutFile winutils.exe
-          Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true -OutFile hadoop.dll
-          Move-Item .\hadoop.dll C:\Windows\System32
-          New-Item -ItemType directory -Path C:\hadoop\bin
-          Move-Item .\winutils.exe C:\hadoop\bin
-          setx HADOOP_HOME=123
-          set HADOOP_HOME=1234
-          python -c "import os; print(os.environ.get('HADOOP_HOME'))"
-          python -c "from pathlib import Path; print(list(Path('C:\hadoop').iterdir()))"
-#          behave features/run.feature --tags=pyspark
+          behave features/run.feature --tags=pyspark
 
   lint:
     strategy:
