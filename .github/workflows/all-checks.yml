@@ -49,6 +49,9 @@ jobs:
 #        with:
 #          spark-version: '3.4.1'
 #          hadoop-version:
+      - name: Add MSBuild to PATH
+        if: matrix.os == 'windows-latest'
+          uses: microsoft/setup-msbuild@v1
       - name: Setup Hadoop
         run: |
           Invoke-WebRequest https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true -OutFile winutils.exe
