@@ -29,6 +29,8 @@ jobs:
         os: [ windows-latest ]
         python-version: [ "3.8", "3.9", "3.10", "3.11" ]
     runs-on: ${{ matrix.os }}
+    env:
+      HADOOP_HOME: 'C:\hadoop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -70,7 +72,6 @@ jobs:
           Move-Item .\winutils.exe C:\hadoop\bin
           setx HADOOP_HOME=123
           set HADOOP_HOME=1234
-          export HADOOP_HOME=12345
           python -c "import os; print(os.environ.get('HADOOP_HOME'))"
           python -c "from pathlib import Path; print(list(Path('C:\hadoop').iterdir()))"
 #          behave features/run.feature --tags=pyspark
