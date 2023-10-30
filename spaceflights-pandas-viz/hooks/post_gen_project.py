@@ -27,5 +27,5 @@ if __name__ == "__main__":
 
     # Execute the script only if the Pyspark add-on is selected.
     # This ensures the script doesn't run with kedro new --starter but only with the add-ons flow option.
-    if "PyPsark" not in selected_add_ons and "Kedro Viz" in selected_add_ons:
+    if "Pyspark" not in selected_add_ons and "Kedro Viz" in selected_add_ons:
         main(selected_add_ons)
