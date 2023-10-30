@@ -9,7 +9,7 @@ executors:
       python_version:
         type: string
     docker:
-      - image: circleci/python:<<parameters.python_version>>
+      - image: cimg/python:<<parameters.python_version>>
 
 commands:
   setup_python_env:
