@@ -9,10 +9,9 @@ executors:
       python_version:
         type: string
     docker:
-      - image: circleci/python:<<parameters.python_version>>
+      - image: cimg/python:<<parameters.python_version>>
 
 commands:
-##
   setup_python_env:
     description: Setup Python environment
     steps:
@@ -22,14 +21,13 @@ commands:
       - run:
           name: Install Python dependencies
           command: pip install -r test_requirements.txt -U
-            
+
       - run:
           name: Echo package versions
           command: |
             python -V
             pip -V
             kedro -V
-##
 
   setup_requirements:
     parameters:
@@ -39,10 +37,10 @@ commands:
       - checkout
       - run:
           name: Install pip setuptools
-          command: python -m pip install -U "pip>=21.2" "setuptools>=38.0" wheel
+          command: python -m pip install -U pip setuptools wheel
       - run:
           name: Install test requirements
-          command: sudo pip install -r test_requirements.txt
+          command: pip install -r test_requirements.txt
       - run:
           name: Pip freeze
           command: pip freeze
@@ -117,7 +115,7 @@ commands:
     steps:
       - run:
           command: |
-            conda activate kedro-starters 
+            conda activate kedro-starters
             behave features/run.feature
 
   win_e2e_lint:
@@ -125,7 +123,7 @@ commands:
     steps:
       - run:
           command: |
-            conda activate kedro-starters 
+            conda activate kedro-starters
             behave features/lint.feature
 
 jobs:
@@ -206,18 +204,18 @@ workflows:
       - run:
           matrix:
             parameters:
-              python_version: [ "3.8", "3.9", "3.10" ]
+              python_version: [ "3.8", "3.9", "3.10", "3.11" ]
       - lint:
           matrix:
             parameters:
-              python_version: [ "3.8", "3.9", "3.10" ]
+              python_version: [ "3.8", "3.9", "3.10", "3.11" ]
 
       - win_run:
           matrix:
                 parameters:
-                  python_version: [ "3.8", "3.9", "3.10" ]
+                  python_version: [ "3.8", "3.9", "3.10", "3.11" ]
 
       - win_lint:
           matrix:
                 parameters:
-                  python_version: [ "3.8", "3.9", "3.10" ]
+                  python_version: [ "3.8", "3.9", "3.10", "3.11" ]
