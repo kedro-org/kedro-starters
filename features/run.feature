@@ -7,30 +7,14 @@ Feature: Run all starters
     When I run the Kedro pipeline
     Then I should get a successful exit code
 
-  Scenario: Run a Kedro project created from pandas-iris
+  Scenario: Run a Kedro project created from databricks-iris
     Given I have prepared a config file
-    And I have run a non-interactive kedro new with the starter pandas-iris
+    And I have run a non-interactive kedro new with the starter databricks-iris
     And I have installed the Kedro project's dependencies
     When I run the Kedro pipeline
     Then I should get a successful exit code
 
-    # Pyspark starter has no pipelines therefore we don't run the Kedro pipeline.
-    # This starter acts as a basic example of implementing pyspark with Kedro.
-  Scenario: Run a Kedro project created from pyspark
-    Given I have prepared a config file
-    And I have run a non-interactive kedro new with the starter pyspark
-    And I have installed the Kedro project's dependencies
-    When I execute the CLI command to list Kedro pipelines
-    Then I should get a successful exit code
-
-  Scenario: Run a Kedro project created from pyspark-iris
-    Given I have prepared a config file
-    And I have run a non-interactive kedro new with the starter pyspark-iris
-    And I have installed the Kedro project's dependencies
-    When I run the Kedro pipeline
-    Then I should get a successful exit code
-
-  Scenario: Run a Kedro project created from spaceflights
+  Scenario: Run a Kedro project created from spaceflights-pandas
     Given I have prepared a config file
     And I have run a non-interactive kedro new with the starter spaceflights-pandas
     And I have installed the Kedro project's dependencies
