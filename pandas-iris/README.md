@@ -1,11 +1,13 @@
-# The `pandas-iris` Kedro starter
+# [ARCHIVED] This starter is no longer maintained.
 
-## Introduction
+## The `pandas-iris` Kedro starter
+
+### Introduction
 
 The code in this repository demonstrates best practice when working with Kedro. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro Iris dataset example](https://docs.kedro.org/en/stable/get_started/new_project.html).
 
 
-### An example pipeline using only native `Kedro`
+#### An example pipeline using only native `Kedro`
 
 ![](./images/iris_pipeline.png)
 

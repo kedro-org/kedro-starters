@@ -1,10 +1,11 @@
-# The `standalone-datacatalog` Kedro starter
+# [ARCHIVED] This starter is no longer maintained.
+## The `standalone-datacatalog` Kedro starter
 
 This starter, formerly known as `mini-kedro`, sets up a lightweight Kedro project that uses the Kedro [Data Catalog](https://docs.kedro.org/en/stable/data/index.html) as a registry for data without using any of the other features of Kedro.
 
 The starter comprises a minimal setup to use the traditional [Iris dataset](https://www.kaggle.com/uciml/iris).
 
-## Usage
+### Usage
 
 To create a new project based on this starter:
 
