@@ -1,4 +1,6 @@
 # [ARCHIVED] This starter is no longer maintained.
+You can still find the starter code in older release tags: https://github.com/kedro-org/kedro-starters/tree/0.18.14/standalone-datacatalog
+
 ## The `standalone-datacatalog` Kedro starter
 
 This starter, formerly known as `mini-kedro`, sets up a lightweight Kedro project that uses the Kedro [Data Catalog](https://docs.kedro.org/en/stable/data/index.html) as a registry for data without using any of the other features of Kedro.
