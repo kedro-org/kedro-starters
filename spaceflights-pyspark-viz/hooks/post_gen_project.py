@@ -5,7 +5,6 @@ from kedro.templates.project.hooks.utils import (
     setup_template_add_ons,
     sort_requirements,
 )
-from kedro.framework.cli.starters import _parse_add_ons_input
 
 
 def main(selected_add_ons):
