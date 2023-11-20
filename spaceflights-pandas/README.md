@@ -14,6 +14,13 @@ kedro new --starter=spaceflights-pandas
 cd <my-project-name>  # change directory into newly created project directory
 ```
 
+Alternatively, you can follow the interactive `kedro new` flow to pick and choose which tools you want as part of your project and choose to add an example to get Spaceflights based example pipelines.
+Depending on your tool selection you will get an example from either of the four spaceflights starters:
+- [`spaceflights-pandas`](../spaceflights-pandas): The spaceflights tutorial example code.
+- [`spaceflights-pandas-viz`](../spaceflights-pandas-viz): The spaceflights tutorial example code with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
+- [`spaceflights-pyspark`](../spaceflights-pyspark): An alternative Kedro Spaceflights example, using PySpark.
+- [`spaceflights-pyspark-viz`](../spaceflights-pyspark-viz): An alternative Kedro Spaceflights example, using PySpark with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
+
 Install the required dependencies:
 
 ```bash
