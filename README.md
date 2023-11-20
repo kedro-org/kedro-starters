@@ -10,7 +10,15 @@ The following aliases are available:
 
 * [Alias `astro-airflow-iris`](astro-airflow-iris): The [Kedro Iris dataset example project](https://docs.kedro.org/en/stable/get_started/new_project.html) with a minimal setup for deploying the pipeline on Airflow with [Astronomer](https://www.astronomer.io/).
 
-* [Alias `spaceflights-pandas`](spaceflights-pandas): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code
+* [Alias `databricks-iris`](databricks-iris): The [Kedro Iris dataset example project] (https://docs.kedro.org/en/stable/get_started/new_project.html) with a minimal setup for running and deploying the pipeline on Databricks.
+
+* [Alias `spaceflights-pandas`](spaceflights-pandas): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code.
+
+* [Alias `spaceflights-pandas-viz`](spaceflights-pandas-viz): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
+
+* [Alias `spaceflights-pyspark`](spaceflights-pyspark): An alternative Kedro Spaceflights example, using [PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
+
+* [Alias `spaceflights-pyspark-viz`](spaceflights-pyspark-viz): An alternative Kedro Spaceflights example, using [PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html) with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
 
 
 Archived starters which are no longer maintained:
