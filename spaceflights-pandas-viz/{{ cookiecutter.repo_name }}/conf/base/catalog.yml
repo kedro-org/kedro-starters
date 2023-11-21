@@ -51,7 +51,7 @@ shuttles:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
   load_args:
-    engine: openpyxl # Use modern Excel engine, it is the default since Kedro 0.18.0
+    engine: openpyxl
 
 preprocessed_companies:
   type: pandas.ParquetDataset
