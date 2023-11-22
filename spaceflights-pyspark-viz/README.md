@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a completed version of the [spaceflights tutorial project](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) and the extra tutorial sections on [visualisation with Kedro-Viz](https://docs.kedro.org/en/stable/visualisation/index.html) and [experiment tracking with Kedro-Viz](https://docs.kedro.org/en/stable/experiment_tracking/index.html) with PySpark setup that originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html). 
+This is a completed version of the [spaceflights tutorial project](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) and the extra tutorial sections on [visualisation with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/kedro-viz_visualisation.html) and [experiment tracking with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/experiment_tracking.html) with a PySpark setup that originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html). 
 This project includes the data required to run it. The code in this repository demonstrates best practice when working with Kedro and PySpark.
 
 To create a project based on this starter, [ensure you have installed Kedro into a virtual environment](https://docs.kedro.org/en/stable/get_started/install.html). Then use the following command:
