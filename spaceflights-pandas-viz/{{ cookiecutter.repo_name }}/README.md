@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is your new Kedro project for the [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) and the extra tutorial sections on [visualisation with Kedro-Viz](https://docs.kedro.org/en/stable/visualisation/index.html) and [experiment tracking with Kedro-Viz](https://docs.kedro.org/en/stable/experiment_tracking/index.html), which was generated using `kedro {{ cookiecutter.kedro_version }}`.
+This is your new Kedro project for the [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) and the extra tutorial sections on [visualisation with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/kedro-viz_visualisation.html) and [experiment tracking with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/experiment_tracking.html), which was generated using `kedro {{ cookiecutter.kedro_version }}`.
 
 Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
 
