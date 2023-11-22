@@ -6,21 +6,18 @@ This is a variation of the [spaceflights tutorial project](https://docs.kedro.or
 
 The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and two example pipelines, and originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
 
-To use this starter, create a new Kedro project using the commands below. To make sure you have the required dependencies, run it in your virtual environment (see [our documentation about virtual environments](https://docs.kedro.org/en/stable/get_started/install.html#virtual-environments) for guidance on how to get set up):
+To create a project based on this starter, [ensure you have installed Kedro into a virtual environment](https://docs.kedro.org/en/stable/get_started/install.html). Then use the following command:
 
 ```bash
 pip install kedro
 kedro new --starter=spaceflights-pyspark
-cd <my-project-name>  # change directory into newly created project directory
 ```
 
-Alternatively, you can follow the interactive `kedro new` flow to pick and choose which tools you want as part of your project and choose to add an example to get Spaceflights based example pipelines.
-Depending on your tool selection you will get an example from either of the four spaceflights starters:
-- [`spaceflights-pandas`](../spaceflights-pandas): The spaceflights tutorial example code.
-- [`spaceflights-pandas-viz`](../spaceflights-pandas-viz): The spaceflights tutorial example code with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
-- [`spaceflights-pyspark`](../spaceflights-pyspark): An alternative Kedro Spaceflights example, using PySpark.
-- [`spaceflights-pyspark-viz`](../spaceflights-pyspark-viz): An alternative Kedro Spaceflights example, using PySpark with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
+After the project is created, navigate to the newly created project directory:
 
+```bash
+cd <my-project-name>  # change directory 
+```
 
 Install the required dependencies:
 
