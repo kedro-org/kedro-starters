@@ -12,6 +12,8 @@ The following aliases are available:
 
 * [Alias `databricks-iris`](databricks-iris): The [Kedro Iris dataset example project](https://docs.kedro.org/en/0.18.14/get_started/new_project.html) with a minimal setup for running and deploying the pipeline on Databricks.
 
+* [Alias `datarobot-interstate`](datarobot-interstate): The [Metro Interstate Traffic Volume dataset example project](http://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume) with a minimal setup for running and deploying the pipeline on DataRobot.
+
 * [Alias `spaceflights-pandas`](spaceflights-pandas): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code.
 
 * [Alias `spaceflights-pandas-viz`](spaceflights-pandas-viz): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code with viz feature examples (experiment tracking, plotting with plotly and matplotlib).
