@@ -48,9 +48,7 @@ def before_scenario(context, scenario):
     starters_root = Path(__file__).parents[1]
     starter_names = [
         "astro-airflow-iris",
-        "pandas-iris",
-        "pyspark",
-        "pyspark-iris",
+        "databricks-iris",
         "spaceflights-pandas",
         "spaceflights-pyspark",
         "spaceflights-pandas-viz",
