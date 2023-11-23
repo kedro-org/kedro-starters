@@ -2,9 +2,15 @@
 You can still find the starter code in older release tags: https://github.com/kedro-org/kedro-starters/tree/0.18.14/pyspark 
 
 ## The `pyspark` Kedro starter
+This starter is unavailable in Kedro version `0.19.0` and beyond and the latest version of Kedro that supports it is Kedro `0.18.14`. To check the version of Kedro you have installed, type `kedro -V` in your terminal window. To install a specific version of Kedro, e.g. 0.18.14, type `pip install kedro==0.18.14`.
+
+To create a project with this starter using `kedro new`, type the following (assuming Kedro version 0.18.14):
+
+```
+kedro new --starter=pyspark --checkout=0.18.14
+``` 
 
 ### Introduction
-
 The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and an example pipeline, and originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
 
 ### Features
