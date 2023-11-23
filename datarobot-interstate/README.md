@@ -43,7 +43,7 @@ random_state: <your_random_state>
 ```
 
 ## How to run your dr-flow pipeline
-Run the full set of pipelines in your `env_name` environment (e.g. `prod`, default `local` if not provided), by typing the following into your terminal from the project directory:
+Run the full set of pipelines in your `env_name` environment (e.g. `prod`, default `base` if not provided), by typing the following into your terminal from the project directory:
 
 ```bash
 pip install --verbose -r src/requirements.txt

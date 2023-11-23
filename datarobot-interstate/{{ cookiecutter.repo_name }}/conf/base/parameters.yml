@@ -1,0 +1,9 @@
+project_name: "{{ cookiecutter.python_package }}"
+target_column: traffic_volume
+segment_column: null
+datetime_column: date_time
+features_to_exclude: null
+task_type: regression # regression, binary_classification, multiclass_classification, clustering, anomaly_detection
+partitioning_method: datetime # random, group, stratified, datetime,
+train_fraction: 0.8
+random_state: 42

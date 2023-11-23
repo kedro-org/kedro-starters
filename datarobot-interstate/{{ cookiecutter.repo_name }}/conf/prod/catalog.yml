@@ -1,0 +1,39 @@
+web_data_request:
+  type: api.APIDataset
+  url: http://archive.ics.uci.edu/static/public/492/metro+interstate+traffic+volume.zip
+
+traffic_volume_data:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/traffic_volume_data.csv
+
+dr_projects:
+  type: yaml.YAMLDataset
+  filepath: data/03_primary/dr_projects.yaml
+
+dr_models:
+  type: yaml.YAMLDataset
+  filepath: data/03_primary/dr_models.yaml
+
+dr_deployments:
+  type: yaml.YAMLDataset
+  filepath: data/03_primary/dr_deployments.yaml  
+
+segmented_data:
+  type: {{ cookiecutter.python_package }}.extras.datasets.partitioned_datasets.PartitionedPandasDataframe
+  filepath: data/02_intermediate/segmented_data
+
+training_data:
+  type: {{ cookiecutter.python_package }}.extras.datasets.partitioned_datasets.PartitionedPandasDataframe
+  filepath: data/02_intermediate/training_data
+
+testing_data:
+  type: {{ cookiecutter.python_package }}.extras.datasets.partitioned_datasets.PartitionedPandasDataframe
+  filepath: data/02_intermediate/testing_data
+
+predictions:
+  type: {{ cookiecutter.python_package }}.extras.datasets.partitioned_datasets.PartitionedPandasDataframe
+  filepath: data/07_model_output/predictions
+  
+predictions_out_of_sample:
+  type: {{ cookiecutter.python_package }}.extras.datasets.partitioned_datasets.PartitionedPandasDataframe
+  filepath: data/07_model_output/predictions_out_of_sample

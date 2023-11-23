@@ -1,0 +1,16 @@
+black~=22.0
+flake8>=3.7.9, <4.0
+ipython>=7.31.1, <8.0; python_version < '3.8'
+ipython~=8.10; python_version >= '3.8'
+isort~=5.0
+jupyter~=1.0
+jupyterlab~=3.0
+kedro~=0.18.13
+kedro-datasets[pandas.CSVDataset]~=1.0
+kedro-viz~=6.6.0
+kedro-telemetry~=0.2.0
+pytest-cov~=3.0
+pytest-mock>=1.7.1, <2.0
+pytest~=7.2
+datarobot~=2.28
+pandas~=2.1.1
