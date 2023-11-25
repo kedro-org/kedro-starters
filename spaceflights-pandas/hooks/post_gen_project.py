@@ -25,7 +25,7 @@ if __name__ == "__main__":
     # Get the selected add-ons from cookiecutter
     selected_add_ons = "{{ cookiecutter.add_ons }}"
 
-    # Execute the script only if the PySpark add-on is selected.
+    # Execute the script only if the add-on is selected.
     # This ensures the script doesn't run with kedro new --starter but only with the add-ons flow option.
-    if "PySpark" in selected_add_ons and "Kedro Viz" in selected_add_ons:
+    if selected_add_ons != "none":
         main(selected_add_ons)

@@ -2,16 +2,20 @@
 
 ## Overview
 
-This is a variation of the [spaceflights tutorial project](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) described in the [online Kedro documentation](https://docs.kedro.org) with `PySpark` and `Kedro-Viz` setup.
+This is a completed version of the [spaceflights tutorial project](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) and the extra tutorial sections on [visualisation with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/kedro-viz_visualisation.html) and [experiment tracking with Kedro-Viz](https://docs.kedro.org/projects/kedro-viz/en/stable/experiment_tracking.html) with a PySpark setup that originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html). 
+This project includes the data required to run it. The code in this repository demonstrates best practice when working with Kedro and PySpark.
 
-The code in this repository demonstrates best practice when working with Kedro and PySpark. It contains a Kedro starter template with some initial configuration and two example pipelines, and originates from the [Kedro documentation about how to work with PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
-
-To use this starter, create a new Kedro project and select `pyspark` and `Kedro-Viz` as add-ons.
+To create a project based on this starter, [ensure you have installed Kedro into a virtual environment](https://docs.kedro.org/en/stable/get_started/install.html). Then use the following command:
 
 ```bash
 pip install kedro
-kedro new
-cd <my-project-name>  # change directory into newly created project directory
+kedro new --starter=spaceflights-pyspark-viz
+```
+
+After the project is created, navigate to the newly created project directory:
+
+```bash
+cd <my-project-name>  # change directory 
 ```
 
 Install the required dependencies:
