@@ -44,13 +44,13 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: microsoft/setup-msbuild@v1
       - name: Install Microsoft Visual C++ Redistributable
-          if: inputs.os == 'windows-latest'
-          run: |
+        if: inputs.os == 'windows-latest'
+        run: |
             choco install vcredist-all
-          shell: powershell
-            - name: Setup Hadoop binary
-              if: inputs.os == 'windows-latest'
-              run: |
+        shell: powershell
+      - name: Setup Hadoop binary
+        if: matrix.os == 'windows-latest'
+        run: |
                 Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true" -OutFile winutils.exe
                 Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true" -OutFile hadoop.dll
                 Move-Item .\hadoop.dll C:\Windows\System32
@@ -59,8 +59,7 @@ jobs:
                 [System.Environment]::SetEnvironmentVariable('HADOOP_HOME', 'C:\hadoop', [System.EnvironmentVariableTarget]::Machine)
                 echo "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
                 echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
-              shell:
-                powershell
+        shell: powershell
       - name: Run `kedro run` end to end tests for all starters
         run: |
           behave features/run.feature --tags=pyspark
