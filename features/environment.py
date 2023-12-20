@@ -1,16 +1,62 @@
 """Behave environment setup commands"""
+from __future__ import annotations
 
 import os
+import shlex
 import shutil
 import subprocess
 import tempfile
 import venv
 from pathlib import Path
-
-from typing import Set
+from typing import Any, Set
 
 _PATHS_TO_REMOVE: Set[Path] = set()
 
+
+
+
+def run(
+    cmd: list | str, split: bool = True, print_output: bool = False, **kwargs: Any
+) -> subprocess.CompletedProcess:
+    """Run a shell command.
+
+    Args:
+        cmd: A command string, or a command followed by program
+            arguments that will be submitted to Popen to run.
+
+        split: Flag that splits command to provide as multiple *args
+            to Popen. Default is True.
+
+        print_output: If True will print previously captured stdout.
+            Default is False.
+
+        **kwargs: Extra options to pass to subprocess.
+
+    Example:
+    ::
+        "ls"
+        "ls -la"
+        "chmod 754 local/file"
+
+    Returns:
+        Result with attributes args, returncode, stdout and stderr.
+
+    """
+    if isinstance(cmd, str) and split:
+        cmd = shlex.split(cmd)
+    result = subprocess.run(cmd, input="", capture_output=True, **kwargs)  # noqa: PLW1510
+    result.stdout = result.stdout.decode("utf-8")
+    result.stderr = result.stderr.decode("utf-8")
+    if print_output:
+        print(result.stdout)
+    return result
+
+def call(cmd, env):
+    res = run(cmd, env=env)
+    if res.returncode:
+        print(res.stdout)
+        print(res.stderr)
+        assert False
 
 def create_new_venv() -> Path:
     """Create a new venv.
@@ -33,6 +79,22 @@ def _create_tmp_dir() -> Path:
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
     kedro_install_venv_dir = create_new_venv()
+
+    # Fix Pip version
+    call(
+        [
+            context.python,
+            "-m",
+            "pip",
+            "install",
+            "-U",
+            # pip==23.3 breaks dependency resolution
+            "pip==23.2",
+        ],
+        env=context.env,
+    )
+
+
     context.venv_dir = kedro_install_venv_dir
 
     if os.name == "posix":
