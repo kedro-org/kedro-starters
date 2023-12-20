@@ -79,6 +79,17 @@ def _create_tmp_dir() -> Path:
 def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
     kedro_install_venv_dir = create_new_venv()
+    context.venv_dir = kedro_install_venv_dir
+
+    if os.name == "posix":
+        bin_dir = context.venv_dir / "bin"
+    else:
+        bin_dir = context.venv_dir / "Scripts"
+
+    context.bin_dir = bin_dir
+    context.pip = str(bin_dir / "pip")
+    context.kedro = str(bin_dir / "kedro")
+    context.python = str(bin_dir / "python")
 
     # Fix Pip version
     call(
@@ -94,18 +105,6 @@ def before_scenario(context, scenario):
         env=context.env,
     )
 
-
-    context.venv_dir = kedro_install_venv_dir
-
-    if os.name == "posix":
-        bin_dir = context.venv_dir / "bin"
-    else:
-        bin_dir = context.venv_dir / "Scripts"
-
-    context.bin_dir = bin_dir
-    context.pip = str(bin_dir / "pip")
-    context.kedro = str(bin_dir / "kedro")
-    context.python = str(bin_dir / "python")
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
