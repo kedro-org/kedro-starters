@@ -1,7 +1,7 @@
 black~=22.0
-ipython~=8.10; python_version >= '3.8'
-jupyter~=1.0
-jupyterlab~=3.0
+ipython>=8.10
+jupyterlab>=3.0
+notebook
 kedro~={{ cookiecutter.kedro_version }}
 kedro-datasets[pandas.CSVDataset]>=1.0
 kedro-airflow~=0.5
