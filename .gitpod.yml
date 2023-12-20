@@ -4,9 +4,8 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
-image:
-  file: .gitpod.Dockerfile
-
+image: gitpod/workspace-python-3.10
+  
 tasks:
   - init: |
       make sign-off
