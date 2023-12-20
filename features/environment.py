@@ -80,6 +80,7 @@ def before_scenario(context, scenario):
     """Environment preparation before each test is run."""
     kedro_install_venv_dir = create_new_venv()
     context.venv_dir = kedro_install_venv_dir
+    context.env = os.environ.copy()
 
     if os.name == "posix":
         bin_dir = context.venv_dir / "bin"
