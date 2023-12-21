@@ -38,6 +38,7 @@ package_name = "{{ cookiecutter.python_package }}"
 project_name = "{{ cookiecutter.project_name }}"
 kedro_init_version = "{{ cookiecutter.kedro_version }}"
 tools = "{{ cookiecutter.tools | default('') | string | replace('\"', '\\\"') }}"
+source_dir = "src"
 
 [tool.pytest.ini_options]
 addopts = """
