@@ -27,5 +27,5 @@ if __name__ == "__main__":
 
     # Execute the script only if the tool is selected.
     # This ensures the script doesn't run with kedro new --starter but only with the tools flow option.
-    if selected_tools != "none":
+    if selected_tools != "['None']":
         main(selected_tools)
