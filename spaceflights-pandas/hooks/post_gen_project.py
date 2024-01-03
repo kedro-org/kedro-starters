@@ -7,12 +7,12 @@ from kedro.templates.project.hooks.utils import (
 )
 
 
-def main(selected_tools):
+def main(example_pipeline):
     current_dir = Path.cwd()
     requirements_file_path = current_dir / "requirements.txt"
     pyproject_file_path = current_dir / "pyproject.toml"
     python_package_name = '{{ cookiecutter.python_package }}'
-    example_pipeline = "{{ cookiecutter.example_pipeline }}"
+    selected_tools = "{{ cookiecutter.tools }}"
 
     # Handle template directories and requirements according to selected tools
     setup_template_tools(selected_tools, requirements_file_path, pyproject_file_path, python_package_name, example_pipeline)
@@ -23,9 +23,9 @@ def main(selected_tools):
 
 if __name__ == "__main__":
     # Get the selected tools from cookiecutter
-    selected_tools = "{{ cookiecutter.tools }}"
+    example_pipeline = "{{ cookiecutter.example_pipeline }}"
 
-    # Execute the script only if the tool is selected.
-    # This ensures the script doesn't run with kedro new --starter but only with the tools flow option.
-    if selected_tools != "['None']":
-        main(selected_tools)
+    # Ensure the script doesn't run with kedro new --starter but only with examples selected.
+    # User cannot specify both starter and example.
+    if example_pipeline == "True":
+        main(example_pipeline)
