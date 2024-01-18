@@ -77,7 +77,7 @@ def create_config_file_with_tools(context, tools):
     context.package_name = context.project_name.replace("-", "_")
     config = {
         "tools": tools_str,
-        "example_pipeline": "n",
+        "example_pipeline": "y",
         "project_name": context.project_name,
         "repo_name": context.project_name,
         "output_dir": str(context.temp_dir),
