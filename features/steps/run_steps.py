@@ -70,15 +70,13 @@ def create_config_file_with_tools(context, tools):
     It takes a custom tools list and sets example prompt to `n`.
     """
 
-    tools_str = tools if tools != "none" else ""
-
     context.config_file = context.temp_dir / "config.yml"
     context.project_name = "project-dummy"
     context.root_project_dir = context.temp_dir / context.project_name
     context.package_name = context.project_name.replace("-", "_")
     config = {
-        "tools": tools_str,
-        "example_pipeline": "y",
+        "tools": tools,
+        "example_pipeline": "n",
         "project_name": context.project_name,
         "repo_name": context.project_name,
         "output_dir": str(context.temp_dir),
