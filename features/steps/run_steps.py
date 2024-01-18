@@ -1,4 +1,5 @@
 import subprocess
+from pathlib import Path
 
 import yaml
 from behave import given, then, when
@@ -51,7 +52,7 @@ def create_project_from_config_file(context, starter_name):
 @when("I run a non-interactive kedro new without starter")
 def create_project_without_starter(context):
     """Behave step to run kedro new given the config I previously created."""
-    res = run(
+    res = subprocess.run(
         [context.kedro, "new", "-c", str(context.config_file)],
         env=context.env,
         cwd=context.temp_dir,
