@@ -2,5 +2,5 @@
     "project_name": "Iris",
     "repo_name": "{{ cookiecutter.project_name.strip().replace(' ', '-').replace('_', '-').lower() }}",
     "python_package": "{{ cookiecutter.project_name.strip().replace(' ', '_').replace('-', '_').lower() }}",
-    "kedro_version": "{{ cookiecutter.kedro_version }}"
+    "kedro_version": "default value required by cookiecutter - overwritten by Kedro implementation"
 }
