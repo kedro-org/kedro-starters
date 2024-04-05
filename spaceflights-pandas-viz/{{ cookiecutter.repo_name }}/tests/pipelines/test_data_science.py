@@ -1,5 +1,8 @@
 import pandas as pd
 import pytest
+from kedro.io import DataCatalog, MemoryDataset
+from kedro.runner import SequentialRunner
+from {{ cookiecutter.python_package }}.pipelines.data_science import create_pipeline
 from {{ cookiecutter.python_package }}.pipelines.data_science.nodes import split_data
 
 
@@ -27,3 +30,13 @@ class TestDataScienceNodes:
         assert len(y_train) == 2  # noqa: PLR2004
         assert len(X_test) == 1
         assert len(y_test) == 1
+
+class TestDataSciencePipeline:
+    def test_data_science_pipeline(self, dummy_data, dummy_parameters):
+        pipeline = create_pipeline().from_nodes("split_data_node").to_nodes("evaluate_model_node")
+        catalog = DataCatalog()
+        catalog.add("model_input_table", MemoryDataset(dummy_data))
+        catalog.add_feed_dict({"params:model_options" : dummy_parameters["model_options"]})
+
+        output = SequentialRunner().run(pipeline, catalog)
+        assert len(output) == 0
