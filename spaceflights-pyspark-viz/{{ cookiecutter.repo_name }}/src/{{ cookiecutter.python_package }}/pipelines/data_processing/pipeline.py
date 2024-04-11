@@ -14,8 +14,8 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=load_shuttles_to_csv,
-                inputs="shuttles@excel",
-                outputs="shuttles@csv",
+                inputs="shuttles_excel_data@excel",
+                outputs="shuttles_csv_data@csv",
                 name="load_shuttles_to_csv_node",
             ),
             node(
