@@ -63,7 +63,8 @@ reviews:
     header: True
     mode: overwrite
 
-shuttles_excel_data@excel:
+
+shuttles_excel:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
