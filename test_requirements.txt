@@ -2,4 +2,4 @@ bandit>=1.6.2, <2.0
 behave>=1.2.6, <2.0
 PyYAML>=4.2, <7.0
 ruff~=0.1.8
-git+https://github.com/kedro-org/kedro.git@main#egg=kedro
+git+https://github.com/kedro-org/kedro.git@debug/point-to-test-starters-branch#egg=kedro
