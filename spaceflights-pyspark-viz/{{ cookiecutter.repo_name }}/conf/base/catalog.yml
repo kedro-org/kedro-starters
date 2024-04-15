@@ -67,7 +67,7 @@ shuttles_excel:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
-shuttles_csv_data@csv:
+shuttles@csv:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/shuttles.csv
 
