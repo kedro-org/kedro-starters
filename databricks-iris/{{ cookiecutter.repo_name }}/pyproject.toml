@@ -40,9 +40,6 @@ kedro_init_version = "{{ cookiecutter.kedro_version }}"
 source_dir = "src"
 
 [tool.pytest.ini_options]
-pythonpath = [
-  "src"
-]
 addopts = """
 --cov-report term-missing \
 --cov src/{{ cookiecutter.python_package }} -ra"""

@@ -42,9 +42,6 @@ example_pipeline = "{{ cookiecutter.example_pipeline }}"
 source_dir = "src"
 
 [tool.pytest.ini_options]
-pythonpath = [
-  "src"
-]
 addopts = """
 --cov-report term-missing \
 --cov src/{{ cookiecutter.python_package }} -ra"""
