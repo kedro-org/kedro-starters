@@ -101,7 +101,7 @@ def before_scenario(context, scenario):
             "install",
             "-U",
             # pip==23.3 breaks dependency resolution
-            "pip==23.2",
+            "pip==23.3.1",
         ],
         env=context.env,
     )

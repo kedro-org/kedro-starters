@@ -1,0 +1,27 @@
+on:
+  workflow_dispatch:
+  schedule:
+    # Run every day at midnight (UTC time)
+    - cron: '0 0 * * *'
+
+jobs:
+  starters-test:
+    uses: ./.github/workflows/all-checks.yml
+
+  notify-failed-build:
+    permissions:
+      issues: write
+    name: Notify failed build for Starters
+    needs: starters-test
+    if: ${{ !success() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jayqi/failed-build-issue-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          label-name: "starters nightly build"
+          title-template: "`kedro-starters`: Nightly build failure"
+          body-template: |
+            GitHub Actions workflow [{{workflow}} #{{runNumber}}](https://github.com/{{repo.owner}}/{{repo.repo}}/actions/runs/{{runId}}) failed.
+          create-label: true
+          always-create-new-issue: false
