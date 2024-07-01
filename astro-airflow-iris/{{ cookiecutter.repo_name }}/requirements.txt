@@ -5,7 +5,6 @@ kedro~={{ cookiecutter.kedro_version }}
 kedro-datasets[pandas-csvdataset]>=3.0; python_version >= "3.9"
 kedro-datasets[pandas.CSVDataset]>=1.0; python_version < "3.9"
 kedro-airflow~=0.5
-kedro-telemetry>=0.3.1
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 pytest~=7.2

@@ -4,7 +4,6 @@ notebook
 kedro~={{ cookiecutter.kedro_version }}
 kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, spark-sparkdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibwriter]>=3.0; python_version >= "3.9"
 kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset, spark.SparkDataset, plotly.PlotlyDataset, plotly.JSONDataset, matplotlib.MatplotlibWriter]>=1.0; python_version < "3.9"
-kedro-telemetry>=0.3.1
 kedro-viz>=6.7.0
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
