@@ -17,7 +17,7 @@ HOOKS = (SparkHooks(),)
 
 # Setup for Experiment Tracking
 # The SQLite DB required for experiment tracking is stored by default in the .viz folder of your project.
-# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS` 
+# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS`
 # to pass to the `SESSION_STORE_CLASS` constructor.
 # SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / .viz)}
 
