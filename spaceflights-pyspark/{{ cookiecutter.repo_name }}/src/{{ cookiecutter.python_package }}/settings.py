@@ -14,10 +14,12 @@ HOOKS = (SparkHooks(),)
 # Class that manages storing KedroSession data.
 # from kedro.framework.session.store import BaseSessionStore
 # SESSION_STORE_CLASS = BaseSessionStore
-# Keyword arguments to pass to the `SESSION_STORE_CLASS` constructor.
-# SESSION_STORE_ARGS = {
-#     "path": "./sessions"
-# }
+
+# Setup for Experiment Tracking
+# The SQLite DB required for experiment tracking is stored by default in the .viz folder of your project.
+# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS` 
+# to pass to the `SESSION_STORE_CLASS` constructor.
+# SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / .viz)}
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"

@@ -18,8 +18,12 @@ from pathlib import Path  # noqa: E402
 from kedro_viz.integrations.kedro.sqlite_store import SQLiteStore  # noqa: E402
 
 SESSION_STORE_CLASS = SQLiteStore
-# Keyword arguments to pass to the `SESSION_STORE_CLASS` constructor.
-SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2])}
+
+# Setup for Experiment Tracking
+# The SQLite DB required for experiment tracking is stored by default in the .viz folder of your project.
+# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS` 
+# to pass to the `SESSION_STORE_CLASS` constructor.
+# SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / .viz)}
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
