@@ -6,6 +6,33 @@ This is your new Kedro project, which was generated using `kedro {{ cookiecutter
 
 Take a look at the [Kedro documentation](https://docs.kedro.org) to get started.
 
+## Getting Started
+
+To create a project based on this starter, ensure you have installed Kedro into a virtual environment. Then use the following command:
+
+```sh
+pip install kedro
+kedro new --starter=databricks-iris
+```
+
+After the project is created, navigate to the newly created project directory:
+
+```sh
+cd <my-project-name>  # change directory 
+```
+
+Install the required dependencies:
+
+```sh
+pip install -r requirements.txt
+```
+
+Now you can run the project:
+
+```sh
+kedro run
+```
+
 ## Rules and guidelines
 
 In order to get the best out of the template:
