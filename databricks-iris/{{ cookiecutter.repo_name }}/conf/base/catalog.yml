@@ -44,7 +44,7 @@
 
 example_iris_data:
   type: spark.SparkDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/01_raw/iris.csv
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/01_raw/iris.csv
   file_format: csv
   load_args:
     header: True
@@ -56,48 +56,45 @@ example_iris_data:
 # for all SparkDatasets.
 X_train@pyspark:
   type: spark.SparkDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/X_train.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_train.parquet
   save_args:
     mode: overwrite
 
 X_train@pandas:
   type: pandas.ParquetDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/X_train.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_train.parquet
 
 X_test@pyspark:
   type: spark.SparkDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/X_test.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_test.parquet
   save_args:
     mode: overwrite
 
 X_test@pandas:
   type: pandas.ParquetDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/X_test.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_test.parquet
 
 y_train@pyspark:
   type: spark.SparkDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/y_train.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_train.parquet
   save_args:
     mode: overwrite
 
 y_train@pandas:
   type: pandas.ParquetDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/y_train.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_train.parquet
 
 y_test@pyspark:
   type: spark.SparkDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/y_test.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_test.parquet
   save_args:
     mode: overwrite
 
 y_test@pandas:
   type: pandas.ParquetDataset
-  filepath: /dbfs/FileStore/iris-databricks/data/02_intermediate/y_test.parquet
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_test.parquet
 
-# This is an example how to use `MemoryDataset` with Spark objects that aren't `DataFrame`'s.
-# In particular, the `assign` copy mode ensures that the `MemoryDataset` will be assigned
-# the Spark object itself, not a deepcopy version of it, since deepcopy doesn't work with
-# Spark object generally.
-example_classifier:
-  type: MemoryDataset
-  copy_mode: assign
+y_pred@pandas:
+  type: pandas.ParquetDataset
+  filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/03_primary/y_pred.parquet
+

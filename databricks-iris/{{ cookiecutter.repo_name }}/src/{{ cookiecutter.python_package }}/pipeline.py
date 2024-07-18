@@ -25,12 +25,12 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=make_predictions,
                 inputs=["X_train@pandas", "X_test@pandas", "y_train@pandas"],
-                outputs="y_pred",
+                outputs="y_pred@pandas",
                 name="make_predictions",
             ),
             node(
                 func=report_accuracy,
-                inputs=["y_pred", "y_test@pandas"],
+                inputs=["y_pred@pandas", "y_test@pandas"],
                 outputs=None,
                 name="report_accuracy",
             ),
