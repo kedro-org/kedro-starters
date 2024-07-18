@@ -94,7 +94,7 @@ y_test@pandas:
   type: pandas.ParquetDataset
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_test.parquet
 
-y_pred@pandas:
+y_pred:
   type: pandas.ParquetDataset
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/03_primary/y_pred.parquet
 
