@@ -24,7 +24,7 @@ def main():
 
     configure_project(package_name)
     with KedroSession.create(env=env, conf_source=conf_source) as session:
-        if len(nodes) == 0:
+        if not nodes:
             session.run()
         else:
             session.run(node_names=nodes)
