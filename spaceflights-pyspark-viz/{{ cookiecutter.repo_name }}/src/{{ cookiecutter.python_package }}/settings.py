@@ -23,7 +23,7 @@ SESSION_STORE_CLASS = SQLiteStore
 # (supported from python >= 3.9 and Kedro-Viz 9.2.0) in the .viz folder
 # of your project. To store it in another directory, provide the keyword argument
 # `SESSION_STORE_ARGS` to pass to the `SESSION_STORE_CLASS` constructor.
-SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / ".viz")}
+SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2])}
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
