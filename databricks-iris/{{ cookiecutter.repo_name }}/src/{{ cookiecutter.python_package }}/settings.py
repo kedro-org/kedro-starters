@@ -16,10 +16,10 @@ HOOKS = (SparkHooks(),)
 # SESSION_STORE_CLASS = BaseSessionStore
 
 # Setup for Experiment Tracking
-# The SQLite DB required for experiment tracking is stored by default in the .viz folder of your project.
-# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS`
+# The SQLite DB required for experiment tracking is stored by default in the .viz folder (supported from python >= 3.9 and Kedro-Viz 9.2.0) 
+# of your project. To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS`
 # to pass to the `SESSION_STORE_CLASS` constructor.
-# SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / .viz)}
+# SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / ".viz")}
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"

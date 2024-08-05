@@ -13,16 +13,16 @@ https://docs.kedro.org/en/stable/kedro_project_setup/settings.html."""
 # DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
 
 # Class that manages storing KedroSession data.
+from pathlib import Path  # noqa: E402
 from kedro_viz.integrations.kedro.sqlite_store import SQLiteStore  # noqa: E402
 
 SESSION_STORE_CLASS = SQLiteStore
 
 # Setup for Experiment Tracking
-# The SQLite DB required for experiment tracking is stored by default in the .viz folder of your project.
-# To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS`
+# The SQLite DB required for experiment tracking is stored by default in the .viz folder (supported from python >= 3.9 and Kedro-Viz 9.2.0) 
+# of your project. To store it in another directory, provide the keyword argument `SESSION_STORE_ARGS`
 # to pass to the `SESSION_STORE_CLASS` constructor.
-# from pathlib import Path  # noqa: E402
-# SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / .viz)}
+SESSION_STORE_ARGS = {"path": str(Path(__file__).parents[2] / ".viz")}
 
 # Directory that holds configuration.
 # CONF_SOURCE = "conf"
