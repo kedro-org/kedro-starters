@@ -3,7 +3,6 @@ jupyterlab>=3.0
 notebook
 kedro~={{ cookiecutter.kedro_version }}
 kedro-datasets[spark, pandas, spark.SparkDataset, pandas.ParquetDataset]>=1.0
-kedro-telemetry>=0.3.1
 numpy~=1.21
 pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
