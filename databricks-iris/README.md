@@ -21,15 +21,11 @@ kedro new --starter=databricks-iris
 This starter has a base configuration that allows it to run natively on Databricks. Directories to store data and logs still need to be manually created in the user's Databricks DBFS instance:
 
 ```bash
-/dbfs/FileStore/iris-databricks/data
-/dbfs/FileStore/iris-databricks/logs
+/dbfs/FileStore/iris_databricks/data
+/dbfs/FileStore/iris_databricks/logs
 ```
 
 See the documentation on deploying a packaged Kedro project to Databricks for more information.
-
-### Databricks entry point
-
-The starter contains a script and an entry point (`databricks_run.py`) that enables a packaged project created with this starter to run on Databricks. See the documentation on deploying a packaged Kedro project to Databricks for more information.
 
 ### Single configuration in `/conf/base/spark.yml`
 
