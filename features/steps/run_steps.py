@@ -169,3 +169,29 @@ def check_status_code(context):
         assert False, "Expected exit code {}" " but got {}".format(
             OK_EXIT_CODE, context.result.returncode
         )
+
+
+@when('I execute the kedro command "{command}"')
+def exec_kedro_target(context, command):
+    """Execute Kedro target."""
+    split_command = command.split()
+    cmd = [context.kedro, *split_command]
+    context.result = subprocess.run(cmd, env=context.env, cwd=str(context.root_project_dir))
+
+
+@when("I install the project's python package")
+def install_project_package_via_pip(context):
+    """Install a python package using pip."""
+    dist_dir = context.root_project_dir / "dist"
+    (whl_file,) = dist_dir.glob("*.whl")
+    subprocess.run([context.pip, "install", str(whl_file)], env=context.env)
+
+
+@when("I execute the installed project")
+def exec_project(context):
+    """Execute installed Kedro project target."""
+    context.result = subprocess.run(
+        [context.python, "-m", context.project_name.replace("-", "_")],
+        cwd=context.root_project_dir,
+        env=context.env
+    )
