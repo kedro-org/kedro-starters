@@ -6,9 +6,5 @@ kedro[jupyter]
 kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, spark-sparkdataset]>=3.0; python_version >= "3.9"
 kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset, spark.SparkDataset]>=1.0; python_version < "3.9"
 kedro-viz>=6.7.0
-pytest-cov~=3.0
-pytest-mock>=1.7.1, <2.0
-pytest~=7.2
-ruff~=0.1.8
 scikit-learn~=1.5.1; python_version >= "3.9"
 scikit-learn<=1.4.0,>=1.0; python_version < "3.9"
