@@ -1,4 +1,5 @@
 import logging
+from typing import Dict, Tuple
 
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -6,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 
 
-def split_data(data: pd.DataFrame, parameters: dict) -> tuple:
+def split_data(data: pd.DataFrame, parameters: Dict) -> Tuple:
     """Splits data into features and targets training and test sets.
 
     Args:
