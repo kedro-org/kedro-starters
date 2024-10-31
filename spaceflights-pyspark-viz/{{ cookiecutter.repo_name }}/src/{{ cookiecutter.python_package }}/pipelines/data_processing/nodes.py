@@ -1,3 +1,4 @@
+from typing import Dict, Tuple
 
 import pandas as pd
 from pyspark.sql import Column
@@ -23,7 +24,7 @@ def _parse_money(x: Column) -> Column:
     return x
 
 
-def preprocess_companies(companies: SparkDataFrame) -> tuple[SparkDataFrame, dict]:
+def preprocess_companies(companies: SparkDataFrame) -> Tuple[SparkDataFrame, Dict]:
     """Preprocesses the data for companies.
 
     Args:

@@ -1,3 +1,4 @@
+from typing import Dict, Tuple
 
 import pandas as pd
 
@@ -18,7 +19,7 @@ def _parse_money(x: pd.Series) -> pd.Series:
     return x
 
 
-def preprocess_companies(companies: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def preprocess_companies(companies: pd.DataFrame) -> Tuple[pd.DataFrame, Dict]:
     """Preprocesses the data for companies.
 
     Args:
