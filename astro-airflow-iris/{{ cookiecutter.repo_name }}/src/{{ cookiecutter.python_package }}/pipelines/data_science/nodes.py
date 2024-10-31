@@ -4,14 +4,14 @@ just for illustrating basic Kedro features.
 Delete this when you start working on your own Kedro project.
 """
 import logging
-from typing import Any, Dict
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
 
 def train_model(
-    train_x: pd.DataFrame, train_y: pd.DataFrame, parameters: Dict[str, Any]
+    train_x: pd.DataFrame, train_y: pd.DataFrame, parameters: dict[str, Any]
 ) -> np.ndarray:
     """Node for training a simple multi-class logistic regression model. The
     number of training iterations as well as the learning rate are taken from
