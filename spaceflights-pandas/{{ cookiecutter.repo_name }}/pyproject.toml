@@ -3,9 +3,22 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
+requires-python = ">=3.9"
 name = "{{ cookiecutter.python_package }}"
 readme = "README.md"
-dynamic = ["dependencies", "version"]
+dynamic = ["version"]
+dependencies = [
+    "ipython>=8.10",
+    "jupyterlab>=3.0",
+    "notebook",
+    "kedro~={{ cookiecutter.kedro_version }}",
+    "kedro[jupyter]",
+    "kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset]>=3.0; python_version >= '3.9'",
+    "kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset]>=1.0; python_version < '3.9'",
+    "kedro-viz>=6.7.0",
+    "scikit-learn~=1.5.1; python_version >= '3.9'",
+    "scikit-learn<=1.4.0,>=1.0; python_version < '3.9'"
+]
 
 [project.scripts]
 {{ cookiecutter.repo_name }} = "{{ cookiecutter.python_package }}.__main__:main"
@@ -32,7 +45,6 @@ dev = [
 ]
 
 [tool.setuptools.dynamic]
-dependencies = {file = "requirements.txt"}
 version = {attr = "{{ cookiecutter.python_package }}.__version__"}
 
 [tool.setuptools.packages.find]
