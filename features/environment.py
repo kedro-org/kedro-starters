@@ -8,9 +8,9 @@ import subprocess
 import tempfile
 import venv
 from pathlib import Path
-from typing import Any, Set
+from typing import Any
 
-_PATHS_TO_REMOVE: Set[Path] = set()
+_PATHS_TO_REMOVE: set[Path] = set()
 
 
 
