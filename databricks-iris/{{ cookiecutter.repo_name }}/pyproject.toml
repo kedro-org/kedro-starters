@@ -8,7 +8,7 @@ readme = "README.md"
 dynamic = ["dependencies", "version"]
 
 [project.scripts]
-{{ cookiecutter.repo_name }} = "{{ cookiecutter.python_package }}.__main__:main"
+"{{ cookiecutter.repo_name }}" = "{{ cookiecutter.python_package }}.__main__:main"
 
 [project.entry-points."kedro.hooks"]
 

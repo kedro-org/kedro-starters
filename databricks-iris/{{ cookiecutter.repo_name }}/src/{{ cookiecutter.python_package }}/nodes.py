@@ -4,14 +4,13 @@ generated using Kedro {{ cookiecutter.kedro_version }}
 """
 
 import logging
-from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd
 from pyspark.sql import DataFrame
 
 
-def split_data(data: DataFrame, parameters: Dict) -> Tuple:
+def split_data(data: DataFrame, parameters: dict) -> tuple:
     """Splits data into features and targets training and test sets.
 
     Args:
