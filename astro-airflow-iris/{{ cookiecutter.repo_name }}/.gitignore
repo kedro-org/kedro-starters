@@ -18,8 +18,13 @@ data/**
 !.gitkeep
 
 # also keep the example dataset
-!data/01_raw/*.csv
+!data/01_raw/iris.csv
 
+# ignore kedro-viz metadata
+.viz
+
+# ignore file based logs
+*.log
 
 ##########################
 # Common files
@@ -149,3 +154,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# mlflow local runs
+mlruns/*
