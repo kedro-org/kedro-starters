@@ -3,10 +3,7 @@ jupyterlab>=3.0
 notebook
 kedro~={{ cookiecutter.kedro_version }}
 kedro[jupyter]
-kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, spark-sparkdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibwriter]>=3.0; python_version >= "3.9"
-kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset, spark.SparkDataset, plotly.PlotlyDataset, plotly.JSONDataset, matplotlib.MatplotlibWriter]>=1.0; python_version < "3.9"
-kedro-viz>=6.7.0
-scikit-learn~=1.5.1; python_version >= "3.9"
-scikit-learn<=1.4.0,>=1.0; python_version < "3.9"
+kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, spark-sparkdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibwriter]>=3.0
+scikit-learn~=1.5.1
 seaborn~=0.12.1
 setuptools; python_version >= "3.12"

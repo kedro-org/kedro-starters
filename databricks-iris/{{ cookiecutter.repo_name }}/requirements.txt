@@ -3,5 +3,5 @@ jupyterlab>=3.0
 notebook
 kedro~={{ cookiecutter.kedro_version }}
 kedro[jupyter]
-kedro-datasets[spark, pandas, spark.SparkDataset, pandas.ParquetDataset]>=1.0
+kedro-datasets[spark, pandas, spark.SparkDataset, pandas.ParquetDataset]>=3.0
 numpy~=1.21
