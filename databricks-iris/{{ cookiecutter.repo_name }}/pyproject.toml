@@ -13,7 +13,8 @@ dependencies = [
     "notebook",
     "kedro[jupyter]~={{ cookiecutter.kedro_version }}",
     "kedro-datasets[spark, pandas, spark.SparkDataset, pandas.ParquetDataset]>=3.0",
-    "numpy~=1.21"
+    "numpy~=1.21; python_version < '3.13'",
+    "numpy~=2.1; python_version >= '3.13'"
 ]
 
 [project.scripts]
