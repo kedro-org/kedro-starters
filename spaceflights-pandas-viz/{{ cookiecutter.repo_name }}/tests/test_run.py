@@ -1,16 +1,14 @@
 """
-This module contains an example test.
-
+This module contains example tests for a Kedro project.
 Tests should be placed in ``src/tests``, in modules that mirror your
-project's structure, and in files named test_*.py. They are simply functions
-named ``test_*`` which test a unit of logic.
+project's structure, and in files named test_*.py.
 """
 from pathlib import Path
 
 import pytest
 from kedro.config import OmegaConfigLoader
-from kedro.framework.context import KedroContext
-from kedro.framework.hooks import _create_hook_manager
+from kedro.framework.session import KedroSession
+from kedro.framework.startup import bootstrap_project
 from kedro.io import DataCatalog
 
 
@@ -20,17 +18,6 @@ def config_loader():
         conf_source=str(Path.cwd() / "conf"),
         base_env="base",
         default_run_env="local"
-    )
-
-
-@pytest.fixture
-def kedro_context(config_loader):
-    return KedroContext(
-        package_name="{{ cookiecutter.python_package }}",
-        project_path=Path.cwd(),
-        env="local",
-        config_loader=config_loader,
-        hook_manager=_create_hook_manager(),
     )
 
 
@@ -51,16 +38,21 @@ class TestConfigLoader:
         assert base_params == {}
 
 
-class TestKedroContext:
-    def test_data_catalog(self, kedro_context):
-        # Test if the data catalog is properly loaded within the KedroContext
-        catalog = kedro_context.catalog
-        assert isinstance(catalog, DataCatalog)
+class TestKedroSession:
+    def test_session_data_catalog(self):
+        bootstrap_project(Path.cwd())
 
-        # Parameters should be loaded into the catalog
-        parameters = catalog.load("parameters")
-        assert isinstance(parameters, dict)
+        # Test creating a Kedro session and verifying its data catalog
+        with KedroSession.create(project_path=Path.cwd()) as session:
+            context = session.load_context()
+            catalog = context.catalog
+            assert isinstance(catalog, DataCatalog)
 
-    def test_project_path(self, kedro_context):
-        # Test if the correct project path is set in the KedroContext
-        assert kedro_context.project_path == Path.cwd()
+            # Test if parameters can be loaded
+            parameters = catalog.load("parameters")
+            assert isinstance(parameters, dict)
+
+    def test_project_path(self):
+        bootstrap_project(Path.cwd())
+        with KedroSession.create(project_path=Path.cwd()) as session:
+            assert session._project_path == Path.cwd()
