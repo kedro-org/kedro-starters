@@ -24,18 +24,13 @@ def config_loader():
 
 
 @pytest.fixture
-def hook_manager():
-    return _create_hook_manager()
-
-
-@pytest.fixture
-def kedro_context(config_loader, hook_manager):
+def kedro_context(config_loader):
     return KedroContext(
         package_name="{{ cookiecutter.python_package }}",
         project_path=Path.cwd(),
         env="local",
         config_loader=config_loader,
-        hook_manager=hook_manager,
+        hook_manager=_create_hook_manager(),
     )
 
 
