@@ -26,7 +26,7 @@ class TestKedroSession:
             base_params = config_loader.get("parameters", "base")
             assert base_params == {}
 
-    def test_session_data_catalog(self):
+    def test_data_catalog(self):
         bootstrap_project(Path.cwd())
 
         # Test creating a Kedro session and verifying its data catalog
@@ -38,6 +38,12 @@ class TestKedroSession:
             # Test if parameters can be loaded
             parameters = catalog.load("parameters")
             assert isinstance(parameters, dict)
+
+    def test_default_runner(self):
+        bootstrap_project(Path.cwd())
+        with KedroSession.create(project_path=Path.cwd()) as session:
+            # Test if the runner exists
+            assert session.run is not None
 
     def test_project_path(self):
         bootstrap_project(Path.cwd())
