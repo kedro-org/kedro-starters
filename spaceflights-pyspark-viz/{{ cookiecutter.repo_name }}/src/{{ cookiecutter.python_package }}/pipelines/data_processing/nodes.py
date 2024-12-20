@@ -37,7 +37,7 @@ def preprocess_companies(companies: SparkDataFrame) -> tuple[SparkDataFrame, dic
 
     # Drop columns that aren't used for model training
     companies = companies.drop('company_location', 'total_fleet_count')
-    return companies, {"columns": companies.columns, "data_type": "companies"}
+    return companies
 
 
 def load_shuttles_to_csv(shuttles: pd.DataFrame) -> pd.DataFrame:
