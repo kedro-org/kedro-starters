@@ -70,14 +70,6 @@ regressor:
   filepath: data/06_models/regressor.pickle
   versioned: true
 
-metrics:
-  type: tracking.MetricsDataset
-  filepath: data/09_tracking/metrics.json
-
-companies_columns:
-  type: tracking.JSONDataset
-  filepath: data/09_tracking/companies_columns.json
-
 shuttle_passenger_capacity_plot_exp:
   type: plotly.PlotlyDataset
   filepath: data/08_reporting/shuttle_passenger_capacity_plot_exp.json
