@@ -21,7 +21,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=preprocess_companies,
                 inputs="companies",
-                outputs=["preprocessed_companies", "companies_columns"],
+                outputs="preprocessed_companies",
                 name="preprocess_companies_node",
             ),
             node(

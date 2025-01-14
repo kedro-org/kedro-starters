@@ -29,7 +29,7 @@ def preprocess_companies(companies: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     """
     companies["iata_approved"] = _is_true(companies["iata_approved"])
     companies["company_rating"] = _parse_percentage(companies["company_rating"])
-    return companies, {"columns": companies.columns.tolist(), "data_type": "companies"}
+    return companies
 
 
 def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
