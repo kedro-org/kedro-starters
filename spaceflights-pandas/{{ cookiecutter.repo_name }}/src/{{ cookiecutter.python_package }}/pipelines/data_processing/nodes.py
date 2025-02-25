@@ -17,7 +17,7 @@ def _parse_money(x: pd.Series) -> pd.Series:
     return x
 
 
-def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
+def preprocess_companies(companies: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     """Preprocesses the data for companies.
 
     Args:
