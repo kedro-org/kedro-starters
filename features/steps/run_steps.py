@@ -99,7 +99,7 @@ def check_created_project_structure_from_tools(context, tools):
         assert is_created(path), f"{path} does not exist"
 
     tools_list = (
-        tools.split(",") if tools != "all" else ["lint", "test", "log", "docs", "data", "pyspark", "viz"]
+        tools.split(",") if tools != "all" else ["lint", "test", "log", "docs", "data", "pyspark"]
     )
 
     if "lint" in tools_list:  # lint tool
@@ -119,14 +119,6 @@ def check_created_project_structure_from_tools(context, tools):
 
     if "pyspark" in tools_list:  # PySpark tool
         assert is_created("conf/base/spark.yml"), "spark.yml does not exist"
-
-    if "viz" in tools_list:  # viz tool
-        expected_reporting_path = Path(
-            f"src/{context.package_name}/pipelines/reporting"
-        )
-        assert is_created(
-            expected_reporting_path
-        ), "reporting pipeline directory does not exist"
 
 
 @given("I have installed the Kedro project's dependencies")
