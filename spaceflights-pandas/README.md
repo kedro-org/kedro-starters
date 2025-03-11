@@ -31,7 +31,7 @@ kedro run
 
 To visualise the default pipeline, run:
 ```bash
-kedro viz
+kedro viz run
 ```
 
 This will open the default browser and display the following pipeline visualisation:

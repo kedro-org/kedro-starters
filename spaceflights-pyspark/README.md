@@ -31,6 +31,15 @@ Now you can run the project:
 kedro run
 ```
 
+To visualise the default pipeline, run:
+```bash
+kedro viz run
+```
+
+This will open the default browser and display the following pipeline visualisation:
+
+![](../spaceflights-pandas/images/pipeline_visualisation_with_layers.png)
+
 ## Features
 
 ### Single configuration in `/conf/base/spark.yml`
