@@ -1,5 +1,4 @@
-# [ARCHIVED] This starter is no longer maintained.
-You can still find the starter code in older release tags: https://github.com/kedro-org/kedro-starters/tree/0.19.11/spaceflights-pandas-viz
+# The `spaceflights-pandas-viz` Kedro starter
 
 ## Overview
 
