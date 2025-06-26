@@ -1,5 +1,5 @@
 bandit>=1.6.2, <2.0
 behave>=1.2.6, <2.0
 PyYAML>=4.2, <7.0
-ruff~=0.1.8
+ruff~=0.12.0
 git+https://github.com/kedro-org/kedro.git@main#egg=kedro
