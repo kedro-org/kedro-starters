@@ -52,7 +52,7 @@ def test_data_science_pipeline(caplog, dummy_data, dummy_parameters):
         .to_nodes("evaluate_model_node")
     )
     catalog = DataCatalog()
-    catalog["model_input_table"] = dummy_data
+    catalog["model_input_table@pandas"] = dummy_data
     catalog["params:model_options"] = dummy_parameters["model_options"]
 
     caplog.set_level(logging.DEBUG, logger="kedro")
