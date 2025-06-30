@@ -1,4 +1,8 @@
+# [ARCHIVED] This starter is no longer maintained.
+You can still find the starter code in older release tags: https://github.com/kedro-org/kedro-starters/releases/tag/0.19.14
+
 # The `spaceflights-pandas-viz` Kedro starter
+This starter is unavailable in Kedro version `1.0.0` and beyond and the latest version of Kedro that supports it is Kedro `0.19.14`. To check the version of Kedro you have installed, type `kedro -V` in your terminal window. To install a specific version of Kedro, e.g. 0.19.14, type `pip install kedro==0.19.14`.
 
 ## Overview
 
