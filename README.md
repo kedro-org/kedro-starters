@@ -14,14 +14,14 @@ The following aliases are available:
 
 * [Alias `spaceflights-pandas`](spaceflights-pandas): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code.
 
-* [Alias `spaceflights-pandas-viz`](spaceflights-pandas-viz): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code with viz feature examples (plotting with plotly and matplotlib).
-
 * [Alias `spaceflights-pyspark`](spaceflights-pyspark): An alternative Kedro Spaceflights example, using [PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html).
-
-* [Alias `spaceflights-pyspark-viz`](spaceflights-pyspark-viz): An alternative Kedro Spaceflights example, using [PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html) with viz feature examples (plotting with plotly and matplotlib).
 
 
 Archived starters which are no longer maintained:
+
+* [Alias `spaceflights-pandas-viz`](spaceflights-pandas-viz): The [spaceflights tutorial](https://docs.kedro.org/en/stable/tutorial/spaceflights_tutorial.html) example code with viz feature examples (plotting with plotly and matplotlib).
+
+* [Alias `spaceflights-pyspark-viz`](spaceflights-pyspark-viz): An alternative Kedro Spaceflights example, using [PySpark](https://docs.kedro.org/en/stable/integrations/pyspark_integration.html) with viz feature examples (plotting with plotly and matplotlib).
 
 * [Alias `pandas-iris`](pandas-iris): The [Kedro Iris dataset example project](https://docs.kedro.org/en/0.18.14/get_started/new_project.html)
 
