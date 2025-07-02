@@ -187,3 +187,29 @@ def exec_project(context):
         cwd=context.root_project_dir,
         env=context.env
     )
+
+
+@when("I run pytest in the project")
+def run_pytest_in_project(context):
+    """Behave step to run pytest in the newly created Kedro project."""
+    context.result = subprocess.run(
+        [context.python, "-m", "pytest"], cwd=context.root_project_dir
+    )
+
+
+@given("I have installed pytest")
+def install_pytest(context):
+    """Behave step to install pytest in the current environment."""
+    res = subprocess.run([
+        context.pip, "install", "pytest"
+    ])
+    assert res.returncode == OK_EXIT_CODE
+    res = subprocess.run([
+        context.pip, "install", "pytest-cov"
+    ])
+    assert res.returncode == OK_EXIT_CODE
+    res = subprocess.run([
+        context.pip, "install", ".",
+    ], cwd=context.root_project_dir)
+    assert res.returncode == OK_EXIT_CODE
+
