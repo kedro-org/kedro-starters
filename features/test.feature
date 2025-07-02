@@ -16,14 +16,6 @@ Feature: Run pytest for all starters
     When I run pytest in the project
     Then I should get a successful exit code
 
-  Scenario: Run pytest for spaceflights-pandas-viz starter
-    Given I have prepared a config file
-    And I have run a non-interactive kedro new with the starter spaceflights-pandas-viz
-    And I have installed the Kedro project's dependencies
-    And I have installed pytest
-    When I run pytest in the project
-    Then I should get a successful exit code
-
   Scenario: Run pytest for spaceflights-pyspark starter
     Given I have prepared a config file
     And I have run a non-interactive kedro new with the starter spaceflights-pyspark
@@ -32,10 +24,3 @@ Feature: Run pytest for all starters
     When I run pytest in the project
     Then I should get a successful exit code
 
-  Scenario: Run pytest for spaceflights-pyspark-viz starter
-    Given I have prepared a config file
-    And I have run a non-interactive kedro new with the starter spaceflights-pyspark-viz
-    And I have installed the Kedro project's dependencies
-    And I have installed pytest
-    When I run pytest in the project
-    Then I should get a successful exit code
