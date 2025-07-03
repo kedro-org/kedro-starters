@@ -216,4 +216,3 @@ def skip(app, what, name, obj, skip, options):
 def setup(app):
     app.connect("autodoc-process-docstring", autodoc_process_docstring)
     app.connect("autodoc-skip-member", skip)
-    # add Kedro stylesheets
