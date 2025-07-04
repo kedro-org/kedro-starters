@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px  # noqa:  F401
@@ -57,12 +58,20 @@ def compare_passenger_capacity_go(preprocessed_shuttles: SparkDataFrame):
 
 
 def create_confusion_matrix(companies: pd.DataFrame):
+    matplotlib.use('Agg')
+    
     actuals = [0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1]
     predicted = [1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1]
     data = {"y_Actual": actuals, "y_Predicted": predicted}
     df = pd.DataFrame(data, columns=["y_Actual", "y_Predicted"])
+    
     confusion_matrix = pd.crosstab(
         df["y_Actual"], df["y_Predicted"], rownames=["Actual"], colnames=["Predicted"]
     )
-    sn.heatmap(confusion_matrix, annot=True)
-    return plt
+    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sn.heatmap(confusion_matrix, annot=True, fmt='d', cmap='Blues', ax=ax)
+    ax.set_title('Confusion Matrix')
+    plt.tight_layout()
+    
+    return fig
