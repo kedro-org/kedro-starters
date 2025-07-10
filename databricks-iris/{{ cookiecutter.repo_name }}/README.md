@@ -64,13 +64,13 @@ kedro run
 
 ## How to test your Kedro project
 
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+Have a look at the file `tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
 
 ```
 pytest
 ```
 
-To configure the coverage threshold, look at the `.coveragerc` file.
+To configure the coverage threshold, look at the `pyproject.toml` file.
 
 ## Project dependencies
 
@@ -118,7 +118,7 @@ kedro ipython
 ```
 
 ### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can run `kedro activate-nbstripout`. This will add a hook in `.git/config` which will run `nbstripout` before anything is committed to `git`.
+To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
 
 > *Note:* Your output cells will be retained locally.
 
