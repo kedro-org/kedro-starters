@@ -70,7 +70,7 @@ Have a look at the file `tests/test_run.py` for instructions on how to write you
 pytest
 ```
 
-To configure the coverage threshold, look at the `pyproject.toml` file.
+You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
 
 ## Project dependencies
 
