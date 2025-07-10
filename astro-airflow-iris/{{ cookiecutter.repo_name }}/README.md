@@ -37,13 +37,13 @@ kedro run
 
 ## How to test your Kedro project
 
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+Have a look at the file `tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
 
 ```
 pytest
 ```
 
-To configure the coverage threshold, look at the `.coveragerc` file.
+You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
 
 ## Project dependencies
 
@@ -115,32 +115,19 @@ created by the Astronomer CLI can pick it up:
 cp src/dist/*.whl ./
 ```
 
-Generate a catalog file with placeholders for all the in-memory datasets:
-```shell
-kedro catalog create --pipeline=__default__
-```
-
-Edit the file `conf/base/catalog/__default__.yml` and choose a way to 
-persist the datasets rather than store them in-memory. E.g.:
+Add a default dataset factory for the in-memory datasets:
 ```yaml
-example_train_x:
+# conf/base/catalog.yml
+"{default_dataset}":
+  type: <dataset_type>
+  filename: <filename>
+```
+For example, if you want to use `pickle` to persist datasets, you can add:
+```yaml
+# conf/base/catalog.yml
+"{default_dataset}":
   type: pickle.PickleDataset
-  filepath: data/05_model_input/example_train_x.pkl
-example_train_y:
-  type: pickle.PickleDataset
-  filepath: data/05_model_input/example_train_y.pkl
-example_test_x:
-  type: pickle.PickleDataset
-  filepath: data/05_model_input/example_test_x.pkl
-example_test_y:
-  type: pickle.PickleDataset
-  filepath: data/05_model_input/example_test_y.pkl
-example_model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/example_model.pkl
-example_predictions:
-  type: pickle.PickleDataset
-  filepath: data/07_model_output/example_predictions.pkl
+  filepath: data/{default_dataset}.pkl
 ```
 
 Install the Kedro Airflow plugin and convert your pipeline into an Airflow dag:
