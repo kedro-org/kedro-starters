@@ -1,0 +1,16 @@
+ipython>=8.10
+jupyterlab>=3.0
+notebook
+kedro[jupyter]~={{ cookiecutter.kedro_version }}
+kedro-datasets[pandas-sqltabledataset,pandas-sqlquerydataset]
+langsmith
+langgraph
+langgraph-prebuilt
+langchain-community
+langchain-core
+langchain-openai
+langfuse
+pandas
+questionary
+scikit-learn
+SQLAlchemy

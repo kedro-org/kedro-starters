@@ -1,0 +1,61 @@
+# --- DB ---
+session_table:
+  type: pandas.SQLTableDataset
+  credentials: db_credentials
+  table_name: session
+  save_args:
+    if_exists: append
+
+user_data:
+  type: pandas.SQLQueryDataset
+  sql: "select * from user where id == ${runtime_params:user_id, 1}"
+  credentials: db_credentials
+
+db_engine:
+  type: kedro_agentic_workflows.datasets.sqlalchemy_dataset.SQLAlchemyEngineDataset
+  credentials: db_credentials
+
+docs:
+  type: pandas.SQLQueryDataset
+  sql: "select question, answer from doc"
+  credentials: db_credentials
+
+# --- LLM setup ---
+llm:
+  type: kedro_datasets_experimental.langchain.ChatOpenAIDataset
+  kwargs:
+    model: "gpt-4o"
+    temperature: 0.0
+  credentials: openai
+
+# --- Prompts ---
+tool_prompt_txt:
+  type: text.TextDataset
+  filepath: data/response_generation/prompts/tool_system.txt
+
+response_system_prompt_txt:
+  type: text.TextDataset
+  filepath: data/response_generation/prompts/response_system.txt
+
+response_user_prompt_txt:
+  type: text.TextDataset
+  filepath: data/response_generation/prompts/response_user.txt
+
+intent_prompt_langfuse:
+  type: kedro_agentic_workflows.datasets.langfuse_prompt_dataset.PromptDataset
+  filepath: data/intent_detection/prompts/intent_prompt_langfuse.json
+  prompt_name: "intent-classifier"
+  prompt_type: "chat"
+  credentials: langfuse_credentials
+
+intent_prompt_opik:
+  type: kedro_agentic_workflows.datasets.opik_prompt_dataset.PromptDataset
+  filepath: data/intent_detection/prompts/intent_prompt_opik.json
+  prompt_name: "intent-classifier"
+  prompt_type: "chat"
+  credentials: opik_credentials
+
+# --- Default dataset ---
+"{default_dataset}":
+  type: MemoryDataset
+  copy_mode: "assign"
