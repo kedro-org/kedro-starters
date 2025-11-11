@@ -9,6 +9,9 @@ on:
       - main
   workflow_call:
 
+permissions:
+  contents: read
+
 jobs:
   security-scan:
     runs-on: ubuntu-latest
