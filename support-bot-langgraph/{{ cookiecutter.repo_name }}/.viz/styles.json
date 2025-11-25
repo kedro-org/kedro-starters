@@ -1,0 +1,13 @@
+{
+    "intent_prompt_langfuse": {"fill": "#97BAC9", "color": "#000000", "stroke": "#CFDFE7"},
+    "llm": {"fill": "#598395", "color": "#000000", "stroke": "#97BAC9"},
+    "init_intent_detection_context_node": {"fill": "#CFDFE7", "color": "#242424", "stroke": "#FFFFFF"},
+    "intent_detection_context": {"fill": "#00BCFF", "color": "#242424", "stroke": "#ACCCDA"},
+    "detect_intent_node": {"fill": "#CFDFE7", "color": "#242424", "stroke": "#FFFFFF"},
+    "generate_response_node": {"fill": "#CFDFE7", "color": "#242424", "stroke": "#FFFFFF"},
+    "response_generation_context": {"fill": "#00BCFF", "color": "#242424", "stroke": "#ACCCDA"},
+    "tools": {"fill": "#0084B2", "color": "#000000", "stroke": "#82A8B8"},
+    "response_prompt": {"fill": "#97BAC9", "color": "#000000", "stroke": "#CFDFE7"},
+    "tool_prompt": {"fill": "#97BAC9", "color": "#000000", "stroke": "#CFDFE7"},
+    "init_response_generation_context_node": {"fill": "#CFDFE7", "color": "#242424", "stroke": "#FFFFFF"}
+}

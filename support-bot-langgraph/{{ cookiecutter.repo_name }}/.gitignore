@@ -22,9 +22,10 @@ data/**
 # also keep the example dataset
 !data/01_raw/iris.csv
 
-# ignore kedro-viz metadata
-.viz
-# keep styles.json
+# ignore everything viz metadata
+.viz/*
+# but DO NOT ignore the directory itself and styles.json
+!.viz/
 !.viz/styles.json
 
 # ignore file based logs
