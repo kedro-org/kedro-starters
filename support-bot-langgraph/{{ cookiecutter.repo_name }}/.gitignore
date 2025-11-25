@@ -4,20 +4,16 @@
 # ignore all local configuration
 conf/local/**
 !conf/local/.gitkeep
-.telemetry
 
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
 
 # ignore everything in the following folders
 data/**
-!data/prompts/
-!data/prompts/**
-logs/**
 
-# except their sub-folders
+# except their sub-folders and prompts
 !data/**/
-!logs/**/
+!data/prompts/**
 
 # also keep all .gitkeep files
 !.gitkeep
@@ -25,6 +21,13 @@ logs/**
 # also keep the example dataset
 !data/01_raw/iris.csv
 
+# ignore kedro-viz metadata
+.viz
+# keep styles.json
+!.viz/styles.json
+
+# ignore file based logs
+*.log
 
 ##########################
 # Common files
@@ -142,7 +145,6 @@ celerybeat-schedule
 
 # Environments
 .env
-.envrc
 .venv
 env/
 venv/
@@ -155,3 +157,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# mlflow local runs
+mlruns/*
