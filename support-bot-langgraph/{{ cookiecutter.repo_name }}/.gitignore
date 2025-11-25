@@ -13,7 +13,8 @@ data/**
 
 # except their sub-folders and prompts
 !data/**/
-!data/prompts/**
+!data/intent_datection/prompts/**
+!data/response_generation/prompts/**
 
 # also keep all .gitkeep files
 !.gitkeep
