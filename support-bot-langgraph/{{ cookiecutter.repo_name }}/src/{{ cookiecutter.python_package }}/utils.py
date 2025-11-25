@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 import json
-from typing import Any, TypeVar
+from typing import Any
 
 from sqlalchemy import Engine, text
 from langchain_core.messages import ToolMessage, BaseMessage

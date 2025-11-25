@@ -1,6 +1,0 @@
-User intent: {intent}
-Intent generator summary: {intent_generator_summary}
-User context: {user_context}
-Created claim: {created_claim}
-Docs Lookup: {docs_lookup}
-User claims: {user_claims}

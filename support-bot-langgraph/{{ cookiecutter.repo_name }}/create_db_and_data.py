@@ -49,7 +49,7 @@ def create_db(db_path: str = "demo-db.sqlite") -> None:
         ended_at TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES user(id)
     );
-    
+
     CREATE TABLE message (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         session_id INTEGER,
@@ -58,7 +58,7 @@ def create_db(db_path: str = "demo-db.sqlite") -> None:
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(session_id) REFERENCES session(session_id)
     );
-    
+
     CREATE TABLE doc (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         topic TEXT,

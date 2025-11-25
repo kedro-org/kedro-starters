@@ -21,9 +21,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=init_response_generation_context,
                 inputs=[
                     "llm",
-                    "tool_prompt_txt",
-                    "response_system_prompt_txt",
-                    "response_user_prompt_txt",
+                    "tool_prompt",
+                    "response_prompt",
                     "tools",
                 ],
                 outputs="response_generation_context",

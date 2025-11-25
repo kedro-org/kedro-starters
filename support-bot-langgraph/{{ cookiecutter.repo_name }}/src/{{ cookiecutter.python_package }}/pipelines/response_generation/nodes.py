@@ -6,7 +6,7 @@ import pandas as pd
 from langchain_core.messages import AIMessage
 from sqlalchemy import text, Engine
 
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_openai import ChatOpenAI
 
 from .agent import ResponseGenerationAgent
@@ -29,9 +29,8 @@ def init_tools(
 
 def init_response_generation_context(
     llm: ChatOpenAI,
-    tool_prompt_txt: str,
-    response_system_prompt_txt: str,
-    response_user_prompt_txt: str,
+    tool_prompt: PromptTemplate,
+    response_prompt: ChatPromptTemplate,
     tools: dict[str, Callable],
 ) -> AgentContext:
     """
@@ -44,18 +43,6 @@ def init_response_generation_context(
 
     for name, fn in tools.items():
         ctx.add_tool(name, fn)
-
-    tool_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", tool_prompt_txt),
-        ]
-    )
-    response_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", response_system_prompt_txt),
-            ("human", response_user_prompt_txt),
-        ]
-    )
 
     ctx.add_prompt("tool_prompt", tool_prompt)
     ctx.add_prompt("response_prompt", response_prompt)
@@ -73,12 +60,12 @@ def generate_response(
     Accepts intent detection result + user context and session config.
     """
     if intent_detection_result["intent"] == "clarification_needed":
-        message = "Failed to recognize intent. Please try to describe your problem briefly."
+        message = (
+            "Failed to recognize intent. Please try to describe your problem briefly."
+        )
         logger.warning(message)
 
-        result = {
-            "messages": [AIMessage(content=message)]
-        }
+        result = {"messages": [AIMessage(content=message)]}
 
     else:
         agent = ResponseGenerationAgent(context=response_generation_context)

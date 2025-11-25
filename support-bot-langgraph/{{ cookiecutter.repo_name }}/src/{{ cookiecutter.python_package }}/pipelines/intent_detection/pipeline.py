@@ -27,7 +27,12 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=load_context,
-                inputs=["params:user_id", "user_data", "session_id"],
+                inputs=[
+                    "params:user_id",
+                    "user_data",
+                    "session_id",
+                    "intent_tracer_langfuse",
+                ],
                 outputs=["user_context", "session_config"],
                 name="load_context_node",
             ),
