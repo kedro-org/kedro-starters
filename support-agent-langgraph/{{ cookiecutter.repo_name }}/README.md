@@ -22,7 +22,7 @@ The template implements an automated insurance customer support assistant powere
 ### Project Structure
 
 ```bash
-{{ cookiecutter.kedro_version }}/
+{{ cookiecutter.project_name }}/
   ├── create_db_and_data.py                # Seeds demo SQLite DB
   ├── conf/
   │   ├── base/
@@ -34,7 +34,7 @@ The template implements an automated insurance customer support assistant powere
   ├── data/
   │   ├── intent_detection/prompts         # Intent prompts
   │   └── response_generation/prompts      # Response prompts
-  └── src/{{ cookiecutter.kedro_version }}/
+  └── src/{{ cookiecutter.project_name }}/
       ├── datasets/                        # Custom SQLAlchemy dataset
       ├── pipelines/
       │   ├── intent_detection/            # LangGraph + Kedro pipeline
