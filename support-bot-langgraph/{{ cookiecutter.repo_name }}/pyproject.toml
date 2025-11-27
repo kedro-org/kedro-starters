@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 name = "{{ cookiecutter.python_package }}"
 readme = "README.md"
 dynamic = ["version"]
@@ -26,15 +26,15 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "docutils<0.18.0",
-    "sphinx~=3.4.3",
-    "sphinx_rtd_theme==0.5.1",
+    "docutils<0.21",
+    "sphinx>=5.3,<7.3",
+    "sphinx_rtd_theme==2.0.0",
     "nbsphinx==0.8.1",
-    "sphinx-autodoc-typehints==1.11.1",
-    "sphinx_copybutton==0.3.1",
+    "sphinx-autodoc-typehints==1.20.2",
+    "sphinx_copybutton==0.5.2",
     "ipykernel>=5.3, <7.0",
-    "Jinja2<3.1.0",
-    "myst-parser~=0.17.2",
+    "Jinja2<3.2.0",
+    "myst-parser>=1.0,<2.1"
 ]
 dev = [
     "pytest-cov>=3,<7",
@@ -54,6 +54,8 @@ namespaces = false
 package_name = "{{ cookiecutter.python_package }}"
 project_name = "{{ cookiecutter.project_name }}"
 kedro_init_version = "{{ cookiecutter.kedro_version }}"
+tools = "{{ cookiecutter.tools | default('') | string | replace('\"', '\\\"') }}"
+example_pipeline = "{{ cookiecutter.example_pipeline }}"
 source_dir = "src"
 
 [tool.pytest.ini_options]
