@@ -15,6 +15,8 @@ The template implements an automated insurance customer support assistant powere
 - LangGraph – orchestrates the multi-node conversational workflow with stateful agents
 - Langfuse/Opik - support prompt and trace tracking
 
+<img src="images/workflow-diagram.png" alt="Workflow design" width="800" height="700">
+
 ## Features
 
 ### Project Structure
