@@ -43,14 +43,24 @@ The template implements an automated insurance customer support assistant powere
       └── settings.py                      # Kedro project settings
 ```
 
-### Prompt and Tool Management
+### Prompt Management and Tracing
 
-Prompts for intent detection and response generation stored under `data/…/prompts`.
+This project separates prompt templates by agent type and manages them with Kedro datasets.
 
-Managed through experimental Kedro datasets:
+- **Intent Detection** - JSON prompts tracked with experimental `LangfusePromptDataset`/ `OpikPromptDataset` integrated with `Langfuse`/`Opik` datasets.
+- **Response Generation** - Static `.txt` and `.yml` prompts managed via experimental `LangChainPromptDataset`.
+
+This project also supports observability and tracing with either `Langfuse` or `Opik`:
+- `Langfuse` tracing is applied via the experimental `LangfuseTraceDataset` that provides tracing objects based on mode configuration and is set as the default option for the project.
+- `Opik` tracing is applied via the experimental `OpikTraceDataset` that provides tracing objects based on mode configuration,
+enabling seamless integration with different AI frameworks and direct SDK usage.
+
+For more details see the following datasets:
 - [LangfusePromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/langfuse.LangfusePromptDataset/)
 - [OpikPromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/opik.OpikPromptDataset/)
 - [LangChainPromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/langchain.LangChainPromptDataset/)
+- [LangfuseTraceDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/langfuse.LangfuseTraceDataset/)
+- [OpikTraceDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/opik.OpikTraceDataset/)
 
 Only **one** observability provider (`Langfuse` or `Opik`) should be active per run.
 
