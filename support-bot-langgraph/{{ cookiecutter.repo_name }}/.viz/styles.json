@@ -1,5 +1,6 @@
 {
     "intent_prompt_langfuse": {"fill": "#97BAC9", "color": "#000000", "stroke": "#CFDFE7"},
+    "opik": {"fill": "#97BAC9", "color": "#000000", "stroke": "#CFDFE7"},
     "llm": {"fill": "#598395", "color": "#000000", "stroke": "#97BAC9"},
     "init_intent_detection_context_node": {"fill": "#CFDFE7", "color": "#242424", "stroke": "#FFFFFF"},
     "intent_detection_context": {"fill": "#00BCFF", "color": "#242424", "stroke": "#ACCCDA"},
