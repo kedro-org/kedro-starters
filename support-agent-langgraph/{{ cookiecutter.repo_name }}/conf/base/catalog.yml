@@ -12,7 +12,7 @@ user_data:
   credentials: db_credentials
 
 db_engine:
-  type: {{ cookiecutter.project_name }}.datasets.sqlalchemy_dataset.SQLAlchemyEngineDataset
+  type: {{ cookiecutter.python_package }}.datasets.sqlalchemy_dataset.SQLAlchemyEngineDataset
   credentials: db_credentials
 
 docs:

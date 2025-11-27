@@ -1,7 +1,7 @@
 ipython>=8.10
 jupyterlab>=3.0
 notebook
-kedro~=1.0.0
+kedro[jupyter]~={{ cookiecutter.kedro_version }}
 kedro-datasets[pandas-sqltabledataset,pandas-sqlquerydataset,yaml-yamldataset,opik,langchain-chatopenaidataset, langfuse]~=9.0.0
 kedro-viz>=12.2.0
 langgraph~=1.0.0
