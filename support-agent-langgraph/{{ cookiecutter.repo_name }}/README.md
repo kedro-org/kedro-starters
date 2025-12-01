@@ -27,7 +27,7 @@ The template implements an automated insurance customer support assistant powere
   ├── conf/
   │   ├── base/
   │   │   ├── catalog.yml                  # Dataset definitions
-  │   │   ├── genai-config.yml             # LLM + tracing configuration
+  │   │   ├── catalog_genai.yml             # LLM + tracing configuration
   │   │   └── parameters.yml               # Pipeline parameters
   │   └── local/
   │       └── credentials.yml              # API keys & DB connection
@@ -113,7 +113,7 @@ Initialize demo data:
 python create_db_and_data.py
 ```
 
-Hte above script creates:
+Tte above script creates:
 
 - SQLite DB with user, claim, message, doc, session
 - Example users and synthetic claims
