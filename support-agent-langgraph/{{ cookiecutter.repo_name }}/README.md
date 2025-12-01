@@ -27,7 +27,7 @@ The template implements an automated insurance customer support assistant powere
   ├── conf/
   │   ├── base/
   │   │   ├── catalog.yml                  # Dataset definitions
-  │   │   ├── catalog_genai.yml             # LLM + tracing configuration
+  │   │   ├── catalog_genai.yml            # LLM + tracing configuration
   │   │   └── parameters.yml               # Pipeline parameters
   │   └── local/
   │       └── credentials.yml              # API keys & DB connection
@@ -35,7 +35,8 @@ The template implements an automated insurance customer support assistant powere
   │   ├── intent_detection/prompts         # Intent prompts
   │   └── response_generation/prompts      # Response prompts
   └── src/{{ cookiecutter.python_package }}/
-      ├── datasets/                        # Custom SQLAlchemy dataset
+      ├── datasets/
+      │   └── sqlalchemy_dataset.py        # Custom `SQLAlchemyEngineDataset` to create SQLAlchemy engines
       ├── pipelines/
       │   ├── intent_detection/            # LangGraph + Kedro pipeline
       │   └── response_generation/         # LangGraph + Kedro pipeline
@@ -113,9 +114,9 @@ Initialize demo data:
 python create_db_and_data.py
 ```
 
-Tte above script creates:
+The above script creates:
 
-- SQLite DB with user, claim, message, doc, session
+- SQLite DB with user, claim, message, doc, session further used via custom `SQLAlchemyEngineDataset`
 - Example users and synthetic claims
 - Knowledge base entries
 
