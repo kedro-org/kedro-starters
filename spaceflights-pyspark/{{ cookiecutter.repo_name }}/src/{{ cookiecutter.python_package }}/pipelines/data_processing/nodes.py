@@ -22,30 +22,23 @@ def _parse_money(x: Column) -> Column:
     return x
 
 
-def preprocess_companies(companies: SparkDataFrame) -> tuple[SparkDataFrame, dict]:
-    """Preprocesses the data for companies.
-
-    Args:
-        companies: Raw data.
-    Returns:
-        Preprocessed data, with `company_rating` converted to a float and
-        `iata_approved` converted to boolean.
+def load_shuttles_to_spark(shuttles: pd.DataFrame) -> pd.DataFrame:
     """
-    companies = companies.withColumn("iata_approved", _is_true(companies.iata_approved))
-    companies = companies.withColumn("company_rating", _parse_percentage(companies.company_rating))
-
-    # Drop columns that aren't used for model training
-    companies = companies.drop('company_location', 'total_fleet_count')
-    return companies
-
-
-def load_shuttles_to_csv(shuttles: pd.DataFrame) -> pd.DataFrame:
-    """Load shuttles to csv because it's not possible to load excel directly into spark.
+    Pass through the locally loaded pandas DataFrame so it can be saved by a SparkDataset.
+    Useful when developing locally but using a remote Spark session (e.g., Databricks
+    Serverless via Databricks Connect) to store the data as a Spark DataFrame.
     """
     return shuttles
 
+def load_companies_to_spark(companies: pd.DataFrame) -> pd.DataFrame:
+    """
+    Return the pandas DataFrame unchanged so a SparkDataset can convert and save it
+    to remote Spark storage. Intended for workflows where data is local but Spark
+    processing runs remotely (e.g., Databricks Serverless with Databricks Connect).
+    """
+    return companies
 
-def preprocess_shuttles(shuttles: SparkDataFrame) -> SparkDataFrame:
+def preprocess_shuttles_spark(shuttles: SparkDataFrame) -> SparkDataFrame:
     """Preprocesses the data for shuttles.
 
     Args:
@@ -62,11 +55,35 @@ def preprocess_shuttles(shuttles: SparkDataFrame) -> SparkDataFrame:
     shuttles = shuttles.drop('shuttle_location', 'engine_type', 'engine_vendor', 'cancellation_policy')
     return shuttles
 
+def preprocess_companies_spark(companies: SparkDataFrame) -> SparkDataFrame:
+    """Preprocesses the data for companies.
 
-def preprocess_reviews(reviews: SparkDataFrame) -> SparkDataFrame:
+    Args:
+        companies: Raw data.
+    Returns:
+        Preprocessed data, with `company_rating` converted to a float and
+        `iata_approved` converted to boolean.
+    """
+    companies = companies.withColumn("iata_approved", _is_true(companies.iata_approved))
+    companies = companies.withColumn("company_rating", _parse_percentage(companies.company_rating))
+
     # Drop columns that aren't used for model training
-    reviews = reviews.drop('review_scores_comfort', 'review_scores_amenities', 'review_scores_trip', 'review_scores_crew', 'review_scores_location', 'review_scores_price', 'number_of_reviews', 'reviews_per_month')
-    return reviews
+    companies = companies.drop('company_location', 'total_fleet_count')
+    return companies
+
+def preprocess_reviews_pandas(reviews: pd.DataFrame) -> pd.DataFrame:
+    # Drop columns that aren't used for model training
+    cols_to_drop = [
+        'review_scores_comfort',
+        'review_scores_amenities',
+        'review_scores_trip',
+        'review_scores_crew',
+        'review_scores_location',
+        'review_scores_price',
+        'number_of_reviews',
+        'reviews_per_month',
+    ]
+    return reviews.drop(columns=cols_to_drop, errors="ignore")
 
 
 def create_model_input_table(

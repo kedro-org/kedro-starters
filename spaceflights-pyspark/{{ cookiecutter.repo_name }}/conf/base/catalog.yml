@@ -40,40 +40,20 @@
 # https://docs.kedro.org/en/stable/data/data_catalog.html
 
 companies:
+  type: pandas.CSVDataset
   filepath: data/01_raw/companies.csv
-  type: spark.SparkDataset
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
 
 reviews:
+  type: pandas.CSVDataset
   filepath: data/01_raw/reviews.csv
-  type: spark.SparkDataset
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
 
-shuttles_excel:
+shuttles:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
-shuttles@csv:
-  type: pandas.CSVDataset
-  filepath: data/02_intermediate/shuttles.csv
-
-shuttles@spark:
-  filepath: data/02_intermediate/shuttles.csv
-  type: spark.SparkDataset
+companies_spark:
+  filepath: data/02_intermediate/companies.csv
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -83,9 +63,17 @@ shuttles@spark:
     header: True
     mode: overwrite
 
+shuttles_spark:
+  type: spark.SparkDatasetV2
+  filepath: data/02_intermediate/shuttles.parquet
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+
 preprocessed_companies:
   filepath: data/02_intermediate/preprocessed_companies.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -97,7 +85,7 @@ preprocessed_companies:
 
 preprocessed_shuttles:
   filepath: data/02_intermediate/preprocessed_shuttles.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -109,7 +97,7 @@ preprocessed_shuttles:
 
 preprocessed_reviews:
   filepath: data/02_intermediate/preprocessed_reviews.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -121,7 +109,7 @@ preprocessed_reviews:
 
 model_input_table@spark:
   filepath: data/03_primary/model_input_table.parquet
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: parquet
   load_args:
     header: True
@@ -138,29 +126,4 @@ model_input_table@pandas:
 regressor:
   type: pickle.PickleDataset
   filepath: data/06_models/regressor.pickle
-  versioned: true
-
-shuttle_passenger_capacity_plot_exp:
-  type: plotly.PlotlyDataset
-  filepath: data/08_reporting/shuttle_passenger_capacity_plot_exp.json
-  versioned: true
-  plotly_args:
-    type: bar
-    fig:
-      x: shuttle_type
-      y: passenger_capacity
-      orientation: h
-    layout:
-      xaxis_title: Shuttles
-      yaxis_title: Average passenger capacity
-      title: Shuttle Passenger capacity
-
-shuttle_passenger_capacity_plot_go:
-  type: plotly.JSONDataset
-  filepath: data/08_reporting/shuttle_passenger_capacity_plot_go.json
-  versioned: true
-
-dummy_confusion_matrix:
-  type: matplotlib.MatplotlibDataset
-  filepath: data/08_reporting/dummy_confusion_matrix.png
   versioned: true

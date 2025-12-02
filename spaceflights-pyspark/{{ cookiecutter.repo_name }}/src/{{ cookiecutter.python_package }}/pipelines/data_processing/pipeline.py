@@ -2,10 +2,11 @@ from kedro.pipeline import Node, Pipeline
 
 from .nodes import (
     create_model_input_table,
-    load_shuttles_to_csv,
-    preprocess_companies,
-    preprocess_reviews,
-    preprocess_shuttles,
+    load_shuttles_to_spark,
+    load_companies_to_spark,
+    preprocess_companies_spark,
+    preprocess_reviews_pandas,
+    preprocess_shuttles_spark,
 )
 
 
@@ -13,25 +14,31 @@ def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline(
         [
             Node(
-                func=load_shuttles_to_csv,
-                inputs="shuttles_excel",
-                outputs="shuttles@csv",
-                name="load_shuttles_to_csv_node",
+                func=load_shuttles_to_spark,
+                inputs="shuttles",
+                outputs="shuttles_spark",
+                name="load_shuttles_to_spark_node",
             ),
             Node(
-                func=preprocess_companies,
+                func=load_companies_to_spark,
                 inputs="companies",
+                outputs="companies_spark",
+                name="load_companies_to_spark_node",
+            ),            
+            Node(
+                func=preprocess_companies_spark,
+                inputs="companies_spark",
                 outputs="preprocessed_companies",
                 name="preprocess_companies_node",
             ),
             Node(
-                func=preprocess_shuttles,
-                inputs="shuttles@spark",
+                func=preprocess_shuttles_spark,
+                inputs="shuttles_spark",
                 outputs="preprocessed_shuttles",
                 name="preprocess_shuttles_node",
             ),
             Node(
-                func=preprocess_reviews,
+                func=preprocess_reviews_pandas,
                 inputs="reviews",
                 outputs="preprocessed_reviews",
                 name="preprocess_reviews_node",
