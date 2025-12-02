@@ -51,26 +51,6 @@ shuttles:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
-companies_spark:
-  filepath: data/02_intermediate/companies.csv
-  type: spark.SparkDatasetV2
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
-
-shuttles_spark:
-  type: spark.SparkDatasetV2
-  filepath: data/02_intermediate/shuttles.parquet
-  file_format: parquet
-  save_args:
-    mode: overwrite
-
-
 preprocessed_companies:
   filepath: data/02_intermediate/preprocessed_companies.csv
   type: spark.SparkDatasetV2
