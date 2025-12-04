@@ -10,7 +10,7 @@ from .nodes import (
 
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline(
-        [   
+        [
             Node(
                 func=preprocess_companies,
                 inputs="companies",
