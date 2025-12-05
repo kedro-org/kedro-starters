@@ -1,6 +1,7 @@
 from typing import Any
+
 from kedro.io import AbstractDataset
-from sqlalchemy import create_engine, Engine
+from sqlalchemy import Engine, create_engine
 
 
 class SQLAlchemyEngineDataset(AbstractDataset):

@@ -2,8 +2,8 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import (
     generate_response,
-    init_tools,
     init_response_generation_context,
+    init_tools,
     log_response_and_end_session,
 )
 

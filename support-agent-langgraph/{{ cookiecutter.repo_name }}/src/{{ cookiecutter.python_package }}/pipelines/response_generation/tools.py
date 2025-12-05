@@ -1,10 +1,15 @@
-from typing import Callable
+"""
+Tool builders for document lookup and claim management against the SQL database.
+Modify if when adding new actions for the response generation agent.
+"""
+
+from collections.abc import Callable
 
 import pandas as pd
-from sqlalchemy import text, Engine, Row
 from langchain_core.tools import tool
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sqlalchemy import Engine, Row, text
 
 
 def build_lookup_docs(docs: pd.DataFrame, docs_matches: int = 3) -> Callable:

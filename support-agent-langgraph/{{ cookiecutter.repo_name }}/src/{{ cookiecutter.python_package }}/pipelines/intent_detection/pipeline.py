@@ -3,9 +3,9 @@ from kedro.pipeline import Pipeline, node, pipeline
 from .nodes import (
     create_session,
     detect_intent,
+    get_session_id,
     init_intent_detection_context,
     load_context,
-    get_session_id,
     log_intent_detection,
 )
 

@@ -1,16 +1,16 @@
-from datetime import datetime
 import logging
-from typing import Callable
+from collections.abc import Callable
+from datetime import datetime
 
+import pandas as pd
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_openai import ChatOpenAI
-import pandas as pd
-from sqlalchemy import text, Engine
+from sqlalchemy import Engine, text
 
+from ...utils import AgentContext, log_message
 from .agent import ResponseGenerationAgent
-from .tools import build_lookup_docs, build_get_user_claims, build_create_claim
-from ...utils import log_message, AgentContext
+from .tools import build_create_claim, build_get_user_claims, build_lookup_docs
 
 logger = logging.getLogger(__name__)
 

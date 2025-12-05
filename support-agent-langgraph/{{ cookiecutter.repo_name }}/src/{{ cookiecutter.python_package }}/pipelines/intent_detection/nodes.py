@@ -1,16 +1,16 @@
 import logging
 from typing import Any
 
-from langfuse.langchain import CallbackHandler
-from langchain_core.messages import HumanMessage, AIMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 import pandas as pd
 import questionary
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langfuse.langchain import CallbackHandler
 from sqlalchemy import Engine
 
-from .agent import IntentOutput, IntentDetectionAgent
-from ...utils import log_message, AgentContext
+from ...utils import AgentContext, log_message
+from .agent import IntentDetectionAgent, IntentOutput
 
 logger = logging.getLogger(__name__)
 

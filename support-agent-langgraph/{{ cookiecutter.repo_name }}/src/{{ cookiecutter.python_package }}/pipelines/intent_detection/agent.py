@@ -1,14 +1,20 @@
-from functools import partial
-from typing import Any, TypedDict, Literal
+"""
+Intent-classification agent built with LangGraph, routing between detection,
+clarification, and context-update steps. Extend this module when adding new
+intents or changing how user queries are resolved.
+"""
 
-from langchain_core.messages import AnyMessage, AIMessage
+from functools import partial
+from typing import Any, Literal, TypedDict
+
+from langchain_core.messages import AIMessage, AnyMessage
 from langchain_core.runnables import Runnable
-from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from pydantic import BaseModel
 
-from ...utils import KedroAgent, AgentContext
+from ...utils import AgentContext, KedroAgent
 
 
 class IntentOutput(BaseModel):

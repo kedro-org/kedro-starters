@@ -1,15 +1,21 @@
-from functools import partial
-from typing import TypedDict, Any
+"""
+Response-generation agent powered by LangGraph, selecting tools when needed
+and producing a structured final answer. Extend this module to add new nodes,
+tool-routes, or modify how the agent composes responses.
+"""
 
-from langchain_core.messages import BaseMessage, AIMessage
+from functools import partial
+from typing import Any, TypedDict
+
+from langchain_core.messages import AIMessage, BaseMessage
 from langchain_core.runnables import Runnable
-from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
+from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 from pydantic import BaseModel, Field
 
-from ...utils import KedroAgent, AgentContext
+from ...utils import AgentContext, KedroAgent
 
 
 class AgentState(TypedDict):
