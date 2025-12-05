@@ -2,11 +2,32 @@
 
 [![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
 
-## Overview
+## How to use this starter
 
-This is your new Kedro project, which was generated using `kedro {{ cookiecutter.kedro_version }}`. 
-The project is generated based on the `support-agent-langgraph` starter and provides a fully working reference architecture you can adapt for any multi-agent LLM workflow.
-It demonstrates how to combine `LangGraph` and `Kedro` to build robust, production-ready agentic workflows.
+This Kedro starter is intentionally more feature-rich than typical Kedro templates. Instead of a minimal scaffold, 
+it provides a complete end-to-end working GenAI support-agent system built with 
+`Kedro` and `LangGraph` + LLM tooling, prompt versioning and full DB workflow.
+
+You can use it in two ways:
+
+1. Run the template end-to-end immediately
+
+This project includes a runnable example support-agent — no additional setup required beyond credentials.
+
+```sh
+pip install -r requirements.txt
+python create_db_and_data.py
+kedro run --params user_id=<id>
+```
+
+This will launch an interactive agent workflow: Intent Agent → Retrieval → Response Agent → Final output to user
+
+2. Adapt it as a starting point for your own agentic workflow
+
+Each component (agents, prompts, tools, DB, tracing) is documented within the code and below.
+We recommend exploring the files inside the project as they inline comments explaining purpose and modification instructions, so you can quickly adapt them to your own use-case.
+
+## Overview
 
 The template implements an automated insurance customer support assistant powered by:
 - Intent Detection Agent – classifies queries and handles clarifications
@@ -43,6 +64,33 @@ The template implements an automated insurance customer support assistant powere
       ├── utils.py                         # AgentContext, logging helpers
       └── settings.py                      # Kedro project settings
 ```
+
+### Database Architecture
+
+This starter ships with a demo SQLite database created using `create_db_and_data.py`. It includes tables for:
+- users - Basic user identity for conversation context
+- claims - User claim data for read/write interactions
+- messages - Stores assistant and user message history
+- sessions - Allows multi-turn conversation continuity
+- knowledge base docs - Retrieval source documents
+
+Demo database is used with the core `pandas.SQLTableDataset` and `pandas.SQLQueryDataset` to read the user info and retrieve KB question-answer pairs and 
+custom `SQLAlchemyEngineDataset` for execution of insert/update queries when tools calling and logging.
+
+**Use the DB setup if you need:**
+
+- stateful agent memory across sessions
+- ability to log conversations, tool calls, model outputs
+- updating user data (claims, tickets, order records, etc.)
+- retrieval-augmented workflows (knowledge base + context)
+
+**You can skip the DB if your system is:**
+
+- pure RAG with no persistent sessions
+- read-only knowledge base with no transactional logic
+- single-shot response apps (no memory)
+
+To disable it, simply remove or replace SQL datasets and the SQLite connection.
 
 ### Prompt Management and Tracing
 
@@ -151,70 +199,3 @@ Based on the information we found regarding your issue: You have two claims. The
 
 If you have any further questions, feel free to ask.
 ```
-
-## Rules and guidelines
-
-In order to get the best out of the template:
-
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://docs.kedro.org/en/stable/faq/faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
-
-## How to test your Kedro project
-
-Have a look at the file `tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
-
-```
-pytest
-```
-
-You can configure the coverage threshold in your project's `pyproject.toml` file under the `[tool.coverage.report]` section.
-
-## How to work with Kedro and notebooks
-
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `catalog`, `context`, `pipelines` and `session`.
->
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
-
-### Jupyter
-To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
-
-```
-pip install jupyter
-```
-
-After installing Jupyter, you can start a local notebook server:
-
-```
-kedro jupyter notebook
-```
-
-### JupyterLab
-To use JupyterLab, you need to install it:
-
-```
-pip install jupyterlab
-```
-
-You can also start JupyterLab:
-
-```
-kedro jupyter lab
-```
-
-### IPython
-And if you want to run an IPython session:
-
-```
-kedro ipython
-```
-
-### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://docs.kedro.org/en/stable/tutorial/package_a_project.html)
