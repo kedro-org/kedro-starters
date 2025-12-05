@@ -4,7 +4,7 @@
 
 ## Overview
 
-This is your new Kedro project, which was generated using `kedro {{ cookiecutter.kedro_version }}`. 
+This is your new Kedro project, which was generated using `kedro {{ cookiecutter.kedro_version }}`.
 The project is generated based on the `support-agent-langgraph` starter and provides a fully working reference architecture you can adapt for any multi-agent LLM workflow.
 It demonstrates how to combine `LangGraph` and `Kedro` to build robust, production-ready agentic workflows.
 
@@ -14,12 +14,12 @@ Take a look at the [Kedro documentation](https://docs.kedro.org) and [STARTER_GU
 
 In order to get the best out of the template:
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://docs.kedro.org/en/stable/faq/faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
-* Don't inline your prompts into code — keep them separately, for example, in `/data/prompts/`
-* Keep workflows observable — always trace agent outputs and track prompt changes with Langfuse, Opik or other tools
+- Don't remove any lines from the `.gitignore` file we provide
+- Make sure your results can be reproduced by following a [data engineering convention](https://docs.kedro.org/en/stable/faq/faq.html#what-is-data-engineering-convention)
+- Don't commit data to your repository
+- Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
+- Don't inline your prompts into code — keep them separately, for example, in `/data/prompts/`
+- Keep workflows observable — always trace agent outputs and track prompt changes with Langfuse, Opik or other tools
 
 ## How to install dependencies
 
@@ -34,6 +34,7 @@ pip install -r requirements.txt
 ## How to initialize demo data:
 
 Run the following script to create a SQLite DB with example users, synthetic claims and knowledge base entries:
+
 ```sh
 python create_db_and_data.py
 ```
@@ -63,6 +64,7 @@ You can configure the coverage threshold in your project's `pyproject.toml` file
 > Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r requirements.txt` you will not need to take any extra steps before you use them.
 
 ### Jupyter
+
 To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
 
 ```sh
@@ -76,6 +78,7 @@ kedro jupyter notebook
 ```
 
 ### JupyterLab
+
 To use JupyterLab, you need to install it:
 
 ```sh
@@ -89,6 +92,7 @@ kedro jupyter lab
 ```
 
 ### IPython
+
 And if you want to run an IPython session:
 
 ```sh
@@ -96,9 +100,10 @@ kedro ipython
 ```
 
 ### How to ignore notebook output cells in `git`
+
 To automatically strip out all output cell contents before committing to `git`, you can use tools like [`nbstripout`](https://github.com/kynan/nbstripout). For example, you can add a hook in `.git/config` with `nbstripout --install`. This will run `nbstripout` before anything is committed to `git`.
 
-> *Note:* Your output cells will be retained locally.
+> _Note:_ Your output cells will be retained locally.
 
 ## Package your Kedro project
 

@@ -4,8 +4,8 @@
 
 ## How to use this starter
 
-This Kedro starter is intentionally more feature-rich than typical Kedro templates. Instead of a minimal scaffold, 
-it provides a complete end-to-end working GenAI support-agent system built with 
+This Kedro starter is intentionally more feature-rich than typical Kedro templates. Instead of a minimal scaffold,
+it provides a complete end-to-end working GenAI support-agent system built with
 `Kedro` and `LangGraph` + LLM tooling, prompt versioning and full DB workflow.
 
 You can use it in two ways:
@@ -30,6 +30,7 @@ We recommend exploring the files inside the project as they inline comments expl
 ## Overview
 
 The template implements an automated insurance customer support assistant powered by:
+
 - Intent Detection Agent – classifies queries and handles clarifications
 - Response Generation Agent – retrieves knowledge base content, fetches user claims, creates new claims, and generates final responses
 - Kedro – manages configuration, datasets, credentials, logging, and reproducibility
@@ -74,13 +75,14 @@ The template implements an automated insurance customer support assistant powere
 ### Database Architecture
 
 This starter ships with a demo SQLite database created using `create_db_and_data.py`. It includes tables for:
+
 - users - Basic user identity for conversation context
 - claims - User claim data for read/write interactions
 - messages - Stores assistant and user message history
 - sessions - Allows multi-turn conversation continuity
 - knowledge base docs - Retrieval source documents
 
-Demo database is used with the core `pandas.SQLTableDataset` and `pandas.SQLQueryDataset` to read the user info and retrieve KB question-answer pairs and 
+Demo database is used with the core `pandas.SQLTableDataset` and `pandas.SQLQueryDataset` to read the user info and retrieve KB question-answer pairs and
 custom `SQLAlchemyEngineDataset` for execution of insert/update queries when tools calling and logging.
 
 **Use the DB setup if you need:**
@@ -106,11 +108,13 @@ This project separates prompt templates by agent type and manages them with Kedr
 - **Response Generation** - Static `.txt` and `.yml` prompts managed via experimental `LangChainPromptDataset`.
 
 This project also supports observability and tracing with either `Langfuse` or `Opik`:
+
 - `Langfuse` tracing is applied via the experimental `LangfuseTraceDataset` that provides tracing objects based on mode configuration and is set as the default option for the project.
 - `Opik` tracing is applied via the experimental `OpikTraceDataset` that provides tracing objects based on mode configuration,
-enabling seamless integration with different AI frameworks and direct SDK usage.
+  enabling seamless integration with different AI frameworks and direct SDK usage.
 
 For more details see the following datasets:
+
 - [LangfusePromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/langfuse.LangfusePromptDataset/)
 - [OpikPromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/opik.OpikPromptDataset/)
 - [LangChainPromptDataset](https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-9.0.0/api/kedro_datasets_experimental/langchain.LangChainPromptDataset/)
@@ -131,7 +135,7 @@ kedro new --starter=support-agent-langgraph
 After the project is created, navigate to the newly created project directory:
 
 ```sh
-cd <my-project-name>  # change directory 
+cd <my-project-name>  # change directory
 ```
 
 Install the required dependencies:
@@ -164,6 +168,7 @@ opik_credentials:
 ```
 
 Initialize demo data:
+
 ```sh
 python create_db_and_data.py
 ```
@@ -193,7 +198,7 @@ Intent classified: existing_claim_question
 Reason: The user is asking to see all their claims, which implies they are inquiring about existing claims.
 
 ================================== Ai Message ==================================
-Tool Calls: get_user_claims (call_6hZXCx7QZBDx0qPCSosDiZYO) Call ID: call_6hZXCx7QZBDx0qPCSosDiZYO Args: user_id: 3 
+Tool Calls: get_user_claims (call_6hZXCx7QZBDx0qPCSosDiZYO) Call ID: call_6hZXCx7QZBDx0qPCSosDiZYO Args: user_id: 3
 
 ================================= Tool Message =================================
 Name: get_user_claims [{"id": 1, "title": "Car Accident Claim", "status": "Pending", "problem": "User was involved in a minor car accident and submitted documents.", "solution": null, "created_at": "2025-09-04 14:11:49"}, {"id": 2, "title": "Laptop Damage Claim", "status": "Resolved", "problem": "Laptop stopped working after water damage.", "solution": "Claim approved. User received reimbursement of $800.", "created_at": "2025-09-04 14:11:49"}]
