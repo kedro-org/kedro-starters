@@ -52,9 +52,15 @@ The template implements an automated insurance customer support assistant powere
   │   │   └── parameters.yml               # Pipeline parameters
   │   └── local/
   │       └── credentials.yml              # API keys & DB connection
-  ├── data/
-  │   ├── intent_detection/prompts         # Intent prompts
-  │   └── response_generation/prompts      # Response prompts
+  ├── data
+  │   ├── intent_detection
+  │   │   └── prompts
+  │   │       ├── intent_prompt_langfuse.json   # Example intent-classification prompt versioned via Langfuse
+  │   │       └── intent_prompt_opik.json       # Example intent-classification prompt versioned via Opik
+  │   └── response_generation
+  │       └── prompts
+  │           ├── response.yml                  # Core agent response template (retrieval + claims + output formatting)
+  │           └── tool.txt                      # System prompt describing available tools + function call format
   └── src/{{ cookiecutter.python_package }}/
       ├── datasets/
       │   └── sqlalchemy_dataset.py        # Custom `SQLAlchemyEngineDataset` to create SQLAlchemy engines to perform write operations
@@ -92,7 +98,7 @@ custom `SQLAlchemyEngineDataset` for execution of insert/update queries when too
 
 To disable it, simply remove or replace SQL datasets and the SQLite connection.
 
-### Prompt Management and Tracing
+### Prompt Management and TracingPrompt Management and Tracing
 
 This project separates prompt templates by agent type and manages them with Kedro datasets.
 
