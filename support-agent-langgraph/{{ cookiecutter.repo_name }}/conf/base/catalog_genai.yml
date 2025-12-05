@@ -1,3 +1,9 @@
+"""
+Separate GenAI catalog for LLMs, prompts, and tracing configuration.
+Modify this when changing prompt templates, observability backend, or LLM settings.
+"""
+
+
 # --- LLM setup ---
 llm:
   type: langchain.ChatOpenAIDataset

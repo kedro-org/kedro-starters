@@ -1,3 +1,9 @@
+"""
+Creates and seeds the demo SQLite database used by the agent workflow.
+Modify this when adding new tables, fields, or expanding example data for your use case.
+"""
+
+
 import sqlite3
 
 
