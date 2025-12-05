@@ -1,7 +1,5 @@
-"""
-Base catalog defining core datasets, including database access for users, sessions,
-and knowledge base docs. Extend this file when modifying or expanding structured data.
-"""
+# Base catalog defining core datasets, including database access for users, sessions,
+# and knowledge base docs. Extend this file when modifying or expanding structured data.
 
 # --- DB ---
 session_table:
