@@ -61,7 +61,7 @@ The template implements an automated insurance customer support assistant powere
   │   └── response_generation
   │       └── prompts
   │           ├── response.yml                  # Core agent response template (retrieval + claims + output formatting)
-  │           └── tool.txt                      # System prompt describing available tools + function call format
+  │           └── tool.txt                      # Tool prompt describing available tools + function call format
   └── src/{{ cookiecutter.python_package }}/
       ├── datasets/
       │   └── sqlalchemy_dataset.py        # Custom `SQLAlchemyEngineDataset` to create SQLAlchemy engines to perform write operations
@@ -104,8 +104,8 @@ To disable it, simply remove or replace SQL datasets and the SQLite connection.
 
 This project separates prompt templates by agent type and manages them with Kedro datasets.
 
-- **Intent Detection** - JSON prompts tracked with experimental `LangfusePromptDataset`/ `OpikPromptDataset` integrated with `Langfuse`/`Opik` datasets.
-- **Response Generation** - Static `.txt` and `.yml` prompts managed via experimental `LangChainPromptDataset`.
+- **Intent Detection** - JSON prompts tracked with experimental `LangfusePromptDataset`/ `OpikPromptDataset` integrated with `Langfuse`/`Opik` datasets. Update these prompts if you want to change intent classification behavior, add new intents, or improve the LLM’s reasoning for ambiguous queries.
+- **Response Generation** - Static `.txt` and `.yml` prompts managed via experimental `LangChainPromptDataset`. Update these prompts to adjust how the agent formats responses, integrates knowledge base content, or interacts with user claims and tools.
 
 This project also supports observability and tracing with either `Langfuse` or `Opik`:
 
