@@ -1,0 +1,29 @@
+# Base catalog defining core datasets, including database access for users, sessions,
+# and knowledge base docs. Extend this file when modifying or expanding structured data.
+
+# --- DB ---
+session_table:
+  type: pandas.SQLTableDataset
+  credentials: db_credentials
+  table_name: session
+  save_args:
+    if_exists: append
+
+user_data:
+  type: pandas.SQLQueryDataset
+  sql: "select * from user where id == ${runtime_params:user_id, 1}"
+  credentials: db_credentials
+
+db_engine:
+  type: {{ cookiecutter.python_package }}.datasets.sqlalchemy_dataset.SQLAlchemyEngineDataset
+  credentials: db_credentials
+
+docs:
+  type: pandas.SQLQueryDataset
+  sql: "select question, answer from doc"
+  credentials: db_credentials
+
+# --- Default dataset ---
+"{default_dataset}":
+  type: MemoryDataset
+  copy_mode: "assign"
