@@ -2,11 +2,7 @@ ipython>=8.10
 jupyterlab>=3.0
 notebook
 kedro[jupyter]~={{ cookiecutter.kedro_version }}
-kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibdataset]>=3.0
-# Temporary(before kedro-datasets release) install SparkDatasetV2 from main branch (overrides PyPI package) and pyspark.
-git+https://github.com/kedro-org/kedro-plugins.git@main#subdirectory=kedro-datasets
-pyspark>=2.2,<5.0
-
+kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibdataset, spark-local]>=9.1
 kedro-viz>=6.7.0
 scikit-learn~=1.5.1
 seaborn~=0.12.1
