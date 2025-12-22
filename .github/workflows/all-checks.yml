@@ -116,4 +116,10 @@ jobs:
           echo "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
           echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
       - name: Package and run all starters
-        run: behave features/package.feature
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            behave features/package.feature --tags "~@pyspark"
+          else
+            behave features/package.feature
+          fi
+        shell: bash
