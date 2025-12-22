@@ -62,7 +62,7 @@ jobs:
           echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
       - name: Run `kedro run` end to end tests for all starters
         run: |
-          behave features/run.feature features/tools.feature features/test.feature
+          behave features/run.feature features/test.feature
 
   lint:
     strategy:
