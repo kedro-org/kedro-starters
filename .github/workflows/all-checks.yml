@@ -62,7 +62,12 @@ jobs:
           echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
       - name: Run `kedro run` end to end tests for all starters
         run: |
-          behave features/run.feature features/tools.feature features/test.feature
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            behave features/run.feature features/tools.feature features/test.feature --tags "~@pyspark"
+          else
+            behave features/run.feature features/tools.feature features/test.feature
+          fi
+        shell: bash
 
   lint:
     strategy:
@@ -116,4 +121,10 @@ jobs:
           echo "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
           echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
       - name: Package and run all starters
-        run: behave features/package.feature
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            behave features/package.feature --tags "~@pyspark"
+          else
+            behave features/package.feature
+          fi
+        shell: bash
