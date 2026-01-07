@@ -21,6 +21,7 @@ Feature: New Kedro project with tools
     When I run a non-interactive kedro new without starter
     Then the expected tool directories and files should be created with "all"
     Given I have installed the Kedro project's dependencies
+    And I have installed local Spark dependencies
     When I run the Kedro pipeline
     Then I should get a successful exit code
 
@@ -29,5 +30,6 @@ Feature: New Kedro project with tools
     When I run a non-interactive kedro new without starter
     Then the expected tool directories and files should be created with "pyspark"
     Given I have installed the Kedro project's dependencies
+    And I have installed local Spark dependencies
     When I run the Kedro pipeline
     Then I should get a successful exit code

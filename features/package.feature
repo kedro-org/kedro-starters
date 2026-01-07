@@ -24,5 +24,6 @@ Feature: Package and run all starters
     When I execute the kedro command "package"
     Then I should get a successful exit code
     When I install the project's python package
+    And I have installed local Spark dependencies
     And I execute the installed project
     Then I should get a successful exit code
