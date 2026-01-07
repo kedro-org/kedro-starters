@@ -131,6 +131,7 @@ def install_project_dependencies(context):
 
 
 @given("I have installed local Spark dependencies")
+@when("I have installed local Spark dependencies")
 def install_local_spark_dependencies(context):
     res = subprocess.run(
         [context.pip, "install", "-U", "kedro-datasets[spark-local, hdfs-base, s3fs-base]"],
