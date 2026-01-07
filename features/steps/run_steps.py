@@ -133,7 +133,7 @@ def install_project_dependencies(context):
 @given("I have installed local Spark dependencies")
 def install_local_spark_dependencies(context):
     res = subprocess.run(
-        [context.pip, "install", "-U", "kedro-datasets[spark-local]"],
+        [context.pip, "install", "-U", "kedro-datasets[spark-local, hdfs-base, s3fs-base]"],
         cwd=context.root_project_dir,
     )
     assert res.returncode == OK_EXIT_CODE
