@@ -40,52 +40,20 @@
 # https://docs.kedro.org/en/stable/data/data_catalog.html
 
 companies:
+  type: pandas.CSVDataset
   filepath: data/01_raw/companies.csv
-  type: spark.SparkDataset
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
 
 reviews:
+  type: pandas.CSVDataset
   filepath: data/01_raw/reviews.csv
-  type: spark.SparkDataset
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
 
-shuttles_excel:
+shuttles:
   type: pandas.ExcelDataset
   filepath: data/01_raw/shuttles.xlsx
 
-shuttles@csv:
-  type: pandas.CSVDataset
-  filepath: data/02_intermediate/shuttles.csv
-
-shuttles@spark:
-  filepath: data/02_intermediate/shuttles.csv
-  type: spark.SparkDataset
-  file_format: csv
-  load_args:
-    header: True
-    inferSchema: True
-  save_args:
-    sep: ','
-    header: True
-    mode: overwrite
-
 preprocessed_companies:
   filepath: data/02_intermediate/preprocessed_companies.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -97,7 +65,7 @@ preprocessed_companies:
 
 preprocessed_shuttles:
   filepath: data/02_intermediate/preprocessed_shuttles.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -109,7 +77,7 @@ preprocessed_shuttles:
 
 preprocessed_reviews:
   filepath: data/02_intermediate/preprocessed_reviews.csv
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: csv
   load_args:
     header: True
@@ -121,7 +89,7 @@ preprocessed_reviews:
 
 model_input_table@spark:
   filepath: data/03_primary/model_input_table.parquet
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   file_format: parquet
   load_args:
     header: True

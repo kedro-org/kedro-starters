@@ -25,4 +25,3 @@ Feature: Run pytest for all starters
     And I have installed pytest
     When I run pytest in the project
     Then I should get a successful exit code
-

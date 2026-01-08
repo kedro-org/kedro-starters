@@ -1,59 +1,41 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px  # noqa:  F401
 import plotly.graph_objs as go
 import seaborn as sn
 from pyspark.sql import DataFrame as SparkDataFrame
-from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
 
 
-# This function uses plotly.express
 def compare_passenger_capacity_exp(preprocessed_shuttles: SparkDataFrame):
-    spark = SparkSession.builder.appName("PassengerCapacityComparison").getOrCreate()
-
-    # Register the DataFrame as a temporary table
-    preprocessed_shuttles.createOrReplaceTempView("shuttles")
-
-    # Perform the grouping and aggregation using SQL
-    query = """
-            SELECT shuttle_type, AVG(passenger_capacity) as passenger_capacity
-            FROM shuttles
-            GROUP BY shuttle_type
-        """
-    grouped_data = spark.sql(query)
-    # Convert Spark DataFrame to Pandas for visualization
-    pandas_grouped_data = grouped_data.toPandas()
-    return pandas_grouped_data
+    """Aggregate passenger capacity by shuttle type (Spark API) and return Pandas for plotting."""
+    grouped = (
+        preprocessed_shuttles
+        .groupBy("shuttle_type")
+        .agg(F.avg("passenger_capacity").alias("passenger_capacity"))
+        .orderBy("shuttle_type")
+    )
+    return grouped.toPandas()
 
 
 def compare_passenger_capacity_go(preprocessed_shuttles: SparkDataFrame):
-    spark = SparkSession.builder.appName("PassengerCapacityComparison").getOrCreate()
+    """Aggregate passenger capacity by shuttle type (Spark API) and return a Plotly figure."""
+    grouped = (
+        preprocessed_shuttles
+        .groupBy("shuttle_type")
+        .agg(F.avg("passenger_capacity").alias("avg_passenger_capacity"))
+        .orderBy("shuttle_type")
+    )
+    pdf = grouped.toPandas()
 
-    # Register the DataFrame as a temporary table
-    preprocessed_shuttles.createOrReplaceTempView("shuttles")
-
-    # Perform the grouping and aggregation using SQL
-    query = """
-        SELECT shuttle_type, AVG(passenger_capacity) as avg_passenger_capacity
-        FROM shuttles
-        GROUP BY shuttle_type
-    """
-    grouped_data = spark.sql(query)
-
-    # Convert Spark DataFrame to Pandas for visualization
-    pandas_grouped_data = grouped_data.toPandas()
-
-    # Create the Plotly figure
     fig = go.Figure(
         [
             go.Bar(
-                x=pandas_grouped_data["shuttle_type"],
-                y=pandas_grouped_data["avg_passenger_capacity"],
+                x=pdf["shuttle_type"],
+                y=pdf["avg_passenger_capacity"],
             )
         ]
     )
-
     return fig
 
 
