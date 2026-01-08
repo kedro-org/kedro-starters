@@ -63,9 +63,9 @@ jobs:
       - name: Run `kedro run` end to end tests for all starters
         run: |
           if [ "${{ runner.os }}" = "Windows" ]; then
-            behave features/run.feature features/test.feature --tags "~@pyspark"
+            behave features/run.feature features/tools.feature features/test.feature --tags "~@pyspark"
           else
-            behave features/run.feature features/test.feature
+            behave features/run.feature features/tools.feature features/test.feature
           fi
         shell: bash
 
