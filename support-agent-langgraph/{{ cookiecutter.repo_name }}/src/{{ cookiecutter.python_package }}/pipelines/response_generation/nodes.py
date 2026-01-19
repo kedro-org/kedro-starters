@@ -46,7 +46,7 @@ def generate_response(
         try:
             m.pretty_print()
         except Exception:
-            print(m)
+            logger.warning("Failed to pretty_print message %r", m)
 
     return result
 
