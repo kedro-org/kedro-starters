@@ -6,7 +6,7 @@
 
 > ⚠️ **Warning**
 >  
-> This starter is experimental and may change or be removed in future releases.
+> This starter is experimental and may change in future Kedro releases.
 
 This Kedro starter is intentionally more feature-rich than typical Kedro templates. Instead of a minimal scaffold,
 it provides a complete end-to-end working GenAI support-agent system built with

@@ -47,4 +47,11 @@ CONFIG_LOADER_ARGS = {
 import warnings
 from kedro.utils import KedroExperimentalWarning
 
+# This starter uses multiple experimental features and maked as experimental itself
+# We want this warning appears only once per starter, not per each experimental feature
+warnings.warn(
+    f"support-agent-langgraph stater is experimental and may change in future Kedro releases.",
+    category=KedroExperimentalWarning,
+)
+
 warnings.filterwarnings("ignore", category=KedroExperimentalWarning)

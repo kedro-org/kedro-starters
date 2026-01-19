@@ -10,6 +10,10 @@ It demonstrates how to combine `LangGraph` and `Kedro` to build robust, producti
 
 Take a look at the [Kedro documentation](https://docs.kedro.org) and [STARTER_GUIDE.md](STARTER_GUIDE.md) to get started.
 
+> ⚠️ **Warning**
+>  
+> This starter is experimental and may change in future Kedro releases.
+
 ## Rules and guidelines
 
 In order to get the best out of the template:
