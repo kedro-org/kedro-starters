@@ -43,3 +43,8 @@ CONFIG_LOADER_ARGS = {
 # Class that manages the Data Catalog.
 # from kedro.io import DataCatalog
 # DATA_CATALOG_CLASS = DataCatalog
+
+import warnings
+from kedro.utils import KedroExperimentalWarning
+
+warnings.filterwarnings("ignore", category=KedroExperimentalWarning)
