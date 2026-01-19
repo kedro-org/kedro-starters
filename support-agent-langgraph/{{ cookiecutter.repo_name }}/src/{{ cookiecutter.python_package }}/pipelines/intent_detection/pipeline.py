@@ -1,11 +1,10 @@
-from kedro.pipeline import Pipeline, node, pipeline
+from kedro.pipeline import llm_context_node, node, Pipeline, pipeline
 
 from .nodes import (
     create_session,
     detect_intent,
-    get_session_id,
-    init_intent_detection_context,
     load_context,
+    get_session_id,
     log_intent_detection,
 )
 
@@ -36,11 +35,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs=["user_context", "session_config"],
                 name="load_context_node",
             ),
-            node(
-                func=init_intent_detection_context,
-                inputs=["llm", "intent_prompt_langfuse"],
+            llm_context_node(
+                name="intent_agent_context_node",
                 outputs="intent_detection_context",
-                name="init_intent_detection_context_node",
+                llm="llm",
+                prompts=[
+                    "intent_prompt_langfuse",
+                ],
             ),
             node(
                 func=detect_intent,
