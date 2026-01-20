@@ -1,32 +1,25 @@
-from kedro.pipeline import Pipeline, node, pipeline
+from kedro.pipeline import llm_context_node, node, pipeline, Pipeline, tool
 
 from .nodes import (
     generate_response,
-    init_response_generation_context,
-    init_tools,
     log_response_and_end_session,
 )
+from .tools import build_create_claim, build_get_user_claims, build_lookup_docs
 
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
-            node(
-                func=init_tools,
-                inputs=["db_engine", "docs", "params:docs_matches"],
-                outputs="tools",
-                name="init_tools_node",
-            ),
-            node(
-                func=init_response_generation_context,
-                inputs=[
-                    "llm",
-                    "tool_prompt",
-                    "response_prompt",
-                    "tools",
-                ],
+            llm_context_node(
+                name="response_agent_context_node",
                 outputs="response_generation_context",
-                name="init_response_generation_context_node",
+                llm="llm",
+                prompts=["tool_prompt", "response_prompt"],
+                tools=[
+                    tool(build_get_user_claims, "db_engine"),
+                    tool(build_lookup_docs, "docs", "params:docs_matches"),
+                    tool(build_create_claim, "db_engine"),
+                ],
             ),
             node(
                 func=generate_response,

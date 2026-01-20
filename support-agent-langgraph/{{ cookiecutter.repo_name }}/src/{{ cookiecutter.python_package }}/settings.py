@@ -43,3 +43,18 @@ CONFIG_LOADER_ARGS = {
 # Class that manages the Data Catalog.
 # from kedro.io import DataCatalog
 # DATA_CATALOG_CLASS = DataCatalog
+
+import warnings
+from kedro.utils import KedroExperimentalWarning
+
+# This starter uses multiple experimental features and is marked as experimental itself.
+# We emit a single experimental warning for the whole starter.
+# To re-enable individual experimental warnings from Kedro,
+# REMOVE the `warnings.filterwarnings(...)` call below.
+warnings.warn(
+    "support-agent-langgraph starter is experimental and may change in future Kedro releases.",
+    category=KedroExperimentalWarning,
+)
+
+# Suppresses all subsequent KedroExperimentalWarning warnings
+warnings.filterwarnings("ignore", category=KedroExperimentalWarning)

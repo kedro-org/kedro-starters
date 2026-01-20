@@ -5,16 +5,17 @@ intents or changing how user queries are resolved.
 """
 
 from functools import partial
-from typing import Any, Literal, TypedDict
+from typing import Any, TypedDict, Literal
 
-from langchain_core.messages import AIMessage, AnyMessage
+from kedro.pipeline import LLMContext
+from langchain_core.messages import AnyMessage, AIMessage
 from langchain_core.runnables import Runnable
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END, START, StateGraph
+from langgraph.graph import StateGraph, START, END
 from langgraph.graph.state import CompiledStateGraph
 from pydantic import BaseModel
 
-from ...utils import AgentContext, KedroAgent
+from ...utils import KedroAgent
 
 
 class IntentOutput(BaseModel):
@@ -64,7 +65,12 @@ class IntentDetectionAgent(KedroAgent):
     Uses LangGraph with memory checkpointing.
     """
 
-    def __init__(self, context: AgentContext):
+    def __init__(self, context: LLMContext):
+        # Bind LLM to structured output schema
+        structured_llm = context.llm.with_structured_output(IntentOutput)
+        intent_detection_chain = context.prompts["intent_prompt_langfuse"] | structured_llm
+        context.llm = intent_detection_chain
+
         super().__init__(context)
         self.compiled_graph: CompiledStateGraph | None = None
         self.memory: MemorySaver | None = None

@@ -5,17 +5,18 @@ tool-routes, or modify how the agent composes responses.
 """
 
 from functools import partial
-from typing import Any, TypedDict
+from typing import TypedDict, Any
 
-from langchain_core.messages import AIMessage, BaseMessage
+from kedro.pipeline import LLMContext
+from langchain_core.messages import BaseMessage, AIMessage
 from langchain_core.runnables import Runnable
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END, START, StateGraph
+from langgraph.graph import StateGraph, START, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 from pydantic import BaseModel, Field
 
-from ...utils import AgentContext, KedroAgent
+from ...utils import KedroAgent
 
 
 class AgentState(TypedDict):
@@ -46,7 +47,7 @@ class ResponseGenerationAgent(KedroAgent):
     - Generates structured final responses using context + tool outputs.
     """
 
-    def __init__(self, context: AgentContext):
+    def __init__(self, context: LLMContext):
         super().__init__(context)
         self.compiled_graph: CompiledStateGraph | None = None
         self.memory: MemorySaver | None = None
@@ -56,13 +57,11 @@ class ResponseGenerationAgent(KedroAgent):
 
         # LLM that decides tool usage
         llm_with_tools = self.context.llm.bind_tools(self.tools)
-        self.llm_with_tools = self.context.get_prompt("tool_prompt") | llm_with_tools
+        self.llm_with_tools = self.context.prompts["tool_prompt"] | llm_with_tools
 
         # LLM that generates structured final response
         structured_llm = self.context.llm.with_structured_output(ResponseOutput)
-        self.response_chain = (
-            self.context.get_prompt("response_prompt") | structured_llm
-        )
+        self.response_chain = self.context.prompts["response_prompt"] | structured_llm
 
     def compile(self):
         """Compile the state graph for response generation."""
@@ -179,3 +178,4 @@ def generate_response(state: AgentState, response_chain: Runnable):
         "claim_created": result.claim_created,
         "escalated": result.escalation,
     }
+
