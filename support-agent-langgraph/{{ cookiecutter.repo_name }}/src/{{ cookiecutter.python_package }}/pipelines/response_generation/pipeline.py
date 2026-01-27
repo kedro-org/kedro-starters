@@ -1,10 +1,12 @@
-from kedro.pipeline import llm_context_node, node, pipeline, Pipeline, tool
+from kedro.pipeline import Pipeline, node, pipeline, llm_context_node, tool
 
 from .nodes import (
+    generate_mermaid_preview,
     generate_response,
     log_response_and_end_session,
 )
-from .tools import build_create_claim, build_get_user_claims, build_lookup_docs
+from .tools import build_lookup_docs, build_get_user_claims, build_create_claim
+from ...utils import make_code_preview_fn
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -20,6 +22,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     tool(build_lookup_docs, "docs", "params:docs_matches"),
                     tool(build_create_claim, "db_engine"),
                 ],
+                preview_fn=make_code_preview_fn(build_get_user_claims, build_lookup_docs, build_create_claim)
             ),
             node(
                 func=generate_response,
@@ -31,6 +34,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs="final_response",
                 name="generate_response_node",
+                preview_fn=generate_mermaid_preview
             ),
             node(
                 func=log_response_and_end_session,
