@@ -2,6 +2,7 @@ import logging
 from typing import Any
 
 from kedro.pipeline import LLMContext
+from kedro.pipeline.preview_contract import MermaidPreview
 from langfuse.langchain import CallbackHandler
 from langchain_core.messages import HumanMessage, AIMessage
 import pandas as pd
@@ -12,6 +13,35 @@ from .agent import IntentDetectionAgent
 from ...utils import log_message
 
 logger = logging.getLogger(__name__)
+
+
+def generate_mermaid_preview() -> MermaidPreview:
+    """
+    Generate a styled Mermaid diagram preview of the response-generation graph.
+
+    This function compiles the agent’s static, non-executable graph definition
+    and renders it as a Mermaid diagram for visualization purposes only.
+
+    The preview is guaranteed to reflect the same graph structure used at
+    runtime, while avoiding any dependency on LLMs, tools, or memory.
+
+    Returns:
+        MermaidPreview containing the rendered diagram and Mermaid theme
+        configuration metadata.
+    """
+    compiled = IntentDetectionAgent.graph().compile()
+    mermaid = compiled.get_graph().draw_mermaid()
+    mermaid = mermaid.replace(
+        "classDef first fill-opacity:0",
+        "classDef first fill:#50C878,color:#000000",
+    )
+    config = {
+        "themeVariables": {
+            "lineColor": "#F5A623",
+            "nodeTextColor": "#000000",
+        },
+    }
+    return MermaidPreview(content=mermaid, meta=config)
 
 
 def create_session(user_id: int) -> pd.DataFrame:
