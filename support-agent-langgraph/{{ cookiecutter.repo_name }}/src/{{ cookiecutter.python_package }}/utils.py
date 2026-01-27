@@ -1,46 +1,14 @@
-import json
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from typing import Any
+import json
+import inspect
+import textwrap
+from typing import Any, Callable
 
-from langchain.schema import AIMessage, HumanMessage
-from langchain_core.messages import BaseMessage, ToolMessage
+from kedro.pipeline import LLMContext
+from kedro.pipeline.preview_contract import TextPreview
+from langchain_core.messages import ToolMessage, BaseMessage
+from langchain.schema import HumanMessage, AIMessage
 from sqlalchemy import Engine, text
-
-
-@dataclass
-class AgentContext:
-    """
-    Container for all agent runtime dependencies.
-
-    Stores:
-    - llm: Language model instance (e.g., ChatOpenAI)
-    - tools: Dictionary of callable tools available to the agent
-    - prompts: Named prompt templates
-    - metadata: Extra runtime metadata for tracing, configs, etc.
-    """
-
-    agent_id: str
-    llm: Any = None
-    tools: dict[str, Any] = field(default_factory=dict)
-    prompts: dict[str, Any] = field(default_factory=dict)
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-    def add_tool(self, name: str, tool: Any) -> None:
-        """Register a tool under the given name."""
-        self.tools[name] = tool
-
-    def get_tool(self, name: str) -> Any:
-        """Retrieve a tool by name."""
-        return self.tools.get(name)
-
-    def add_prompt(self, name: str, prompt: Any) -> None:
-        """Register a prompt template under the given name."""
-        self.prompts[name] = prompt
-
-    def get_prompt(self, name: str) -> Any:
-        """Retrieve a prompt template by name."""
-        return self.prompts.get(name)
 
 
 class KedroAgent(ABC):
@@ -52,7 +20,7 @@ class KedroAgent(ABC):
     - Can be invoked with context and configuration
     """
 
-    def __init__(self, context: AgentContext):
+    def __init__(self, context: LLMContext):
         self.context = context
 
     @abstractmethod
@@ -107,3 +75,26 @@ def log_message(
                 "content": json.dumps(content, default=str),  # ensure JSON serializable
             },
         )
+
+
+def make_code_preview_fn(*funcs: Callable):
+    """Create a preview function with captured callable context."""
+    def preview_fn() -> TextPreview:
+        sources: list[str] = []
+
+        for func in funcs:
+            try:
+                source = inspect.getsource(func)
+                source = textwrap.dedent(source)
+            except (OSError, TypeError):
+                name = getattr(func, "__qualname__", repr(func))
+                source = f"# Source unavailable for {name}"
+
+            sources.append(source)
+
+        return TextPreview(
+            content="\n\n".join(sources),
+            meta={"language": "python"},
+        )
+
+    return preview_fn
