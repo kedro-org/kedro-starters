@@ -10,8 +10,8 @@ from typing import TypedDict, Any
 from kedro.pipeline import LLMContext
 from langchain_core.messages import BaseMessage, AIMessage
 from langchain_core.runnables import Runnable
-from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph, START, END
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 from pydantic import BaseModel, Field
@@ -63,32 +63,128 @@ class ResponseGenerationAgent(KedroAgent):
         structured_llm = self.context.llm.with_structured_output(ResponseOutput)
         self.response_chain = self.context.prompts["response_prompt"] | structured_llm
 
-    def compile(self):
-        """Compile the state graph for response generation."""
+    @staticmethod
+    def _build_graph(
+        *,
+        tool_calling_node,
+        tools_node,
+        generate_response_node,
+        tools_condition_fn,
+    ) -> StateGraph:
+        """
+        Construct the response-generation state graph with injected node behavior.
+
+        This method defines the *static topology* of the agent's LangGraph:
+        - node names
+        - execution order
+        - conditional routing logic
+
+        The concrete behavior of each node (LLMs, tools, no-op placeholders)
+        is injected via callables, allowing the same graph structure to be
+        reused for:
+          - runtime execution (real LLMs, tools, memory)
+          - static preview / visualization (no-op nodes)
+
+        This method should be the single source of truth for the graph structure.
+        Any change to node wiring or control flow must happen here.
+
+        Args:
+            tool_calling_node:
+                Callable implementing the tool-decision step.
+                At runtime, this invokes an LLM; for previews, this is a no-op.
+            tools_node:
+                Callable or ToolNode responsible for executing selected tools.
+            generate_response_node:
+                Callable that generates the final structured response.
+            tools_condition_fn:
+                Function that inspects state and decides whether tool execution
+                is required ("tools") or can be skipped ("none").
+
+        Returns:
+            A StateGraph defining the response-generation workflow,
+            ready to be compiled.
+        """
         builder = StateGraph(AgentState)
 
-        builder.add_node(
-            "tool_calling_llm",
-            partial(tool_calling_llm, llm_with_tools=self.llm_with_tools),
-        )
-        builder.add_node("tools", ToolNode(self.tools))
-        builder.add_node(
-            "generate_response",
-            partial(generate_response, response_chain=self.response_chain),
-        )
+        builder.add_node("tool_calling_llm", tool_calling_node)
+        builder.add_node("tools", tools_node)
+        builder.add_node("generate_response", generate_response_node)
 
         builder.add_edge(START, "tool_calling_llm")
         builder.add_conditional_edges(
             "tool_calling_llm",
-            tools_condition,
+            tools_condition_fn,
             {"tools": "tools", "none": "generate_response"},
         )
         builder.add_edge("tools", "generate_response")
         builder.add_edge("generate_response", END)
 
-        # Compile with memory persistence
+        return builder
+
+    @staticmethod
+    def graph() -> StateGraph:
+        """
+        Create a static, non-executable version of the agent graph for previewing.
+
+        This method returns the same graph structure used at runtime, but with
+        placeholder (no-op) nodes and a fixed routing condition. It is intended
+        exclusively for:
+          - Mermaid diagram rendering
+          - Documentation
+          - Architecture inspection
+
+        The returned graph is *not* suitable for execution, but guarantees that
+        any structural change to the runtime graph is immediately reflected
+        in previews and diagrams.
+
+        Returns:
+            A StateGraph with no-op node implementations, suitable for compilation
+            and visualization.
+        """
+        return ResponseGenerationAgent._build_graph(
+            tool_calling_node=lambda x: x,
+            tools_node=lambda x: x,
+            generate_response_node=lambda x: x,
+            tools_condition_fn=lambda _: "none",
+        )
+
+    def compile(self):
+        """
+        Compile the executable response-generation graph with runtime dependencies.
+
+        This method binds concrete implementations to the static graph structure:
+          - LLM-powered tool decision logic
+          - Tool execution via ToolNode
+          - Final response generation chain
+          - Persistent memory / checkpointing
+
+        It reuses the same graph topology defined in `_build_graph`, ensuring that
+        the executable agent and its visualized architecture are always in sync.
+
+        After calling this method, the agent is ready to be invoked.
+
+        Raises:
+            RuntimeError:
+                If required runtime dependencies (LLM, tools, prompts) are missing.
+        """
         self.memory = MemorySaver()
-        self.compiled_graph = builder.compile(checkpointer=self.memory)
+
+        builder = self._build_graph(
+            tool_calling_node=partial(
+                tool_calling_llm,
+                llm_with_tools=self.llm_with_tools,
+            ),
+            tools_node=ToolNode(self.tools),
+            generate_response_node=partial(
+                generate_response,
+                response_chain=self.response_chain,
+            ),
+            tools_condition_fn=tools_condition,
+        )
+
+        self.compiled_graph = builder.compile(
+            checkpointer=self.memory
+        )
 
     def invoke(self, context: dict, config: dict | None = None) -> Any:
         """
@@ -178,4 +274,3 @@ def generate_response(state: AgentState, response_chain: Runnable):
         "claim_created": result.claim_created,
         "escalated": result.escalation,
     }
-

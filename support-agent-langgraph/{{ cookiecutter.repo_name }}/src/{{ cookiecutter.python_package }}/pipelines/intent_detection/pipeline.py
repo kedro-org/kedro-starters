@@ -1,10 +1,11 @@
-from kedro.pipeline import llm_context_node, node, Pipeline, pipeline
+from kedro.pipeline import Pipeline, node, pipeline, llm_context_node
 
 from .nodes import (
     create_session,
     detect_intent,
-    load_context,
+    generate_mermaid_preview,
     get_session_id,
+    load_context,
     log_intent_detection,
 )
 
@@ -48,6 +49,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs=["intent_detection_context", "user_context", "session_config"],
                 outputs="intent_detection_result",
                 name="detect_intent_node",
+                preview_fn=generate_mermaid_preview,
             ),
             node(
                 func=log_intent_detection,
