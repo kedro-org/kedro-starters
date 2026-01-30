@@ -1,55 +1,50 @@
-import logging
-from collections.abc import Callable
 from datetime import datetime
+import logging
 
-import pandas as pd
+from kedro.pipeline import LLMContext
+from kedro.pipeline.preview_contract import MermaidPreview
+
 from langchain_core.messages import AIMessage
-from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from langchain_openai import ChatOpenAI
-from sqlalchemy import Engine, text
+from sqlalchemy import text, Engine
 
-from ...utils import AgentContext, log_message
 from .agent import ResponseGenerationAgent
-from .tools import build_create_claim, build_get_user_claims, build_lookup_docs
+from ...utils import log_message
 
 logger = logging.getLogger(__name__)
 
 
-def init_tools(
-    db_engine: Engine, docs: pd.DataFrame, docs_matches: int
-) -> dict[str, Callable]:
-    """Assemble all tools used by the response generation agent."""
-    return {
-        "lookup_docs": build_lookup_docs(docs, docs_matches),
-        "get_user_claims": build_get_user_claims(db_engine),
-        "create_claim": build_create_claim(db_engine),
+def generate_mermaid_preview() -> MermaidPreview:
+    """
+    Generate a styled Mermaid diagram preview of the response-generation graph.
+
+    This function compiles the agent’s static, non-executable graph definition
+    and renders it as a Mermaid diagram for visualization purposes only.
+
+    The preview is guaranteed to reflect the same graph structure used at
+    runtime, while avoiding any dependency on LLMs, tools, or memory.
+
+    Returns:
+        MermaidPreview containing the rendered diagram and Mermaid theme
+        configuration metadata.
+    """
+    compiled = ResponseGenerationAgent.graph().compile()
+    mermaid = compiled.get_graph().draw_mermaid()
+    mermaid = mermaid.replace(
+        "classDef first fill-opacity:0",
+        "classDef first fill:#50C878,color:#000000",
+    )
+    config = {
+        "themeVariables": {
+            "lineColor": "#F5A623",
+            "nodeTextColor": "#000000",
+        },
     }
+    return MermaidPreview(content=mermaid, meta=config)
 
-
-def init_response_generation_context(
-    llm: ChatOpenAI,
-    tool_prompt: PromptTemplate,
-    response_prompt: ChatPromptTemplate,
-    tools: dict[str, Callable],
-) -> AgentContext:
-    """
-    Initialize the AgentContext for response generation.
-    - Binds LLM and tools.
-    - Attaches tool prompt and response prompt.
-    """
-    ctx = AgentContext(agent_id="response_generation_agent")
-    ctx.llm = llm
-
-    for name, fn in tools.items():
-        ctx.add_tool(name, fn)
-
-    ctx.add_prompt("tool_prompt", tool_prompt)
-    ctx.add_prompt("response_prompt", response_prompt)
-    return ctx
 
 
 def generate_response(
-    response_generation_context: AgentContext,
+    response_generation_context: LLMContext,
     intent_detection_result: dict,
     user_context: dict,
     session_config: dict,
@@ -83,7 +78,7 @@ def generate_response(
         try:
             m.pretty_print()
         except Exception:
-            pass
+            logger.warning("Failed to pretty_print message %r", m)
 
     return result
 

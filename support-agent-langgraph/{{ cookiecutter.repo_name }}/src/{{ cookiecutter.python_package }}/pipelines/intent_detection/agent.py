@@ -5,16 +5,17 @@ intents or changing how user queries are resolved.
 """
 
 from functools import partial
-from typing import Any, Literal, TypedDict
+from typing import Any, TypedDict, Literal
 
-from langchain_core.messages import AIMessage, AnyMessage
+from kedro.pipeline import LLMContext
+from langchain_core.messages import AnyMessage, AIMessage
 from langchain_core.runnables import Runnable
+from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from pydantic import BaseModel
 
-from ...utils import AgentContext, KedroAgent
+from ...utils import KedroAgent
 
 
 class IntentOutput(BaseModel):
@@ -64,40 +65,104 @@ class IntentDetectionAgent(KedroAgent):
     Uses LangGraph with memory checkpointing.
     """
 
-    def __init__(self, context: AgentContext):
+    def __init__(self, context: LLMContext):
         super().__init__(context)
         self.compiled_graph: CompiledStateGraph | None = None
         self.memory: MemorySaver | None = None
 
-    def compile(self) -> None:
-        """Build and compile the intent detection state graph."""
+        # LLM bound to structured intent output
+        structured_llm = self.context.llm.with_structured_output(IntentOutput)
+        self.intent_chain = (
+            self.context.prompts["intent_prompt_langfuse"]
+            | structured_llm
+        )
+
+    @staticmethod
+    def _build_graph(
+        *,
+        detect_intent_node,
+        clarify_intent_node,
+        update_context_node,
+        routing_fn,
+    ) -> StateGraph:
+        """
+        Construct the intent-detection state graph with injected node behavior.
+
+        This method defines the static topology of the agent graph:
+        - node names
+        - execution order
+        - conditional routing
+
+        Node behavior is injected, allowing reuse for:
+          - runtime execution
+          - static preview / visualization
+        """
         builder = StateGraph(AgentState)
 
-        # Register nodes
-        builder.add_node("detect_intent", partial(detect_intent, llm=self.context.llm))
-        builder.add_node("update_context", update_context)
-        builder.add_node("clarify_intent", clarify_intent)
+        builder.add_node("detect_intent", detect_intent_node)
+        builder.add_node("clarify_intent", clarify_intent_node)
+        builder.add_node("update_context", update_context_node)
 
-        # Flow
         builder.add_edge(START, "detect_intent")
 
-        # Conditional routing
-        def route_by_intent(state: AgentState):
-            return (
-                "clarify_intent"
-                if state["intent"] == "clarification_needed"
-                else "update_context"
-            )
-
         builder.add_conditional_edges(
-            "detect_intent", route_by_intent, ["clarify_intent", "update_context"]
+            "detect_intent",
+            routing_fn,
+            {
+                "clarify_intent": "clarify_intent",
+                "update_context": "update_context",
+            },
         )
+
         builder.add_edge("clarify_intent", "update_context")
         builder.add_edge("update_context", END)
 
-        # Compile with memory checkpointing
+        return builder
+
+    @staticmethod
+    def graph() -> StateGraph:
+        """
+        Create a static, non-executable version of the intent-detection graph.
+
+        Intended for:
+          - Mermaid diagram rendering
+          - Documentation
+          - Architecture inspection
+        """
+        return IntentDetectionAgent._build_graph(
+            detect_intent_node=lambda x: x,
+            clarify_intent_node=lambda x: x,
+            update_context_node=lambda x: x,
+            routing_fn=lambda _: "update_context",
+        )
+
+    def compile(self) -> None:
+        """
+        Compile the executable intent-detection graph with runtime dependencies.
+        """
         self.memory = MemorySaver()
-        self.compiled_graph = builder.compile(checkpointer=self.memory)
+
+        builder = self._build_graph(
+            detect_intent_node=partial(
+                detect_intent,
+                llm=self.intent_chain,
+            ),
+            clarify_intent_node=clarify_intent,
+            update_context_node=update_context,
+            routing_fn=self._route_by_intent,
+        )
+
+        self.compiled_graph = builder.compile(
+            checkpointer=self.memory
+        )
+
+    @staticmethod
+    def _route_by_intent(state: AgentState) -> str:
+        return (
+            "clarify_intent"
+            if state.get("intent") == "clarification_needed"
+            else "update_context"
+        )
 
     def invoke(self, context: dict, config: dict | None = None) -> Any:
         """
