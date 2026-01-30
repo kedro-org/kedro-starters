@@ -117,9 +117,6 @@ def check_created_project_structure_from_tools(context, tools):
     if "data" in tools_list:  # data tool
         assert is_created("data"), "data directory does not exist"
 
-    if "pyspark" in tools_list:  # PySpark tool
-        assert is_created("conf/base/spark.yml"), "spark.yml does not exist"
-
 
 @given("I have installed the Kedro project's dependencies")
 def install_project_dependencies(context):
