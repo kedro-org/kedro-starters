@@ -94,3 +94,7 @@ dummy_confusion_matrix:
   type: matplotlib.MatplotlibDataset
   filepath: data/08_reporting/dummy_confusion_matrix.png
   versioned: true
+
+blah:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/blah.csv
