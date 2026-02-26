@@ -109,12 +109,6 @@ Package your project:
 kedro package
 ```
 
-Copy the package at the root of the project such that the Docker images 
-created by the Astronomer CLI can pick it up:
-```shell
-cp src/dist/*.whl ./
-```
-
 Add a default dataset factory for the in-memory datasets:
 ```yaml
 # conf/base/catalog.yml
