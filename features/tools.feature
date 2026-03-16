@@ -1,4 +1,3 @@
-@skip
 Feature: New Kedro project with tools
 
   Scenario: Create a new Kedro project without any tools
