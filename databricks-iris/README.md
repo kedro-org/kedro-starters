@@ -27,14 +27,6 @@ This starter has a base configuration that allows it to run natively on Databric
 
 See the documentation on deploying a packaged Kedro project to Databricks for more information.
 
-### Single configuration in `/conf/base/spark.yml`
-
-While Spark allows you to specify many different [configuration options](https://spark.apache.org/docs/latest/configuration.html), this starter uses `/conf/base/spark.yml` as a single configuration location.
-
-### `SparkSession` initialisation
-
-This Kedro starter contains the initialisation code for `SparkSession` in the `ProjectContext` and takes its configuration from `/conf/base/spark.yml`. Modify this code if you want to further customise your `SparkSession`, e.g. to use [YARN](https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html).
-
 ### Configures `MemoryDataset` to work with Spark objects
 
 Out of the box, Kedro's `MemoryDataset` works with Spark's `DataFrame`. However, it doesn't work with other Spark objects such as machine learning models unless you add further configuration. This Kedro starter demonstrates how to configure `MemoryDataset` for Spark's machine learning model in the `catalog.yml`.

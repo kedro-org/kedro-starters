@@ -12,7 +12,7 @@
 #  filepath: "data/01_raw/bikes.csv"
 #
 #weather:
-#  type: spark.SparkDataset
+#  type: spark.SparkDatasetV2
 #  filepath: s3a://your_bucket/data/01_raw/weather*
 #  file_format: csv
 #  credentials: dev_s3
@@ -43,7 +43,7 @@
 # template. Please feel free to remove it once you remove the example pipeline.
 
 example_iris_data:
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/01_raw/iris.csv
   file_format: csv
   load_args:
@@ -53,9 +53,9 @@ example_iris_data:
     header: True
 
 # We need to set mode to 'overwrite' in save_args so when saving the dataset it is replaced each time it is run
-# for all SparkDatasets.
+# for all SparkDatasetV2s.
 X_train@pyspark:
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_train.parquet
   save_args:
     mode: overwrite
@@ -65,7 +65,7 @@ X_train@pandas:
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_train.parquet
 
 X_test@pyspark:
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_test.parquet
   save_args:
     mode: overwrite
@@ -75,7 +75,7 @@ X_test@pandas:
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/X_test.parquet
 
 y_train@pyspark:
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_train.parquet
   save_args:
     mode: overwrite
@@ -85,7 +85,7 @@ y_train@pandas:
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_train.parquet
 
 y_test@pyspark:
-  type: spark.SparkDataset
+  type: spark.SparkDatasetV2
   filepath: /dbfs/FileStore/{{ cookiecutter.python_package }}/data/02_intermediate/y_test.parquet
   save_args:
     mode: overwrite
