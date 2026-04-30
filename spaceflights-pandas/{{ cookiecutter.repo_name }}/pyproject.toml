@@ -14,7 +14,8 @@ dependencies = [
     "kedro[jupyter]~={{ cookiecutter.kedro_version }}",
     "kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibdataset]>=3.0",
     "kedro-viz>=6.7.0",
-    "scikit-learn~=1.5.1",
+    "scikit-learn~=1.5.1; python_version < '3.14'",
+    "scikit-learn~=1.8.0; python_version >= '3.14'",
     "seaborn~=0.12.1"
 ]
 
