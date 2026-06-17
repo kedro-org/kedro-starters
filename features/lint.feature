@@ -23,3 +23,9 @@ Feature: Lint all starters
     And I have run a non-interactive kedro new with the starter spaceflights-pyspark
     When I lint the project
     Then I should get a successful exit code
+
+  Scenario: Lint support-agent-langgraph starter
+    Given I have prepared a config file
+    And I have run a non-interactive kedro new with the starter support-agent-langgraph
+    When I lint the project
+    Then I should get a successful exit code
