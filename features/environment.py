@@ -98,7 +98,9 @@ def before_scenario(context, scenario):
     context.kedro = str(bin_dir / "kedro")
     context.python = str(bin_dir / "python")
     # All scenarios install through uv so packages are reused from its shared cache.
-    context.pip_install = [_UV, "pip", "install", "--python", context.python]
+    # Target the venv directory, not the interpreter: on Windows the interpreter is
+    # `python.exe` and uv, unlike subprocess, doesn't add the extension.
+    context.pip_install = [_UV, "pip", "install", "--python", str(context.venv_dir)]
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
@@ -117,7 +119,10 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     """Remove the scenario's venv and project straight away, as venvs with Spark can fill the CI disk."""
-    for path in (context.venv_dir, context.temp_dir):
+    # getattr: before_scenario may have failed before creating both directories.
+    for path in (getattr(context, "venv_dir", None), getattr(context, "temp_dir", None)):
+        if path is None:
+            continue
         shutil.rmtree(path, ignore_errors=True)
         _PATHS_TO_REMOVE.discard(path)
 
