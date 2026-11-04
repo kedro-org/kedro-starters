@@ -64,6 +64,11 @@ jobs:
           "C:\hadoop\bin" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
       - name: Run `kedro run` end to end tests for all starters
         run: behave features/run.feature features/tools.feature features/test.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
 
   lint:
     strategy:
@@ -87,6 +92,11 @@ jobs:
         run: uv pip install --system -r test_requirements.txt
       - name: Run linter for all starters
         run: behave features/lint.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
 
   package:
     strategy:
@@ -125,3 +135,8 @@ jobs:
           "C:\hadoop\bin" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
       - name: Package and run all starters
         run: behave features/package.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
