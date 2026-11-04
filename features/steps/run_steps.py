@@ -122,7 +122,7 @@ def check_created_project_structure_from_tools(context, tools):
 def install_project_dependencies(context):
     reqs_path = "requirements.txt"
     res = subprocess.run(
-        [context.pip, "install", "-r", reqs_path, "-U"], cwd=context.root_project_dir
+        [*context.pip_install, "-r", reqs_path, "-U"], cwd=context.root_project_dir
     )
     assert res.returncode == OK_EXIT_CODE
 
@@ -131,7 +131,7 @@ def install_project_dependencies(context):
 @when("I have installed local Spark dependencies")
 def install_local_spark_dependencies(context):
     res = subprocess.run(
-        [context.pip, "install", "-U", "kedro-datasets[spark-local, hdfs-base, s3fs-base]"],
+        [*context.pip_install, "-U", "kedro-datasets[spark-local, hdfs-base, s3fs-base]"],
         cwd=context.root_project_dir,
     )
     assert res.returncode == OK_EXIT_CODE
@@ -179,11 +179,12 @@ def exec_kedro_target(context, command):
 
 
 @when("I install the project's python package")
-def install_project_package_via_pip(context):
-    """Install a python package using pip."""
+def install_project_package(context):
+    """Install the packaged project wheel."""
     dist_dir = context.root_project_dir / "dist"
     (whl_file,) = dist_dir.glob("*.whl")
-    subprocess.run([context.pip, "install", str(whl_file)], env=context.env)
+    res = subprocess.run([*context.pip_install, str(whl_file)], env=context.env)
+    assert res.returncode == OK_EXIT_CODE
 
 
 @when("I execute the installed project")
@@ -207,16 +208,8 @@ def run_pytest_in_project(context):
 @given("I have installed pytest")
 def install_pytest(context):
     """Behave step to install pytest in the current environment."""
-    res = subprocess.run([
-        context.pip, "install", "pytest"
-    ])
+    res = subprocess.run([*context.pip_install, "pytest", "pytest-cov"])
     assert res.returncode == OK_EXIT_CODE
-    res = subprocess.run([
-        context.pip, "install", "pytest-cov"
-    ])
-    assert res.returncode == OK_EXIT_CODE
-    res = subprocess.run([
-        context.pip, "install", ".",
-    ], cwd=context.root_project_dir)
+    res = subprocess.run([*context.pip_install, "."], cwd=context.root_project_dir)
     assert res.returncode == OK_EXIT_CODE
 
