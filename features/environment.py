@@ -5,12 +5,13 @@ import os
 import shlex
 import shutil
 import subprocess
+import sys
 import tempfile
-import venv
 from pathlib import Path
 from typing import Any
 
 _PATHS_TO_REMOVE: set[Path] = set()
+_UV = shutil.which("uv")
 
 
 
@@ -59,13 +60,13 @@ def call(cmd, env):
         assert False
 
 def create_new_venv() -> Path:
-    """Create a new venv.
+    """Create a new venv with uv, using the Python that runs behave so the CI matrix version is tested.
+
     Returns:
         path to created venv
     """
-    # Create venv
     venv_dir = _create_tmp_dir()
-    venv.main([str(venv_dir)])
+    call([_UV, "venv", "--python", sys.executable, str(venv_dir)], env=os.environ.copy())
     return venv_dir
 
 
@@ -74,6 +75,12 @@ def _create_tmp_dir() -> Path:
     tmp_dir = Path(tempfile.mkdtemp()).resolve()
     _PATHS_TO_REMOVE.add(tmp_dir)
     return tmp_dir
+
+
+def before_all(context):
+    """Fail fast with a clear message if uv is missing, rather than in every scenario."""
+    if _UV is None:
+        raise RuntimeError("uv is required to run the e2e tests: https://docs.astral.sh/uv/")
 
 
 def before_scenario(context, scenario):
@@ -88,24 +95,12 @@ def before_scenario(context, scenario):
         bin_dir = context.venv_dir / "Scripts"
 
     context.bin_dir = bin_dir
-    context.pip = str(bin_dir / "pip")
     context.kedro = str(bin_dir / "kedro")
     context.python = str(bin_dir / "python")
-
-    # Fix Pip version
-    call(
-        [
-            context.python,
-            "-m",
-            "pip",
-            "install",
-            "-U",
-            # pip==23.3 breaks dependency resolution
-            "pip==23.3.1",
-        ],
-        env=context.env,
-    )
-
+    # All scenarios install through uv so packages are reused from its shared cache.
+    # Target the venv directory, not the interpreter: on Windows the interpreter is
+    # `python.exe` and uv, unlike subprocess, doesn't add the extension.
+    context.pip_install = [_UV, "pip", "install", "--python", str(context.venv_dir)]
 
     starters_root = Path(__file__).parents[1]
     starter_names = [
@@ -118,9 +113,18 @@ def before_scenario(context, scenario):
         starter: str(starters_root / starter) for starter in starter_names
     }
     context.starters_paths = starters_paths
-    subprocess.run([context.python, "-m", "pip", "install", "-r", "test_requirements.txt"])
-    context.temp_dir = Path(tempfile.mkdtemp()).resolve()
-    _PATHS_TO_REMOVE.add(context.temp_dir)
+    call([*context.pip_install, "-r", str(starters_root / "test_requirements.txt")], env=context.env)
+    context.temp_dir = _create_tmp_dir()
+
+
+def after_scenario(context, scenario):
+    """Remove the scenario's venv and project straight away, as venvs with Spark can fill the CI disk."""
+    # getattr: before_scenario may have failed before creating both directories.
+    for path in (getattr(context, "venv_dir", None), getattr(context, "temp_dir", None)):
+        if path is None:
+            continue
+        shutil.rmtree(path, ignore_errors=True)
+        _PATHS_TO_REMOVE.discard(path)
 
 
 def after_all(context):

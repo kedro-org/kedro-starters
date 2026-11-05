@@ -40,34 +40,35 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Set up uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          # One cache per job and Python version, so parallel matrix jobs don't race to save the same key.
+          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
       - name: Install test requirements
+        run: uv pip install --system -r test_requirements.txt
+      - name: Set up Java 17 for Spark 4
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Set up Hadoop native binaries for Spark on Windows
+        if: runner.os == 'Windows'
         run: |
-          make install-test-requirements        
-      - name: Add MSBuild to PATH
-        if: matrix.os == 'windows-latest'
-        uses: microsoft/setup-msbuild@v1
-      - name: Install Microsoft Visual C++ Redistributable
-        if: matrix.os == 'windows-latest'
-        run: |
-          choco install vcredist-all
-      - name: Setup Hadoop binary
-        if: matrix.os == 'windows-latest'
-        run: |
-          Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true" -OutFile winutils.exe
-          Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true" -OutFile hadoop.dll
-          Move-Item .\hadoop.dll C:\Windows\System32
-          New-Item -ItemType directory -Path C:\hadoop\bin
-          Move-Item .\winutils.exe C:\hadoop\bin
-          echo "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
-          echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
+          # No winutils build exists for Spark 4's bundled Hadoop 3.5; 3.3.6 is the latest community build.
+          $base = "https://raw.githubusercontent.com/cdarlint/winutils/7386986d5d8a079b5cd4464f4599766dd27e7d13/hadoop-3.3.6/bin"
+          New-Item -ItemType Directory -Force -Path C:\hadoop\bin | Out-Null
+          Invoke-WebRequest "$base/winutils.exe" -OutFile C:\hadoop\bin\winutils.exe
+          Invoke-WebRequest "$base/hadoop.dll" -OutFile C:\hadoop\bin\hadoop.dll
+          "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_ENV
+          "C:\hadoop\bin" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
       - name: Run `kedro run` end to end tests for all starters
-        run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            behave features/run.feature features/tools.feature features/test.feature --tags "~@pyspark"
-          else
-            behave features/run.feature features/tools.feature features/test.feature
-          fi
-        shell: bash
+        run: behave features/run.feature features/tools.feature features/test.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
 
   lint:
     strategy:
@@ -82,10 +83,20 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Set up uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          # One cache per job and Python version, so parallel matrix jobs don't race to save the same key.
+          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
       - name: Install test requirements
-        run: make install-test-requirements
+        run: uv pip install --system -r test_requirements.txt
       - name: Run linter for all starters
         run: behave features/lint.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
 
   package:
     strategy:
@@ -100,31 +111,32 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Set up uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          # One cache per job and Python version, so parallel matrix jobs don't race to save the same key.
+          cache-suffix: ${{ github.job }}-${{ matrix.python-version }}
       - name: Install test requirements
+        run: uv pip install --system -r test_requirements.txt
+      - name: Set up Java 17 for Spark 4
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Set up Hadoop native binaries for Spark on Windows
+        if: runner.os == 'Windows'
         run: |
-          make install-test-requirements
-      - name: Add MSBuild to PATH
-        if: matrix.os == 'windows-latest'
-        uses: microsoft/setup-msbuild@v1
-      - name: Install Microsoft Visual C++ Redistributable
-        if: matrix.os == 'windows-latest'
-        run: |
-          choco install vcredist-all
-      - name: Setup Hadoop binary
-        if: matrix.os == 'windows-latest'
-        run: |
-          Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/winutils.exe?raw=true" -OutFile winutils.exe
-          Invoke-WebRequest "https://github.com/steveloughran/winutils/blob/master/hadoop-2.7.1/bin/hadoop.dll?raw=true" -OutFile hadoop.dll
-          Move-Item .\hadoop.dll C:\Windows\System32
-          New-Item -ItemType directory -Path C:\hadoop\bin
-          Move-Item .\winutils.exe C:\hadoop\bin
-          echo "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
-          echo "PATH=$env:HADOOP_HOME\bin;$env:PATH" | Out-File -Append -Encoding ascii -FilePath $env:GITHUB_ENV
+          # No winutils build exists for Spark 4's bundled Hadoop 3.5; 3.3.6 is the latest community build.
+          $base = "https://raw.githubusercontent.com/cdarlint/winutils/7386986d5d8a079b5cd4464f4599766dd27e7d13/hadoop-3.3.6/bin"
+          New-Item -ItemType Directory -Force -Path C:\hadoop\bin | Out-Null
+          Invoke-WebRequest "$base/winutils.exe" -OutFile C:\hadoop\bin\winutils.exe
+          Invoke-WebRequest "$base/hadoop.dll" -OutFile C:\hadoop\bin\hadoop.dll
+          "HADOOP_HOME=C:\hadoop" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_ENV
+          "C:\hadoop\bin" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
       - name: Package and run all starters
-        run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            behave features/package.feature --tags "~@pyspark"
-          else
-            behave features/package.feature
-          fi
-        shell: bash
+        run: behave features/package.feature
+        env:
+          # On Windows the uv cache is under runner.temp on D:, but the default TEMP is on C:.
+          # uv can't hardlink across drives, so keep scenario venvs on D: too. Empty (default) elsewhere.
+          TEMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
+          TMP: ${{ runner.os == 'Windows' && runner.temp || '' }}
