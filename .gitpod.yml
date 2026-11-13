@@ -4,7 +4,7 @@
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
-image: gitpod/workspace-python-3.10
+image: gitpod/workspace-python-3.11
   
 tasks:
   - init: |
