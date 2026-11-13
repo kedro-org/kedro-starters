@@ -16,7 +16,7 @@ jobs:
         uses: actions/github-script@v6
         id: membership
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ORG_MEMBERSHIP_TOKEN }}
           result-encoding: string
           script: |
 
@@ -36,11 +36,14 @@ jobs:
               }
 
             } catch (error) {
-              console.log("%s: Error occured and marked user as notMember", '${{ github.actor }}')
-              console.log("Error", error.stack);
-              console.log("Error", error.name);
-              console.log("Error", error.message);
-              return "notMember";
+              // A 404 means the user is not an org member. Any other error (e.g. a bad or
+              // expired token) must not label the issue, so fail the job visibly instead.
+              if (error.status === 404) {
+                console.log("%s: not a member of Kedro org", '${{ github.actor }}')
+                return "notMember";
+              }
+              core.setFailed(`Membership check failed: ${error.message}`)
+              return "error";
             }
 
       - name: Label issue if author is from community
