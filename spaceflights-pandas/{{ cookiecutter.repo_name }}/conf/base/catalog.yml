@@ -42,6 +42,7 @@
 companies:
   type: pandas.CSVDataset
   filepath: data/01_raw/companies.csv
+  validator: {{ cookiecutter.python_package }}.schemas.companies.RawCompaniesSchema
 
 reviews:
   type: pandas.CSVDataset
