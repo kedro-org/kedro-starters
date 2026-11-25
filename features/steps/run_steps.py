@@ -77,7 +77,8 @@ def create_project_without_starter(context):
 def create_config_file_with_tools(context, tools):
     """Behave step to create a temporary config file
     (given the existing temp directory) and store it in the context.
-    It takes a custom tools list and sets example prompt to `n`.
+    It takes a custom tools list and sets the example pipeline prompt to `y`,
+    so projects are generated from the starters in this repository.
     """
 
     context.config_file = context.temp_dir / "config.yml"
