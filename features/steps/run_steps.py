@@ -1,3 +1,4 @@
+import os
 import subprocess
 from pathlib import Path
 
@@ -5,6 +6,8 @@ import yaml
 from behave import given, then, when
 
 OK_EXIT_CODE = 0
+# Branch of kedro-starters to pull templates from (set by the GitHub workflow).
+STARTERS_CHECKOUT = os.environ.get("KEDRO_STARTERS_CHECKOUT", "main")
 
 
 @given("I have prepared a config file")
@@ -53,7 +56,14 @@ def create_project_from_config_file(context, starter_name):
 def create_project_without_starter(context):
     """Behave step to run kedro new given the config I previously created."""
     res = subprocess.run(
-        [context.kedro, "new", "-c", str(context.config_file)],
+        [
+            context.kedro,
+            "new",
+            "-c",
+            str(context.config_file),
+            "--checkout",
+            STARTERS_CHECKOUT,
+        ],
         env=context.env,
         cwd=context.temp_dir,
     )
