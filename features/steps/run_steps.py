@@ -68,13 +68,6 @@ def create_project_without_starter(context):
         cwd=context.temp_dir,
     )
     assert res.returncode == OK_EXIT_CODE, res
-    # TEMP-VERIFY-CHECKOUT (remove before merging): prove the template came from the branch
-    print(f"TEMP-VERIFY-CHECKOUT: KEDRO_STARTERS_CHECKOUT={STARTERS_CHECKOUT!r}", flush=True)
-    marker = context.root_project_dir / "TEMP_CHECKOUT_MARKER.txt"
-    assert marker.exists(), (
-        f"Marker missing: template was NOT pulled from branch {STARTERS_CHECKOUT!r}"
-    )
-    print("TEMP-VERIFY-CHECKOUT: marker found, template pulled from the branch", flush=True)
     # prevent telemetry from prompting for input during e2e tests
     telemetry_file = context.root_project_dir / ".telemetry"
     telemetry_file.write_text("consent: false", encoding="utf-8")

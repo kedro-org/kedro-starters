@@ -1,1 +1,0 @@
-TEMP: proves the project was generated from this branch's template. Remove before merging.
