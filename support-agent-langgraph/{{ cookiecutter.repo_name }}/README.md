@@ -2,7 +2,7 @@
 
 [![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
 
-## Overviewxx
+## Overview
 
 This is your new Kedro project, which was generated using `kedro {{ cookiecutter.kedro_version }}`.
 The project is generated based on the `support-agent-langgraph` starter and provides a fully working reference architecture you can adapt for any multi-agent LLM workflow.
