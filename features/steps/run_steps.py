@@ -1,5 +1,6 @@
 import os
 import subprocess
+import tomllib
 from pathlib import Path
 
 import yaml
@@ -49,6 +50,16 @@ def create_project_from_config_file(context, starter_name):
     # prevent telemetry from prompting for input during e2e tests
     telemetry_file = context.root_project_dir / ".telemetry"
     telemetry_file.write_text("consent: false", encoding="utf-8")
+
+
+@then("the project should declare its development tools in a dependency group")
+def check_dev_tools_in_dependency_group(context):
+    """Behave step to check the dev tools are not published as an installable extra."""
+    pyproject = tomllib.loads(
+        (context.root_project_dir / "pyproject.toml").read_text(encoding="utf-8")
+    )
+    assert "dev" not in pyproject["project"].get("optional-dependencies", {})
+    assert pyproject["dependency-groups"]["dev"]
 
 
 @given("I have run a non-interactive kedro new without starter")
